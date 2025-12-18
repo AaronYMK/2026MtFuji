@@ -1,40 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>我的第一個 PWA</title>
-
-  <!-- 基本 PWA -->
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#ffffff">
-
-  <!-- iOS PWA -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="測試PWA">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <!-- Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="icons/icon-76.png">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>富士山獵人旅遊手冊</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<h1>🎉 PWA 成功運行！</h1>
-<p>即使離線也能看到這個頁面，代表 Service Worker 已經生效。</p>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('Service Worker 註冊成功:', reg))
-      .catch(err => console.error('Service Worker 註冊失敗:', err));
-  }
-</script>
-
+    <div id="app-container"></div>
+    <script src="script.js"></script>
 </body>
 </html>
