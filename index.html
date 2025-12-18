@@ -2,444 +2,449 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>2026 冬季。富士山</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="MtFuji">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 日本關東之旅</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* iOS 滾動優化 */
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            /* 讓 iOS 滾動更滑順 */
-            -webkit-overflow-scrolling: touch; 
+        :root {
+            --bg-color: #f7f5f0; /* 米色 */
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-sub: #666666;
+            --accent: #d45d5d; /* 日式朱紅 - 用於必吃/重點 */
+            --nav-bg: #2c3e50;
+            --tag-transport: #e8f4f8; --text-transport: #0077b6;
+            --tag-food: #fff0f0; --text-food: #d63031;
+            --tag-spot: #f0f7f0; --text-spot: #27ae60;
         }
 
-        /* iOS Safe Area 適配 (避開瀏海與底部橫條) */
-        .safe-top { padding-top: env(safe-area-inset-top); }
-        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding-bottom: 80px; /* 底部導航空間 */
+        }
+
+        /* 標題區 */
+        header {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        h1 {
+            font-family: 'Shippori Mincho', serif;
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        .subtitle { font-size: 0.8rem; color: var(--text-sub); margin-top: 5px; }
+
+        /* 天氣區塊 */
+        .weather-widget {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        /* 行程卡片 */
+        .timeline { padding: 10px 15px; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            border-left: 4px solid transparent;
+            transition: transform 0.2s;
+        }
+        .card:active { transform: scale(0.98); }
+
+        /* 分類顏色條 */
+        .card.transport { border-left-color: var(--text-transport); }
+        .card.food { border-left-color: var(--text-food); }
+        .card.spot { border-left-color: var(--text-spot); }
+
+        .time { font-weight: 700; color: var(--text-sub); font-size: 0.9rem; margin-bottom: 5px; display: block; }
+        .title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
         
-        /* 動畫 */
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* 標籤 */
+        .tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+        .tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+        .tag.highlight { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+        /* 導遊解說 */
+        .guide-text {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+            background: #fafafa;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .must-do { color: var(--accent); font-weight: 700; }
+
+        /* 按鈕區 */
+        .actions { margin-top: 12px; display: flex; gap: 10px; }
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        .btn-nav { background-color: #f1f3f5; color: #495057; }
+        .btn-nav:hover { background-color: #e9ecef; }
+
+        /* 底部導航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        .nav-item {
+            text-align: center;
+            color: #999;
+            font-size: 0.7rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .nav-item i { display: block; font-size: 1.2rem; margin-bottom: 3px; }
+        .nav-item.active { color: var(--accent); }
+
+        /* 資訊頁面 */
+        .info-section { display: none; padding: 15px; }
+        .info-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        
+        /* 方案切換 */
+        .plan-toggle {
+            display: flex;
+            justify-content: center;
+            margin: 10px 15px;
+            background: #e9ecef;
+            border-radius: 20px;
+            padding: 4px;
+        }
+        .plan-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 8px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .plan-btn.active { background: white; shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: bold; }
+
     </style>
 </head>
-<body class="flex justify-center min-h-screen bg-neutral-100 sm:py-8 sm:items-center">
+<body>
 
-    <div id="app-container" class="w-full h-[100dvh] bg-white relative flex flex-col overflow-hidden sm:w-[375px] sm:h-[812px] sm:rounded-[40px] sm:shadow-2xl sm:border-[8px] border-slate-800">
-        
-        <div class="hidden sm:flex h-8 bg-white justify-between items-center px-6 pt-2 shrink-0 z-20">
-           <span class="text-xs font-bold text-slate-800">09:00</span>
-           <div class="flex gap-1">
-             <div class="w-4 h-4 bg-slate-800 rounded-full opacity-20"></div>
-             <div class="w-4 h-4 bg-slate-800 rounded-full opacity-20"></div>
-             <div class="w-4 h-4 bg-slate-800 rounded-full"></div>
-           </div>
-        </div>
+<header>
+    <h1 id="day-title">Day 1: 出發與新宿</h1>
+    <div class="subtitle" id="day-date">2026-01-26</div>
+</header>
 
-        <div id="header-section" class="relative p-6 pb-8 transition-colors duration-300 shrink-0 safe-top">
-            </div>
+<div id="weather-container" class="weather-widget">
+    <div><i class="fas fa-spinner fa-spin"></i> 載入當地天氣預報中...</div>
+</div>
 
-        <div id="content-scroll" class="flex-1 overflow-y-auto px-6 pt-8 pb-32 scrollbar-hide">
-            </div>
-
-        <div id="nav-bar" class="absolute bottom-0 left-0 right-0 h-[88px] bg-white/95 backdrop-blur-md border-t border-gray-100 flex justify-around items-start pt-3 px-2 z-10 safe-bottom">
-            </div>
-
-        <div class="absolute bottom-28 right-6 pointer-events-none z-0">
-           <div class="w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-slate-800 border border-gray-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 21 15 18 9 21 3 18 3 6"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="6" x2="15" y2="18"/></svg>
-           </div>
-        </div>
-
+<div id="content-area" class="timeline">
     </div>
 
-    <script>
-        // --- Service Worker Registration (PWA) ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW registered!', reg))
-                    .catch(err => console.log('SW failed', err));
-            });
+<nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchDay(0)"><i class="fas fa-plane"></i>Day 1</button>
+    <button class="nav-item" onclick="switchDay(1)"><i class="fas fa-mountain"></i>Day 2</button>
+    <button class="nav-item" onclick="switchDay(2)"><i class="fas fa-torii-gate"></i>Day 3</button>
+    <button class="nav-item" onclick="switchDay(3)"><i class="fas fa-camera"></i>Day 4</button>
+    <button class="nav-item" onclick="switchDay(4)"><i class="fas fa-shopping-bag"></i>Day 5</button>
+    <button class="nav-item" onclick="switchTab('info')"><i class="fas fa-info-circle"></i>資訊</button>
+</nav>
+
+<script>
+    // 資料結構：包含所有行程資訊、導航連結與導遊解說
+    const itineraryData = [
+        {
+            day: "Day 1",
+            date: "2026-01-26",
+            title: "出發 & 新宿之夜",
+            locationData: { lat: 35.6938, lon: 139.7034 }, // 新宿
+            events: [
+                { time: "06:30", title: "機場接送出門", type: "transport", location: "Banqiao District, New Taipei City", desc: "準時出發前往桃園機場。" },
+                { time: "09:30", title: "TPE 起飛 (CI 100)", type: "transport", location: "Taoyuan International Airport", desc: "預計 13:30 抵達東京成田 (NRT)。", highlight: "航班 CI 100" },
+                { time: "15:14", title: "搭乘成田特快 NEX", type: "transport", location: "Narita Airport Terminal 2", desc: "前往 B1 搭乘 JR。目標班次：成田32號 (15:14) 或 34號 (15:44)。", highlight: "車票記得收好" },
+                { time: "16:45", title: "抵達 JR 新宿駅", type: "transport", location: "Shinjuku Station", desc: "人潮眾多，請注意隨身行李。" },
+                { time: "17:00", title: "Check-in: Yksi Stay", type: "spot", location: "Yksi Stay Shinjuku", desc: "先放置行李，稍作休息。" },
+                { time: "18:00", title: "晚餐：牛かつもと村", type: "food", location: "Gyukatsu Motomura Shinjuku", desc: "人氣炸牛排店。建議將牛排在石板上稍微炙燒，口感更佳。", highlight: "必吃：炸牛排定食" },
+                { time: "19:00", title: "新宿逛街 & 扭蛋", type: "spot", location: "Lumine Est Shinjuku", desc: "順序：Lumine Est (年輕潮流) → Adidas → BicCamera (電器) → C-Pla (扭蛋) → Gacha no Mori。", highlight: "C-Pla 扭蛋專門店" },
+                { time: "22:30", title: "宵夜：一蘭拉麵", type: "food", location: "Ichiran Shinjuku", desc: "日本經典豚骨拉麵，可選擇麵條硬度與湯頭濃度。", highlight: "記得加點半熟蛋" }
+            ]
+        },
+        {
+            day: "Day 2",
+            date: "2026-01-27",
+            title: "富士山河口湖自駕",
+            locationData: { lat: 35.4981, lon: 138.7686 }, // 河口湖
+            events: [
+                { time: "07:30", title: "富士回遊 3號", type: "transport", location: "Shinjuku Station Platform 9", desc: "JR新宿中央本線特急 9、10號月台。直達河口湖。", highlight: "指定席車票" },
+                { time: "09:30", title: "抵達河口湖 & 取車", type: "transport", location: "Budget Rent a Car Kawaguchiko", desc: "前往 Budget 租車取車，檢查車況。", highlight: "準備：護照、駕照日譯本" },
+                { time: "10:45", title: "忍野八海", type: "spot", location: "Oshino Hakkai", desc: "富士山融雪過濾後的八個清泉。水質極度清澈，被譽為神之泉。", highlight: "必看：湧池 (最深最藍)" },
+                { time: "12:00", title: "午餐：こし路 (Koshiji)", type: "food", location: "Koshiji Oshino", desc: "在地人推薦的日式食堂。", highlight: "必吃：牛肉燉飯" },
+                { time: "13:45", title: "Kaba 水陸巴士", type: "spot", location: "Yamanakako Kaba Bus", desc: "體驗車子直接衝進山中湖的快感，近距離欣賞富士山。" },
+                { time: "14:30", title: "山中湖巡禮 & 下午茶", type: "spot", location: "Hirano no Hama", desc: "平野之濱拍逆富士 → 長池親水公園 → The Park 吃鬆餅看湖景。", highlight: "The Park 鬆餅" },
+                { time: "16:30", title: "住宿：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "絕景溫泉旅館，所有房間面湖面富士山。晚餐前建議先泡湯。", highlight: "逆富士絕景住宿" }
+            ]
+        },
+        {
+            day: "Day 3",
+            date: "2026-01-28",
+            title: "河口湖深度遊",
+            locationData: { lat: 35.5165, lon: 138.7562 },
+            hasPlanB: true,
+            eventsA: [ // 晴天方案
+                { time: "10:30", title: "睡到自然醒", type: "spot", location: "Shuhoukaku Kogetsu", desc: "享受悠閒的早晨與窗外美景。" },
+                { time: "10:45", title: "午餐：手打うどん 彩花", type: "food", location: "Teuchi Udon Ayaka", desc: "吉田烏龍麵名店，麵條極具嚼勁。", highlight: "必點：肉烏龍麵" },
+                { time: "11:45", title: "甜點時光 (二選一)", type: "food", location: "La Verdure Kimura", desc: "選項一：木村屋布丁 / 選項二：Fujisan Shokupan 富士山吐司。", highlight: "富士山造型麵包" },
+                { time: "12:15", title: "河口湖纜車 & 兔子神社", type: "spot", location: "Mt. Fuji Panoramic Ropeway", desc: "搭纜車上天上山公園，敲響天上之鐘。", highlight: "狸貓與兔子傳說" },
+                { time: "14:00", title: "河口淺間神社", type: "spot", location: "Kawaguchi Asama Shrine", desc: "千年古杉圍繞的神聖之地，世界文化遺產的一部分。" },
+                { time: "14:30", title: "河口湖遙拝所 (天空鳥居)", type: "spot", location: "Tenku no Torii", desc: "需穿防滑鞋走路上山。拍攝鳥居框住富士山的絕景。", highlight: "IG爆紅打卡點" },
+                { time: "15:30", title: "下午茶：HanaCafe Kikyou", type: "food", location: "HanaCafe Kikyou", desc: "桔梗信玄餅直營咖啡廳。", highlight: "必吃：信玄餅冰淇淋" },
+                { time: "16:30", title: "返回：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "享受旅館晚餐與溫泉。" }
+            ],
+            eventsB: [ // 雪天方案
+                { time: "10:30", title: "睡到自然醒", type: "spot", location: "Shuhoukaku Kogetsu", desc: "雪天行車請注意安全。" },
+                { time: "10:45", title: "午餐：手打うどん 彩花", type: "food", location: "Teuchi Udon Ayaka", desc: "熱騰騰的烏龍麵暖身。" },
+                { time: "11:45", title: "甜點時光 (二選一)", type: "food", location: "La Verdure Kimura", desc: "木村屋布丁 或 Fujisan Shokupan。" },
+                { time: "12:30", title: "音樂盒之森美術館", type: "spot", location: "Kawaguchiko Music Forest Museum", desc: "歐洲庭園風格，室內活動避雪首選。欣賞自動演奏樂器與沙畫表演。", highlight: "室內避雪首選" },
+                { time: "14:00", title: "河口淺間神社", type: "spot", location: "Kawaguchi Asama Shrine", desc: "雪中的神社更顯莊嚴肅穆。" },
+                { time: "15:00", title: "下午茶：HanaCafe Kikyou", type: "food", location: "HanaCafe Kikyou", desc: "享受甜點休息。" },
+                { time: "16:30", title: "返回：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "雪見溫泉是人生最高享受。" }
+            ]
+        },
+        {
+            day: "Day 4",
+            date: "2026-01-29",
+            title: "下吉田懷舊散策",
+            locationData: { lat: 35.4849, lon: 138.8037 }, // 下吉田
+            events: [
+                { time: "09:30", title: "Check-out & 還車", type: "transport", location: "Budget Rent a Car Kawaguchiko", desc: "加油滿油還車。" },
+                { time: "10:15", title: "Fujiyama Cookie & 買票", type: "food", location: "Fujiyama Cookie", desc: "購買富士山造型餅乾當伴手禮。搭乘 10:31 車次前往富士山站。" },
+                { time: "10:36", title: "富士山站寄放行李", type: "transport", location: "Fujisan Station", desc: "投幣式置物櫃寄放大型行李。" },
+                { time: "11:14", title: "抵達下吉田站", type: "transport", location: "Shimoyoshida Station", desc: "開始步行行程。" },
+                { time: "12:00", title: "新倉山淺間公園", type: "spot", location: "Chureito Pagoda", desc: "需爬398階梯。著名的「五重塔+富士山+櫻花(季節)」明信片視角。", highlight: "經典明信片視角" },
+                { time: "13:15", title: "小室淺間神社", type: "spot", location: "Omuro Sengen Shrine", desc: "歷史悠久的神社，可求籤運。" },
+                { time: "13:45", title: "FabCafe Fuji", type: "food", location: "FabCafe Fuji", desc: "文青咖啡廳享用輕食午餐。" },
+                { time: "14:30", title: "甜點 (二選一)", type: "food", location: "Honcho Chacha", desc: "選項：本町茶茶 (抹茶) 或 金精軒 (水信玄餅)。" },
+                { time: "14:45", title: "本町通懷舊商店街", type: "spot", location: "Shimoyoshida Honcho Street", desc: "日川時計店前是著名拍照點，請注意交通安全，不要阻礙車輛。", highlight: "昭和風街道" },
+                { time: "15:00", title: "金鳥居", type: "spot", location: "Kanadorii", desc: "富士山站附近的大型鳥居，彷彿是通往富士山的入口。" },
+                { time: "15:47", title: "富士回遊 94號", type: "transport", location: "Fujisan Station", desc: "搭乘特急返回新宿。" },
+                { time: "17:45", title: "抵達 JR 新宿", type: "transport", location: "Shinjuku Station", desc: "前往飯店。" },
+                { time: "18:15", title: "Check-in: The Knot", type: "spot", location: "The Knot Tokyo Shinjuku", desc: "搭計程車前往飯店，設計感強烈的精品旅館。" },
+                { time: "19:30", title: "晚餐：焼肉うしふじ", type: "food", location: "Yakiniku Ushifuji", desc: "高級燒肉晚餐。餐後逛唐吉訶德。", highlight: "必吃：A5和牛" }
+            ]
+        },
+        {
+            day: "Day 5",
+            date: "2026-01-30",
+            title: "最後採買 & 返程",
+            locationData: { lat: 35.6938, lon: 139.7034 },
+            events: [
+                { time: "08:45", title: "早餐/早午餐：らぁ麺や 嶋", type: "food", location: "Ramenya Shima", desc: "超人氣拉麵名店（需確認是否需早起排隊整理券）。", highlight: "東京頂級拉麵" },
+                { time: "11:00", title: "寄放行李", type: "transport", location: "Busta Shinjuku", desc: "搭計程車到新宿高速巴士總站(Busta)寄放行李，方便之後去機場。" },
+                { time: "11:30", title: "午餐：Al Dente", type: "food", location: "Al Dente Shinjuku", desc: "知名的義大利麵店。" },
+                { time: "12:30", title: "最後衝刺：高島屋 & 手創館", type: "spot", location: "Takashimaya Shinjuku", desc: "高島屋百貨與 Tokyu Hands 購買精緻生活用品與伴手禮。" },
+                { time: "14:00", title: "下午茶：Ochobohan", type: "food", location: "Ochobohan Shinjuku", desc: "Lumine Est 內的抹茶甜點套餐，完美的句點。", highlight: "抹茶愛好者" },
+                { time: "15:08", title: "成田特快 NEX", type: "transport", location: "Shinjuku Station Platform 5", desc: "前往 5、6號月台搭乘成田37號。16:31 抵達機場。", highlight: "最後的電車" },
+                { time: "19:30", title: "起飛 (CI)", type: "transport", location: "Narita Airport", desc: "22:45 抵達 TPE，接送回家。" }
+            ]
         }
+    ];
 
-        // --- Data ---
-        const itineraryData = [
-          {
-            day: 1,
-            date: "2026—01—26",
-            title: "出發 ～ 耍廢叻！",
-            themeColor: "from-green-100 to-green-50",
-            headerBg: "bg-gradient-to-b from-green-100 to-green-50",
-            accent: "text-green-600",
-            events: [
-              { time: "06:30", icon: "car", title: "UGO 送機", type: "transport" },
-              { time: "09:30", icon: "plane", title: "「 航班 CI 100 」09：30 ─ 13：30", desc: "TPE 桃園機場出發", type: "transport" },
-              { time: "13:30", icon: "mapPin", title: "抵達：成田 (NRT)", desc: "降落東京", type: "arrival" },
-              { 
-                time: "15:14", 
-                icon: "train", 
-                title: "成田特快 NEX", 
-                desc: "搭乘舒適的紅色閃電直奔新宿。班次時間「 15：14～16：41 成田32號 」or「 15：44～17：12 成田34號 」",
-                location: "機場 B1 JR 月台",
-                type: "highlight"
-              },
-              { time: "17:00", icon: "hotel", title: "Yksi Stay", desc: "新宿的質感住宿，整備休息的秘密基地。", type: "stay" },
-              { 
-                time: "18:00", 
-                icon: "utensils", 
-                title: "牛かつもと村", 
-                desc: "新宿必吃的炸牛排，外酥內嫩的口感，在石板上滋滋作響。", 
-                type: "food" 
-              },
-              { time: "18:45",
-                icon: "coffee",
-                title:"Pearl Lady CHA BAR",
-                desc: "珍珠奶茶是最佳補給品。", 
-                type: "snack" },
-              { 
-                time: "19:00", 
-                icon: "shopping", 
-                title: "新宿逛街 & 扭蛋任務", 
-                desc: "LUMINE EST → 愛迪達 → BicCamera → C-Pla → Gacha no Mori",
-                mapDetails: ["LUMINE EST", "Adidas", "BicCamera", "Gacha no Mori"],
-                type: "shopping"
-              },
-              { time: "22:30", icon: "utensils", title: "一蘭拉麵", desc: "深夜的靈魂慰藉，濃郁豚骨湯頭消除第一天的疲勞。", type: "food" }
-            ]
-          },
-          {
-            day: 2,
-            date: "2026—01—27",
-            title: "前進：富士山麓的修煉",
-            themeColor: "from-blue-100 to-blue-50",
-            headerBg: "bg-gradient-to-b from-blue-100 to-blue-50",
-            accent: "text-blue-600",
-            events: [
-              { 
-                time: "07:30", 
-                icon: "train", 
-                title: "富士回遊 3號", 
-                desc: "直達河口湖的特急列車。請務必準時抵達新宿站中央本線9、10號月台，錯過就麻煩囉！",
-                location: "JR新宿 9/10月台",
-                type: "highlight"
-              },
-              { time: "09:45", icon: "car", title: "Budget 租車", desc: "取得移動載具，開始自駕探索模式。", type: "transport" },
-              { 
-                time: "10:45", 
-                icon: "mapPin", 
-                title: "忍野八海", 
-                desc: "富士山雪水過濾後的八個清泉，水質清澈見底。彷彿使用了「凝」一般，能看見水底的每一處細節。",
-                type: "spot"
-              },
-              { time: "12:00", icon: "utensils", title: "こし路", desc: "在地人推薦的牛肉燉飯，暖胃又暖心。", type: "food" },
-              { 
-                time: "13:45", 
-                icon: "navigation", 
-                title: "Kaba 水陸巴士", 
-                desc: "衝進湖裡的瞬間超刺激！從湖面視角仰望巨大的富士山，是完全不同的震撼體驗。",
-                type: "activity"
-              },
-              { 
-                time: "14:30", 
-                icon: "camera", 
-                title: "平野之濱 & The Park", 
-                desc: "絕美拍攝點與長池親水公園散策，配上 The Park 的鬆餅，享受悠閒的午後時光。",
-                type: "spot"
-              },
-              { time: "16:30", icon: "hotel", title: "秀峰閣湖月", desc: "夢幻住宿，窗外就是逆富士。享受溫泉與懷石料理的頂級夜晚。", type: "stay" }
-            ]
-          },
-          {
-            day: 3,
-            date: "2026—01—28",
-            title: "探索：湖畔的二選一抉擇",
-            themeColor: "from-purple-100 to-purple-50",
-            headerBg: "bg-gradient-to-b from-purple-100 to-purple-50",
-            accent: "text-purple-600",
-            note: "本日依天氣狀況選擇方案",
-            events: [
-              { time: "10:30", icon: "star", title: "睡到自然醒", desc: "養精蓄銳，為了接下來的旅程。", type: "relax" },
-              { time: "10:45", icon: "utensils", title: "手打うどん 彩花", desc: "Q彈帶勁的吉田烏龍麵，在地風味十足。", type: "food" },
-              { 
-                time: "11:45", 
-                icon: "coffee", 
-                title: "甜點獵人試驗", 
-                desc: "抉擇吧！木村屋的絲滑布丁 vs Fujisan Shokupan 的富士山造型麵包。",
-                type: "choice"
-              },
-              { 
-                time: "12:15", 
-                icon: "map", 
-                title: "方案一 (晴)：纜車與神社", 
-                desc: "搭乘河口湖纜車俯瞰全景，參拜可愛的兔神社。接著前往河口淺間神社與遙拜所，捕捉神聖視角。",
-                subEvents: ["河口湖纜車", "うさぎ神社", "河口淺間神社", "天空鳥居(遙拝所)"],
-                type: "scenario_a"
-              },
-              { 
-                time: "12:30", 
-                icon: "map", 
-                title: "方案二 (雪)：音樂與藝術", 
-                desc: "若遇雪天，轉往音樂盒之森美術館，在歐式庭園中聆聽自動演奏樂器的美妙樂章。",
-                subEvents: ["音樂盒之森美術館", "河口淺間神社"],
-                type: "scenario_b"
-              },
-              { time: "15:30", icon: "coffee", title: "HanaCafe Kikyou", desc: "桔梗信玄餅的官方咖啡廳，必吃濃郁的黑糖黃豆粉甜點。", type: "snack" },
-              { time: "16:30", icon: "hotel", title: "秀峰閣湖月", desc: "再次回到溫暖的家，享受最後一晚的湖畔寧靜。", type: "stay" }
-            ]
-          },
-          {
-            day: 4,
-            date: "2026—01—29",
-            title: "回歸：吉田與新宿的穿梭",
-            themeColor: "from-orange-100 to-orange-50",
-            headerBg: "bg-gradient-to-b from-orange-100 to-orange-50",
-            accent: "text-orange-600",
-            events: [
-              { time: "09:30", icon: "hotel", title: "Check-Out & 還車", desc: "告別秀峰閣，前往 Budget 還車，準備搭乘火車。", type: "transport" },
-              { time: "10:15", icon: "shopping", title: "Fujiyama Cookie", desc: "車站旁的可愛伴手禮，將富士山的形狀帶回家。", type: "shopping" },
-              { time: "12:00", icon: "camera", title: "新倉山公園 展望台", desc: "經典中的經典！五重塔與富士山的同框合影，需爬398階梯，展現獵人的體力吧！", type: "highlight" },
-              { time: "13:15", icon: "mapPin", title: "小室淺間神社", desc: "寧靜莊嚴的神社，祈求旅途平安。", type: "spot" },
-              { time: "13:45", icon: "coffee", title: "FabCafe Fuji", desc: "結合數位製造與咖啡的空間，稍作休息。", type: "snack" },
-              { 
-                time: "14:45", 
-                icon: "camera", 
-                title: "日川時計店 & 懷舊商店街", 
-                desc: "本町通的知名攝影點，巨大的富士山聳立在復古街道盡頭，彷彿時光倒流。",
-                type: "spot"
-              },
-              { time: "15:47", icon: "train", title: "富士回遊 94號", desc: "帶著滿滿回憶，搭乘特急列車返回繁華新宿。", type: "transport" },
-              { time: "19:30", icon: "utensils", title: "焼肉うしふじ", desc: "回到東京的第一餐，用頂級燒肉慶祝這趟旅程。", type: "food" },
-              { time: "21:00", icon: "shopping", title: "唐吉訶德大採購", desc: "最後衝刺！補齊所有藥妝與零食。", type: "shopping" }
-            ]
-          },
-          {
-            day: 5,
-            date: "2026—01—30",
-            title: "終章：滿載而歸",
-            themeColor: "from-pink-100 to-pink-50",
-            headerBg: "bg-gradient-to-b from-pink-100 to-pink-50",
-            accent: "text-pink-600",
-            events: [
-              { time: "08:45", icon: "utensils", title: "らぁ麺や 嶋", desc: "極致美味的醬油拉麵，湯頭層次豐富，完美的早午餐選擇。", type: "food" },
-              { time: "11:00", icon: "car", title: "行李寄放", desc: "新宿高速巴士總站 Busta Shinjuku，解放雙手輕鬆逛。", type: "transport" },
-              { time: "12:30", icon: "shopping", title: "高島屋 & 手創館", desc: "最後的百貨巡禮，Al Dente 的義大利麵也不容錯過。", type: "shopping" },
-              { time: "14:00", icon: "coffee", title: "Ochobohan Shinjuku", desc: "在離開前，享用最後一份精緻的抹茶甜點套餐。", type: "snack" },
-              { 
-                time: "15:08", 
-                icon: "train", 
-                title: "NEX 成田37號", 
-                desc: "前往機場。JR新宿 5、6號月台。再見了，東京！",
-                location: "JR新宿 5/6月台",
-                type: "highlight"
-              },
-              { time: "23:30", icon: "car", title: "溫暖的家", desc: "平安抵達，旅程圓滿結束。", type: "arrival" }
-            ]
-          }
-        ];
+    let currentDay = 0;
+    let currentPlan = 'A'; // 'A' for Sun, 'B' for Snow (Day 3 only)
 
-        // --- Icon Definitions (SVG Strings) ---
-        const icons = {
-            plane: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"/><path d="M13 2a2 2 0 0 0-2 2v10l-6-5-3 2 9 8 9-8-3-2-6 5V4a2 2 0 0 0-2-2z"/></svg>`,
-            train: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/><circle cx="8" cy="15" r="1"/><circle cx="16" cy="15" r="1"/></svg>`,
-            car: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17h2"/><path d="M15 17h2"/></svg>`,
-            utensils: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>`,
-            camera: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
-            mapPin: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
-            coffee: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
-            hotel: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 22v-6.57"/><path d="M12 11h.01"/><path d="M12 7h.01"/><path d="M14 15.43V22"/><path d="M15 16a5 5 0 0 0-6 0"/><path d="M16 11h.01"/><path d="M16 7h.01"/><path d="M8 11h.01"/><path d="M8 7h.01"/><rect x="4" y="2" width="16" height="20" rx="2"/></svg>`,
-            shopping: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
-            star: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-            map: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 21 15 18 9 21 3 18 3 6"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="6" x2="15" y2="18"/></svg>`,
-            navigation: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`,
-            chevronRight: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`
-        };
+    function init() {
+        renderDay(0);
+        updateWeather();
+    }
 
-        // --- Render Functions ---
+    function switchDay(index) {
+        currentDay = index;
+        // 更新底部導航狀態
+        document.querySelectorAll('.nav-item').forEach((btn, i) => {
+            if(i === index) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        // 切換回內容顯示（如果從資訊頁回來）
+        document.getElementById('content-area').style.display = 'block';
+        document.querySelector('.info-section').style.display = 'none';
+        
+        renderDay(index);
+        updateWeather();
+        window.scrollTo(0, 0);
+    }
 
-        let currentDayIndex = 0;
-
-        function renderGonIcon() {
-            return `
-            <div class="w-12 h-12 rounded-full bg-green-500 border-2 border-white shadow-lg flex items-center justify-center overflow-hidden">
-                <span class="text-white font-bold text-xs">GON</span>
-            </div>`;
-        }
-
-        function renderKilluaIcon() {
-            return `
-            <div class="w-12 h-12 rounded-full bg-blue-500 border-2 border-white shadow-lg flex items-center justify-center overflow-hidden">
-                 <span class="text-white font-bold text-xs">KILLUA</span>
-            </div>`;
-        }
-
-        function renderEventCard(event, accentColor) {
-            const isHighlight = event.type === 'highlight';
-            const borderColor = isHighlight ? 'border-yellow-400' : 'border-gray-200';
-            const dotColor = isHighlight ? 'bg-yellow-400' : 'bg-gray-300';
-            const cardRing = isHighlight ? 'ring-2 ring-yellow-100' : '';
-            const iconSvg = icons[event.icon] || icons.mapPin;
-
-            let subEventsHtml = '';
-            if (event.subEvents) {
-                subEventsHtml = `<div class="mt-2 flex flex-wrap gap-1">
-                      ${event.subEvents.map(sub => 
-                        `<span class="text-xs bg-slate-50 text-slate-600 px-2 py-1 rounded-full border border-slate-100">${sub}</span>`
-                      ).join('')}
-                    </div>`;
-            }
-
-            let mapDetailsHtml = '';
-            if (event.mapDetails) {
-                 const spots = event.mapDetails.map((spot, idx) => {
-                     const arrow = idx < event.mapDetails.length - 1 ? `<span class="text-slate-300 flex items-center">${icons.chevronRight}</span>` : '';
-                     return `<span class="text-xs font-medium text-slate-600">${spot}</span>${arrow}`;
-                 }).join('');
-                 
-                 mapDetailsHtml = `
-                  <div class="mt-3 bg-slate-50 p-2 rounded-lg">
-                      <div class="text-xs text-slate-400 mb-1 uppercase tracking-wide flex items-center">
-                         <span class="mr-1">${icons.navigation}</span> 路線導引
-                      </div>
-                      <div class="flex flex-wrap gap-2 items-center">
-                         ${spots}
-                      </div>
-                  </div>`;
-            }
-
-            let locationHtml = '';
-            if (event.location) {
-                locationHtml = `
-                  <div class="flex items-center text-xs text-amber-600 mb-2 font-bold">
-                    ${icons.mapPin}
-                    <span class="ml-1">${event.location}</span>
-                  </div>`;
-            }
-
-            let descHtml = '';
-            if (event.desc) {
-                descHtml = `
-                  <p class="text-sm text-slate-500 leading-relaxed text-justify border-t border-gray-100 pt-2 mt-1">
-                    ${event.desc}
-                  </p>`;
-            }
-
-            return `
-            <div class="relative mb-6 pl-8 border-l-2 ${borderColor} last:mb-0 fade-in">
-              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white shadow-sm ${dotColor}"></div>
-              
-              <div class="bg-white rounded-xl shadow-sm p-4 ${cardRing}">
-                <div class="flex justify-between items-start mb-2">
-                  <div class="flex items-center gap-2">
-                    <span class="text-sm font-bold bg-gray-100 px-2 py-0.5 rounded text-gray-600 font-mono">
-                      ${event.time}
-                    </span>
-                    <div class="${accentColor}">
-                      ${iconSvg}
-                    </div>
-                  </div>
-                </div>
-                
-                <h3 class="text-lg font-bold text-slate-800 mb-1">${event.title}</h3>
-                ${locationHtml}
-                ${descHtml}
-                ${subEventsHtml}
-                ${mapDetailsHtml}
-              </div>
-            </div>`;
-        }
-
-        function renderApp() {
-            const dayData = itineraryData[currentDayIndex];
-
-            // 1. Update Header
-            const headerEl = document.getElementById('header-section');
-            headerEl.className = `relative p-6 pb-8 transition-colors duration-300 shrink-0 safe-top ${dayData.headerBg}`;
-            headerEl.innerHTML = `
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs font-bold tracking-widest text-slate-500 uppercase bg-white/50 px-2 py-1 rounded backdrop-blur-sm">
-                      【 2026 冬季。富士山 】
-                    </span>
-                    <span class="text-xs font-bold text-slate-500 font-mono">
-                      ${dayData.date}
-                    </span>
-                </div>
-
-                <h1 class="text-3xl font-black text-slate-800 leading-tight mb-2">
-                    Day ${dayData.day}
-                </h1>
-                <h2 class="text-xl font-bold ${dayData.accent} mb-4">
-                    ${dayData.title}
-                </h2>
-
-                <div class="absolute -bottom-6 right-6 flex -space-x-3">
-                      ${renderGonIcon()}
-                      ${renderKilluaIcon()}
-                </div>
-            `;
-
-            // 2. Update Content
-            const contentEl = document.getElementById('content-scroll');
-            let contentHtml = '';
+    function switchTab(tabName) {
+        if(tabName === 'info') {
+            document.getElementById('content-area').style.display = 'none';
+            document.querySelector('.info-section').style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[5].classList.add('active'); // info button
             
-            if (dayData.note) {
-                contentHtml += `
-                 <div class="mb-6 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-xl text-sm flex items-start gap-2">
-                    <span class="mt-0.5 flex-shrink-0 text-yellow-600">${icons.star}</span>
-                    ${dayData.note}
-                 </div>`;
-            }
+            // 隱藏頂部日期與天氣
+            document.querySelector('header').style.display = 'none';
+            document.querySelector('.weather-widget').style.display = 'none';
+        }
+    }
 
-            dayData.events.forEach(event => {
-                contentHtml += renderEventCard(event, dayData.accent);
-            });
+    function togglePlan(plan) {
+        currentPlan = plan;
+        renderDay(2); // Re-render Day 3
+    }
 
-            contentHtml += `
-                <div class="text-center py-8 text-slate-300 text-xs tracking-widest uppercase">
-                    Mission Ongoing
-                </div>`;
+    function renderDay(index) {
+        const data = itineraryData[index];
+        const container = document.getElementById('content-area');
+        
+        // 恢復 Header 顯示
+        document.querySelector('header').style.display = 'block';
+        document.querySelector('.weather-widget').style.display = 'flex';
 
-            contentEl.innerHTML = contentHtml;
-            contentEl.scrollTop = 0;
+        document.getElementById('day-title').textContent = `${data.day}: ${data.title}`;
+        document.getElementById('day-date').textContent = data.date;
 
-            // 3. Update Nav Bar
-            const navEl = document.getElementById('nav-bar');
-            navEl.innerHTML = itineraryData.map((d, idx) => {
-                const isActive = currentDayIndex === idx;
-                const activeClasses = "bg-slate-800 text-white shadow-lg scale-110 -translate-y-2";
-                const inactiveClasses = "text-slate-400 hover:bg-gray-100";
-                
-                return `
-                <button 
-                  onclick="switchDay(${idx})"
-                  class="flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all duration-200 ${isActive ? activeClasses : inactiveClasses}"
-                >
-                  <span class="text-xs font-bold font-mono">D${d.day}</span>
-                  ${isActive ? '<div class="w-1 h-1 bg-white rounded-full mt-1"></div>' : ''}
-                </button>`;
-            }).join('');
+        let html = '';
+
+        // 特殊處理 Day 3 的方案切換按鈕
+        if(data.hasPlanB) {
+            html += `
+            <div class="plan-toggle">
+                <button class="plan-btn ${currentPlan === 'A' ? 'active' : ''}" onclick="togglePlan('A')">☀️ 方案一 (晴)</button>
+                <button class="plan-btn ${currentPlan === 'B' ? 'active' : ''}" onclick="togglePlan('B')">❄️ 方案二 (雪)</button>
+            </div>`;
         }
 
-        window.switchDay = function(index) {
-            currentDayIndex = index;
-            renderApp();
-        }
+        const events = (data.hasPlanB) ? (currentPlan === 'A' ? data.eventsA : data.eventsB) : data.events;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderApp();
+        events.forEach(event => {
+            let icon = 'fa-map-marker-alt';
+            if(event.type === 'transport') icon = 'fa-train';
+            if(event.type === 'food') icon = 'fa-utensils';
+
+            const highlightHtml = event.highlight ? `<span class="tag highlight"><i class="fas fa-star"></i> ${event.highlight}</span>` : '';
+            
+            html += `
+            <div class="card ${event.type}">
+                <span class="time">${event.time}</span>
+                <div class="title">${event.title}</div>
+                <div class="tags">
+                    <span class="tag" style="background:#eee">${event.type.toUpperCase()}</span>
+                    ${highlightHtml}
+                </div>
+                <div class="guide-text">
+                    ${event.desc}
+                </div>
+                <div class="actions">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}" target="_blank" class="btn btn-nav">
+                        <i class="fas fa-location-arrow"></i> 導航
+                    </a>
+                </div>
+            </div>
+            `;
         });
 
-    </script>
+        container.innerHTML = html;
+    }
+
+    // 使用 Open-Meteo 免費 API 獲取天氣 (無需 Key)
+    async function updateWeather() {
+        const data = itineraryData[currentDay];
+        const widget = document.getElementById('weather-container');
+        widget.innerHTML = '<div><i class="fas fa-spinner fa-spin"></i> 正在載入天氣...</div>';
+
+        try {
+            // 這裡抓取的是"目前"的天氣作為示範，因為免費 API 無法準確預測 2026 年
+            // 如果要更精準，可以只顯示該地點的"平均氣溫"作為參考
+            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${data.locationData.lat}&longitude=${data.locationData.lon}&current_weather=true`);
+            const weather = await response.json();
+            
+            const temp = weather.current_weather.temperature;
+            const code = weather.current_weather.weathercode;
+            let weatherDesc = "晴時多雲";
+            let icon = "fa-sun";
+
+            // 簡單的天氣代碼轉換
+            if(code > 3) { weatherDesc = "多雲/陰"; icon = "fa-cloud"; }
+            if(code > 50) { weatherDesc = "有雨"; icon = "fa-umbrella"; }
+            if(code > 70) { weatherDesc = "有雪"; icon = "fa-snowflake"; }
+
+            widget.innerHTML = `
+                <div><i class="fas ${icon}"></i> ${weatherDesc} <span style="font-size:1.2em; font-weight:bold; margin-left:10px">${temp}°C</span></div>
+                <div style="font-size:0.8em; opacity:0.8">目前當地概況</div>
+            `;
+        } catch (e) {
+            widget.innerHTML = '無法載入天氣資訊';
+        }
+    }
+
+    // 初始化 Info 頁面結構
+    const infoHtml = `
+    <div class="info-section">
+        <h2><i class="fas fa-plane"></i> 航班資訊</h2>
+        <div class="info-card">
+            <div class="info-row"><span>去程</span> <span>CI 100 (09:30 TPE - 13:30 NRT)</span></div>
+            <div class="info-row"><span>回程</span> <span>CI (19:30 NRT - 22:45 TPE)</span></div>
+        </div>
+
+        <h2><i class="fas fa-hotel"></i> 住宿資訊</h2>
+        <div class="info-card">
+            <div class="info-row"><strong>Day 1:</strong> <span>Yksi Stay Shinjuku</span></div>
+            <div class="info-row"><strong>Day 2-3:</strong> <span>秀峰閣湖月 (河口湖)</span></div>
+            <div class="info-row"><strong>Day 4:</strong> <span>The Knot Tokyo Shinjuku</span></div>
+        </div>
+
+        <h2><i class="fas fa-phone-alt"></i> 緊急聯絡</h2>
+        <div class="info-card">
+            <div class="info-row"><span>警察局</span> <span>110</span></div>
+            <div class="info-row"><span>救護車/火警</span> <span>119</span></div>
+            <div class="info-row"><span>旅外國人急難救助</span> <span>+886-800-085-095</span></div>
+        </div>
+    </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', infoHtml);
+
+    init();
+</script>
 </body>
 </html>
