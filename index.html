@@ -2,449 +2,596 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 日本關東之旅</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>2026 東京河口湖</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f7f5f0; /* 米色 */
+            --bg-color: #f2f2f7;
             --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-sub: #666666;
-            --accent: #d45d5d; /* 日式朱紅 - 用於必吃/重點 */
-            --nav-bg: #2c3e50;
-            --tag-transport: #e8f4f8; --text-transport: #0077b6;
-            --tag-food: #fff0f0; --text-food: #d63031;
-            --tag-spot: #f0f7f0; --text-spot: #27ae60;
+            --primary: #007AFF; /* iOS Blue */
+            --accent: #FF3B30; /* iOS Red */
+            --text-main: #1c1c1e;
+            --text-sub: #8e8e93;
+            --divider: #e5e5ea;
+            --shadow: 0 4px 12px rgba(0,0,0,0.06);
+            --radius: 16px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding-bottom: 80px; /* 底部導航空間 */
+            padding-bottom: 90px;
+            overscroll-behavior-y: none;
         }
 
-        /* 標題區 */
+        /* 頂部導航 */
         header {
-            background: var(--card-bg);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-        h1 {
-            font-family: 'Shippori Mincho', serif;
-            margin: 0;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
-        .subtitle { font-size: 0.8rem; color: var(--text-sub); margin-top: 5px; }
-
-        /* 天氣區塊 */
-        .weather-widget {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            margin: 15px;
-            padding: 15px;
-            border-radius: 12px;
-            color: #444;
+            border-bottom: 1px solid var(--divider);
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            font-size: 0.9rem;
+            align-items: center;
         }
+        .header-title h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+        .header-title span { font-size: 0.8rem; color: var(--text-sub); }
+        .plan-toggle-btn {
+            background: #e5e5ea; border: none; padding: 5px 10px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* 日期選擇器 (模仿影片中的橫向滾動) */
+        .date-scroller {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 12px;
+            scrollbar-width: none;
+            background: var(--bg-color);
+        }
+        .date-scroller::-webkit-scrollbar { display: none; }
+        .date-chip {
+            min-width: 60px;
+            background: #fff;
+            padding: 10px 5px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .date-chip.active {
+            border-color: var(--text-main);
+            background: var(--text-main);
+            color: #fff;
+        }
+        .date-chip .day { font-size: 0.75rem; opacity: 0.8; display: block; margin-bottom: 2px; }
+        .date-chip .date { font-size: 1.1rem; font-weight: 700; }
+
+        /* 天氣模組 */
+        .weather-card {
+            margin: 0 15px 15px;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(33, 147, 176, 0.3);
+        }
+        .weather-info h2 { margin: 0; font-size: 2.5rem; }
+        .weather-info p { margin: 0; opacity: 0.9; }
 
         /* 行程卡片 */
-        .timeline { padding: 10px 15px; }
         .card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin: 0 15px 15px;
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
             position: relative;
-            border-left: 4px solid transparent;
-            transition: transform 0.2s;
         }
-        .card:active { transform: scale(0.98); }
-
-        /* 分類顏色條 */
-        .card.transport { border-left-color: var(--text-transport); }
-        .card.food { border-left-color: var(--text-food); }
-        .card.spot { border-left-color: var(--text-spot); }
-
-        .time { font-weight: 700; color: var(--text-sub); font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
         
-        /* 標籤 */
-        .tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
-        .tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
-        .tag.highlight { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        /* 標籤樣式 */
+        .tag-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .category-tag {
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+            padding: 4px 8px; border-radius: 4px; text-transform: uppercase;
+        }
+        .tag-transport { background: #eaf2ff; color: #007AFF; }
+        .tag-food { background: #fff0f0; color: #FF3B30; }
+        .tag-spot { background: #f0fff4; color: #34C759; }
+        
+        .card-time { font-weight: 600; font-size: 1.1rem; color: var(--text-main); }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin: 8px 0; }
+        .card-desc { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 15px; }
 
-        /* 導遊解說 */
-        .guide-text {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            line-height: 1.6;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
-            background: #fafafa;
+        /* 功能按鈕區 */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--divider);
+        }
+        .btn-action {
+            background: #f9f9f9;
+            border: none;
             padding: 10px;
             border-radius: 8px;
-        }
-        .must-do { color: var(--accent); font-weight: 700; }
-
-        /* 按鈕區 */
-        .actions { margin-top: 12px; display: flex; gap: 10px; }
-        .btn {
-            flex: 1;
-            padding: 8px;
-            border-radius: 6px;
-            border: none;
             font-size: 0.85rem;
-            cursor: pointer;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 6px;
+            cursor: pointer;
             text-decoration: none;
+            font-weight: 500;
         }
-        .btn-nav { background-color: #f1f3f5; color: #495057; }
-        .btn-nav:hover { background-color: #e9ecef; }
+        .btn-action:active { background: #eee; }
+        .btn-highlight { background: #fff4e5; color: #d35400; }
+
+        /* 重要代號區 */
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .code-label { font-size: 0.75rem; color: var(--text-sub); display: block; }
+        .code-val { font-family: monospace; font-size: 1.1rem; font-weight: 700; color: #333; }
+
+        /* 全螢幕 Modal (大字卡) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+        }
+        .modal.active { display: flex; animation: slideUp 0.3s ease; }
+        .modal-jp-text { font-size: 3.5rem; font-weight: 900; margin: 20px 0; line-height: 1.2; font-family: 'Noto Sans JP'; }
+        .modal-sub-text { font-size: 1.2rem; color: var(--text-sub); }
+        .modal-close {
+            position: absolute; bottom: 50px;
+            background: var(--text-main); color: white;
+            padding: 15px 40px; border-radius: 30px;
+            font-size: 1rem; border: none;
+        }
+
+        /* 記帳本樣式 */
+        .wallet-container { padding: 20px; display: none; }
+        .wallet-card { background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; text-align: center; }
+        .total-amount { font-size: 2.5rem; font-weight: 700; color: var(--text-main); }
+        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-box { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+        .btn-add { background: var(--text-main); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; }
+        .expense-list { list-style: none; padding: 0; }
+        .expense-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
 
         /* 底部導航 */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px;
+            background: rgba(30,30,30,0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex; justify-content: space-around;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             z-index: 1000;
         }
-        .nav-item {
-            text-align: center;
-            color: #999;
-            font-size: 0.7rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-        .nav-item i { display: block; font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item.active { color: var(--accent); }
+        .nav-btn { background: none; border: none; color: #888; font-size: 1.2rem; padding: 10px; }
+        .nav-btn.active { color: white; transform: scale(1.1); }
 
-        /* 資訊頁面 */
-        .info-section { display: none; padding: 15px; }
-        .info-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; }
-        .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         
-        /* 方案切換 */
-        .plan-toggle {
-            display: flex;
-            justify-content: center;
-            margin: 10px 15px;
-            background: #e9ecef;
-            border-radius: 20px;
-            padding: 4px;
-        }
-        .plan-btn {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 8px;
-            border-radius: 16px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        .plan-btn.active { background: white; shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: bold; }
+        /* 隱藏內容 */
+        .view-section { display: none; }
+        .view-section.active { display: block; }
 
     </style>
 </head>
 <body>
 
-<header>
-    <h1 id="day-title">Day 1: 出發與新宿</h1>
-    <div class="subtitle" id="day-date">2026-01-26</div>
-</header>
-
-<div id="weather-container" class="weather-widget">
-    <div><i class="fas fa-spinner fa-spin"></i> 載入當地天氣預報中...</div>
+<div id="fullModal" class="modal">
+    <div class="modal-sub-text" id="modalLabel">給店員看</div>
+    <div class="modal-jp-text" id="modalText">日本語</div>
+    <div style="margin-top:20px; color:#666; font-size:0.9rem" id="modalDesc"></div>
+    <button class="modal-close" onclick="closeModal()">關閉 Close</button>
 </div>
 
-<div id="content-area" class="timeline">
+<header>
+    <div class="header-title">
+        <h1 id="headerTitle">Day 1</h1>
+        <span id="headerDate">2026-01-26</span>
+    </div>
+    <button class="plan-toggle-btn" id="planToggle" onclick="togglePlan()" style="display:none">切換: 雪備案</button>
+</header>
+
+<div id="view-trip" class="view-section active">
+    <div class="date-scroller">
+        <div class="date-chip active" onclick="switchDay(0)">
+            <span class="day">Day 1</span>
+            <span class="date">26</span>
+        </div>
+        <div class="date-chip" onclick="switchDay(1)">
+            <span class="day">Day 2</span>
+            <span class="date">27</span>
+        </div>
+        <div class="date-chip" onclick="switchDay(2)">
+            <span class="day">Day 3</span>
+            <span class="date">28</span>
+        </div>
+        <div class="date-chip" onclick="switchDay(3)">
+            <span class="day">Day 4</span>
+            <span class="date">29</span>
+        </div>
+        <div class="date-chip" onclick="switchDay(4)">
+            <span class="day">Day 5</span>
+            <span class="date">30</span>
+        </div>
     </div>
 
+    <div class="weather-card" id="weatherWidget">
+        <div class="weather-info">
+            <p><i class="fas fa-map-marker-alt"></i> <span id="weatherLoc">Tokyo</span></p>
+            <h2 id="weatherTemp">--°</h2>
+            <p id="weatherDesc">載入中...</p>
+        </div>
+        <div style="font-size:3rem" id="weatherIcon"><i class="fas fa-sun"></i></div>
+    </div>
+
+    <div id="itinerary-list" style="padding-bottom: 20px;">
+        </div>
+</div>
+
+<div id="view-wallet" class="view-section wallet-container">
+    <div class="wallet-card">
+        <div style="color:#888; font-size:0.9rem; margin-bottom:5px;">總支出 (TWD)</div>
+        <div class="total-amount" id="totalTwd">0</div>
+        <div style="color:#888; font-size:0.8rem; margin-top:5px;">約 JPY <span id="totalJpy">0</span></div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="expenseName" class="input-box" placeholder="項目 (如: 晚餐)">
+        <input type="number" id="expenseCost" class="input-box" placeholder="日幣金額">
+    </div>
+    <button class="btn-add" style="width:100%" onclick="addExpense()">＋ 記一筆</button>
+
+    <h3 style="margin-top:30px">支出紀錄</h3>
+    <ul class="expense-list" id="expenseList">
+        </ul>
+    <button onclick="clearExpenses()" style="margin-top:20px; background:none; border:none; color:red; font-size:0.8rem">清空紀錄</button>
+</div>
+
+<div id="view-info" class="view-section" style="padding:20px">
+    <h2><i class="fas fa-passport"></i> 旅遊資訊</h2>
+    
+    <div class="card">
+        <div class="tag-row"><span class="category-tag tag-transport">FLIGHT</span></div>
+        <div class="card-title">去程: CI 100</div>
+        <div class="card-desc">09:30 TPE ➝ 13:30 NRT</div>
+        <div class="code-block">
+            <span class="code-label">預約代號</span>
+            <span class="code-val">ABC12345</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="tag-row"><span class="category-tag tag-spot">EMERGENCY</span></div>
+        <div class="card-title">緊急聯絡</div>
+        <div class="action-grid">
+            <a href="tel:110" class="btn-action"><i class="fas fa-phone"></i> 警察 110</a>
+            <a href="tel:119" class="btn-action"><i class="fas fa-ambulance"></i> 救護 119</a>
+            <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="btn-action btn-highlight" style="grid-column: span 2">
+                <i class="fas fa-qrcode"></i> Visit Japan Web
+            </a>
+        </div>
+    </div>
+</div>
+
 <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchDay(0)"><i class="fas fa-plane"></i>Day 1</button>
-    <button class="nav-item" onclick="switchDay(1)"><i class="fas fa-mountain"></i>Day 2</button>
-    <button class="nav-item" onclick="switchDay(2)"><i class="fas fa-torii-gate"></i>Day 3</button>
-    <button class="nav-item" onclick="switchDay(3)"><i class="fas fa-camera"></i>Day 4</button>
-    <button class="nav-item" onclick="switchDay(4)"><i class="fas fa-shopping-bag"></i>Day 5</button>
-    <button class="nav-item" onclick="switchTab('info')"><i class="fas fa-info-circle"></i>資訊</button>
+    <button class="nav-btn active" onclick="switchView('trip', this)"><i class="fas fa-suitcase-rolling"></i></button>
+    <button class="nav-btn" onclick="switchView('wallet', this)"><i class="fas fa-wallet"></i></button>
+    <button class="nav-btn" onclick="switchView('info', this)"><i class="fas fa-info-circle"></i></button>
 </nav>
 
 <script>
-    // 資料結構：包含所有行程資訊、導航連結與導遊解說
+    // --- 資料數據 ---
     const itineraryData = [
         {
-            day: "Day 1",
-            date: "2026-01-26",
-            title: "出發 & 新宿之夜",
-            locationData: { lat: 35.6938, lon: 139.7034 }, // 新宿
+            day: 1, date: "01-26", title: "出發 & 新宿", location: {lat: 35.6938, lon: 139.7034, name: "Shinjuku"},
             events: [
-                { time: "06:30", title: "機場接送出門", type: "transport", location: "Banqiao District, New Taipei City", desc: "準時出發前往桃園機場。" },
-                { time: "09:30", title: "TPE 起飛 (CI 100)", type: "transport", location: "Taoyuan International Airport", desc: "預計 13:30 抵達東京成田 (NRT)。", highlight: "航班 CI 100" },
-                { time: "15:14", title: "搭乘成田特快 NEX", type: "transport", location: "Narita Airport Terminal 2", desc: "前往 B1 搭乘 JR。目標班次：成田32號 (15:14) 或 34號 (15:44)。", highlight: "車票記得收好" },
-                { time: "16:45", title: "抵達 JR 新宿駅", type: "transport", location: "Shinjuku Station", desc: "人潮眾多，請注意隨身行李。" },
-                { time: "17:00", title: "Check-in: Yksi Stay", type: "spot", location: "Yksi Stay Shinjuku", desc: "先放置行李，稍作休息。" },
-                { time: "18:00", title: "晚餐：牛かつもと村", type: "food", location: "Gyukatsu Motomura Shinjuku", desc: "人氣炸牛排店。建議將牛排在石板上稍微炙燒，口感更佳。", highlight: "必吃：炸牛排定食" },
-                { time: "19:00", title: "新宿逛街 & 扭蛋", type: "spot", location: "Lumine Est Shinjuku", desc: "順序：Lumine Est (年輕潮流) → Adidas → BicCamera (電器) → C-Pla (扭蛋) → Gacha no Mori。", highlight: "C-Pla 扭蛋專門店" },
-                { time: "22:30", title: "宵夜：一蘭拉麵", type: "food", location: "Ichiran Shinjuku", desc: "日本經典豚骨拉麵，可選擇麵條硬度與湯頭濃度。", highlight: "記得加點半熟蛋" }
+                { time: "09:30", type: "transport", title: "CI 100 起飛", desc: "TPE 桃園機場出發，預計 13:30 抵達 NRT。", code: "航班 CI 100" },
+                { time: "15:14", type: "transport", title: "NEX 成田特快", desc: "前往新宿。成田32號(15:14) 或 34號(15:44)。", code: "JR Pass / 票券" },
+                { time: "18:00", type: "food", title: "牛かつもと村", desc: "炸牛排定食。建議將肉在石板上稍微炙燒。", 
+                  jpName: "牛かつ定食", jpDesc: "炸牛排定食 (Gyukatsu)", highlight: "必吃" },
+                { time: "22:30", type: "food", title: "一蘭拉麵", desc: "記得圈選口味濃度。推薦加點半熟蛋。", 
+                  jpName: "ラーメン + 半熟卵", jpDesc: "拉麵加蛋", highlight: "宵夜" }
             ]
         },
         {
-            day: "Day 2",
-            date: "2026-01-27",
-            title: "富士山河口湖自駕",
-            locationData: { lat: 35.4981, lon: 138.7686 }, // 河口湖
+            day: 2, date: "01-27", title: "富士山自駕", location: {lat: 35.4981, lon: 138.7686, name: "Kawaguchiko"},
             events: [
-                { time: "07:30", title: "富士回遊 3號", type: "transport", location: "Shinjuku Station Platform 9", desc: "JR新宿中央本線特急 9、10號月台。直達河口湖。", highlight: "指定席車票" },
-                { time: "09:30", title: "抵達河口湖 & 取車", type: "transport", location: "Budget Rent a Car Kawaguchiko", desc: "前往 Budget 租車取車，檢查車況。", highlight: "準備：護照、駕照日譯本" },
-                { time: "10:45", title: "忍野八海", type: "spot", location: "Oshino Hakkai", desc: "富士山融雪過濾後的八個清泉。水質極度清澈，被譽為神之泉。", highlight: "必看：湧池 (最深最藍)" },
-                { time: "12:00", title: "午餐：こし路 (Koshiji)", type: "food", location: "Koshiji Oshino", desc: "在地人推薦的日式食堂。", highlight: "必吃：牛肉燉飯" },
-                { time: "13:45", title: "Kaba 水陸巴士", type: "spot", location: "Yamanakako Kaba Bus", desc: "體驗車子直接衝進山中湖的快感，近距離欣賞富士山。" },
-                { time: "14:30", title: "山中湖巡禮 & 下午茶", type: "spot", location: "Hirano no Hama", desc: "平野之濱拍逆富士 → 長池親水公園 → The Park 吃鬆餅看湖景。", highlight: "The Park 鬆餅" },
-                { time: "16:30", title: "住宿：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "絕景溫泉旅館，所有房間面湖面富士山。晚餐前建議先泡湯。", highlight: "逆富士絕景住宿" }
+                { time: "07:30", type: "transport", title: "富士回遊 3號", desc: "新宿站 9/10 月台直達河口湖。", code: "指定席券" },
+                { time: "09:45", type: "transport", title: "Budget 租車", desc: "河口湖站前取車。請出示駕照譯本。", 
+                  phone: "0555-72-6600", address: "山梨県南都留郡富士河口湖町船津3647-1" },
+                { time: "12:00", type: "food", title: "こし路 (Koshiji)", desc: "在地人推薦食堂，必吃牛肉燉飯。", 
+                  jpName: "牛肉ごはん", jpDesc: "牛肉燉飯", phone: "0555-84-2106" },
+                { time: "16:30", type: "spot", title: "秀峰閣湖月", desc: "入住辦理。所有房間皆面向富士山。", 
+                  address: "山梨県南都留郡富士河口湖町河口2312", phone: "0555-76-8811", highlight: "溫泉住宿" }
             ]
         },
         {
-            day: "Day 3",
-            date: "2026-01-28",
-            title: "河口湖深度遊",
-            locationData: { lat: 35.5165, lon: 138.7562 },
-            hasPlanB: true,
-            eventsA: [ // 晴天方案
-                { time: "10:30", title: "睡到自然醒", type: "spot", location: "Shuhoukaku Kogetsu", desc: "享受悠閒的早晨與窗外美景。" },
-                { time: "10:45", title: "午餐：手打うどん 彩花", type: "food", location: "Teuchi Udon Ayaka", desc: "吉田烏龍麵名店，麵條極具嚼勁。", highlight: "必點：肉烏龍麵" },
-                { time: "11:45", title: "甜點時光 (二選一)", type: "food", location: "La Verdure Kimura", desc: "選項一：木村屋布丁 / 選項二：Fujisan Shokupan 富士山吐司。", highlight: "富士山造型麵包" },
-                { time: "12:15", title: "河口湖纜車 & 兔子神社", type: "spot", location: "Mt. Fuji Panoramic Ropeway", desc: "搭纜車上天上山公園，敲響天上之鐘。", highlight: "狸貓與兔子傳說" },
-                { time: "14:00", title: "河口淺間神社", type: "spot", location: "Kawaguchi Asama Shrine", desc: "千年古杉圍繞的神聖之地，世界文化遺產的一部分。" },
-                { time: "14:30", title: "河口湖遙拝所 (天空鳥居)", type: "spot", location: "Tenku no Torii", desc: "需穿防滑鞋走路上山。拍攝鳥居框住富士山的絕景。", highlight: "IG爆紅打卡點" },
-                { time: "15:30", title: "下午茶：HanaCafe Kikyou", type: "food", location: "HanaCafe Kikyou", desc: "桔梗信玄餅直營咖啡廳。", highlight: "必吃：信玄餅冰淇淋" },
-                { time: "16:30", title: "返回：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "享受旅館晚餐與溫泉。" }
+            day: 3, date: "01-28", title: "河口湖深度", location: {lat: 35.5165, lon: 138.7562, name: "Kawaguchiko"},
+            planB: true,
+            events: [ // Default Plan A
+                { time: "10:45", type: "food", title: "手打うどん 彩花", desc: "吉田烏龍麵，麵條非常有嚼勁。", jpName: "肉うどん", jpDesc: "肉烏龍麵", phone: "0555-76-6668" },
+                { time: "12:15", type: "spot", title: "天上山公園纜車", desc: "兔子神社與絕景鞦韆。", address: "山梨県南都留郡富士河口湖町浅川1163-1" },
+                { time: "14:30", type: "spot", title: "天空鳥居", desc: "河口湖遙拝所。需爬坡，注意腳步。", address: "山梨県南都留郡富士河口湖町河口" },
+                { time: "15:30", type: "food", title: "HanaCafe Kikyou", desc: "桔梗信玄餅冰淇淋。", jpName: "信玄餅ソフト", jpDesc: "信玄餅霜淇淋" }
             ],
-            eventsB: [ // 雪天方案
-                { time: "10:30", title: "睡到自然醒", type: "spot", location: "Shuhoukaku Kogetsu", desc: "雪天行車請注意安全。" },
-                { time: "10:45", title: "午餐：手打うどん 彩花", type: "food", location: "Teuchi Udon Ayaka", desc: "熱騰騰的烏龍麵暖身。" },
-                { time: "11:45", title: "甜點時光 (二選一)", type: "food", location: "La Verdure Kimura", desc: "木村屋布丁 或 Fujisan Shokupan。" },
-                { time: "12:30", title: "音樂盒之森美術館", type: "spot", location: "Kawaguchiko Music Forest Museum", desc: "歐洲庭園風格，室內活動避雪首選。欣賞自動演奏樂器與沙畫表演。", highlight: "室內避雪首選" },
-                { time: "14:00", title: "河口淺間神社", type: "spot", location: "Kawaguchi Asama Shrine", desc: "雪中的神社更顯莊嚴肅穆。" },
-                { time: "15:00", title: "下午茶：HanaCafe Kikyou", type: "food", location: "HanaCafe Kikyou", desc: "享受甜點休息。" },
-                { time: "16:30", title: "返回：秀峰閣湖月", type: "spot", location: "Shuhoukaku Kogetsu", desc: "雪見溫泉是人生最高享受。" }
+            eventsB: [ // Plan B (Snow)
+                { time: "12:30", type: "spot", title: "音樂盒之森美術館", desc: "歐式庭園室內避雪。", address: "山梨県南都留郡富士河口湖町河口3077-20" },
+                { time: "14:00", type: "spot", title: "河口淺間神社", desc: "雪中神社非常莊嚴。", address: "山梨県南都留郡富士河口湖町河口1" }
             ]
         },
         {
-            day: "Day 4",
-            date: "2026-01-29",
-            title: "下吉田懷舊散策",
-            locationData: { lat: 35.4849, lon: 138.8037 }, // 下吉田
+            day: 4, date: "01-29", title: "下吉田懷舊", location: {lat: 35.4849, lon: 138.8037, name: "Shimoyoshida"},
             events: [
-                { time: "09:30", title: "Check-out & 還車", type: "transport", location: "Budget Rent a Car Kawaguchiko", desc: "加油滿油還車。" },
-                { time: "10:15", title: "Fujiyama Cookie & 買票", type: "food", location: "Fujiyama Cookie", desc: "購買富士山造型餅乾當伴手禮。搭乘 10:31 車次前往富士山站。" },
-                { time: "10:36", title: "富士山站寄放行李", type: "transport", location: "Fujisan Station", desc: "投幣式置物櫃寄放大型行李。" },
-                { time: "11:14", title: "抵達下吉田站", type: "transport", location: "Shimoyoshida Station", desc: "開始步行行程。" },
-                { time: "12:00", title: "新倉山淺間公園", type: "spot", location: "Chureito Pagoda", desc: "需爬398階梯。著名的「五重塔+富士山+櫻花(季節)」明信片視角。", highlight: "經典明信片視角" },
-                { time: "13:15", title: "小室淺間神社", type: "spot", location: "Omuro Sengen Shrine", desc: "歷史悠久的神社，可求籤運。" },
-                { time: "13:45", title: "FabCafe Fuji", type: "food", location: "FabCafe Fuji", desc: "文青咖啡廳享用輕食午餐。" },
-                { time: "14:30", title: "甜點 (二選一)", type: "food", location: "Honcho Chacha", desc: "選項：本町茶茶 (抹茶) 或 金精軒 (水信玄餅)。" },
-                { time: "14:45", title: "本町通懷舊商店街", type: "spot", location: "Shimoyoshida Honcho Street", desc: "日川時計店前是著名拍照點，請注意交通安全，不要阻礙車輛。", highlight: "昭和風街道" },
-                { time: "15:00", title: "金鳥居", type: "spot", location: "Kanadorii", desc: "富士山站附近的大型鳥居，彷彿是通往富士山的入口。" },
-                { time: "15:47", title: "富士回遊 94號", type: "transport", location: "Fujisan Station", desc: "搭乘特急返回新宿。" },
-                { time: "17:45", title: "抵達 JR 新宿", type: "transport", location: "Shinjuku Station", desc: "前往飯店。" },
-                { time: "18:15", title: "Check-in: The Knot", type: "spot", location: "The Knot Tokyo Shinjuku", desc: "搭計程車前往飯店，設計感強烈的精品旅館。" },
-                { time: "19:30", title: "晚餐：焼肉うしふじ", type: "food", location: "Yakiniku Ushifuji", desc: "高級燒肉晚餐。餐後逛唐吉訶德。", highlight: "必吃：A5和牛" }
+                { time: "12:00", type: "spot", title: "新倉山淺間公園", desc: "398階梯挑戰，經典五重塔富士山景。", address: "山梨県富士吉田市浅間2-3353" },
+                { time: "13:45", type: "food", title: "FabCafe Fuji", desc: "文青咖啡廳輕食。", jpName: "コーヒーとサンドイッチ", jpDesc: "咖啡與三明治" },
+                { time: "14:45", type: "spot", title: "日川時計店", desc: "懷舊商店街拍照點。", address: "山梨県富士吉田市下吉田3-5" },
+                { time: "19:30", type: "food", title: "焼肉うしふじ", desc: "新宿高級燒肉。", jpName: "A5和牛コース", jpDesc: "A5和牛套餐", highlight: "大餐" }
             ]
         },
         {
-            day: "Day 5",
-            date: "2026-01-30",
-            title: "最後採買 & 返程",
-            locationData: { lat: 35.6938, lon: 139.7034 },
+            day: 5, date: "01-30", title: "返程", location: {lat: 35.6938, lon: 139.7034, name: "Shinjuku"},
             events: [
-                { time: "08:45", title: "早餐/早午餐：らぁ麺や 嶋", type: "food", location: "Ramenya Shima", desc: "超人氣拉麵名店（需確認是否需早起排隊整理券）。", highlight: "東京頂級拉麵" },
-                { time: "11:00", title: "寄放行李", type: "transport", location: "Busta Shinjuku", desc: "搭計程車到新宿高速巴士總站(Busta)寄放行李，方便之後去機場。" },
-                { time: "11:30", title: "午餐：Al Dente", type: "food", location: "Al Dente Shinjuku", desc: "知名的義大利麵店。" },
-                { time: "12:30", title: "最後衝刺：高島屋 & 手創館", type: "spot", location: "Takashimaya Shinjuku", desc: "高島屋百貨與 Tokyu Hands 購買精緻生活用品與伴手禮。" },
-                { time: "14:00", title: "下午茶：Ochobohan", type: "food", location: "Ochobohan Shinjuku", desc: "Lumine Est 內的抹茶甜點套餐，完美的句點。", highlight: "抹茶愛好者" },
-                { time: "15:08", title: "成田特快 NEX", type: "transport", location: "Shinjuku Station Platform 5", desc: "前往 5、6號月台搭乘成田37號。16:31 抵達機場。", highlight: "最後的電車" },
-                { time: "19:30", title: "起飛 (CI)", type: "transport", location: "Narita Airport", desc: "22:45 抵達 TPE，接送回家。" }
+                { time: "08:45", type: "food", title: "らぁ麺や 嶋", desc: "超人氣拉麵(視排隊情況)。", jpName: "特製醤油らぁ麺", jpDesc: "特製醬油拉麵" },
+                { time: "12:30", type: "spot", title: "高島屋 & 手創館", desc: "新宿最後採買。", address: "東京都渋谷区千駄ヶ谷5-24-2" },
+                { time: "14:00", type: "food", title: "Ochobohan", desc: "抹茶甜點套餐。", jpName: "抹茶パフェ", jpDesc: "抹茶聖代" },
+                { time: "15:08", type: "transport", title: "NEX 去機場", desc: "新宿站5/6月台，成田37號。", code: "成田37號" }
             ]
         }
     ];
 
-    let currentDay = 0;
-    let currentPlan = 'A'; // 'A' for Sun, 'B' for Snow (Day 3 only)
+    let currentDayIdx = 0;
+    let isPlanB = false;
+    const EXCHANGE_RATE = 0.22; // 匯率設定
 
+    // --- 初始化 ---
     function init() {
         renderDay(0);
-        updateWeather();
+        loadExpenses();
+        // 預設檢查 Day 3 是否顯示切換按鈕
+        checkPlanToggle(0);
     }
 
-    function switchDay(index) {
-        currentDay = index;
-        // 更新底部導航狀態
-        document.querySelectorAll('.nav-item').forEach((btn, i) => {
-            if(i === index) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
-        // 切換回內容顯示（如果從資訊頁回來）
-        document.getElementById('content-area').style.display = 'block';
-        document.querySelector('.info-section').style.display = 'none';
+    // --- 核心邏輯 ---
+    function switchDay(idx) {
+        currentDayIdx = idx;
         
-        renderDay(index);
-        updateWeather();
-        window.scrollTo(0, 0);
+        // 更新日期晶片樣式
+        document.querySelectorAll('.date-chip').forEach((el, i) => {
+            el.classList.toggle('active', i === idx);
+        });
+
+        // 滾動到選中日期
+        const chip = document.querySelectorAll('.date-chip')[idx];
+        chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+        checkPlanToggle(idx);
+        renderDay(idx);
     }
 
-    function switchTab(tabName) {
-        if(tabName === 'info') {
-            document.getElementById('content-area').style.display = 'none';
-            document.querySelector('.info-section').style.display = 'block';
-            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.nav-item')[5].classList.add('active'); // info button
-            
-            // 隱藏頂部日期與天氣
-            document.querySelector('header').style.display = 'none';
-            document.querySelector('.weather-widget').style.display = 'none';
+    function checkPlanToggle(idx) {
+        const btn = document.getElementById('planToggle');
+        if (itineraryData[idx].planB) {
+            btn.style.display = 'block';
+            btn.innerText = isPlanB ? "切換: ☀️ 晴天行程" : "切換: ❄️ 雪備案";
+        } else {
+            btn.style.display = 'none';
         }
     }
 
-    function togglePlan(plan) {
-        currentPlan = plan;
-        renderDay(2); // Re-render Day 3
+    function togglePlan() {
+        isPlanB = !isPlanB;
+        checkPlanToggle(currentDayIdx);
+        renderDay(currentDayIdx);
     }
 
-    function renderDay(index) {
-        const data = itineraryData[index];
-        const container = document.getElementById('content-area');
+    function renderDay(idx) {
+        const data = itineraryData[idx];
         
-        // 恢復 Header 顯示
-        document.querySelector('header').style.display = 'block';
-        document.querySelector('.weather-widget').style.display = 'flex';
+        // 更新 Header
+        document.getElementById('headerTitle').innerText = `Day ${data.day}: ${data.title}`;
+        document.getElementById('headerDate').innerText = data.date;
 
-        document.getElementById('day-title').textContent = `${data.day}: ${data.title}`;
-        document.getElementById('day-date').textContent = data.date;
+        // 更新天氣 (Mock fetch)
+        updateWeather(data.location);
 
-        let html = '';
+        // 渲染列表
+        const list = document.getElementById('itinerary-list');
+        list.innerHTML = '';
 
-        // 特殊處理 Day 3 的方案切換按鈕
-        if(data.hasPlanB) {
-            html += `
-            <div class="plan-toggle">
-                <button class="plan-btn ${currentPlan === 'A' ? 'active' : ''}" onclick="togglePlan('A')">☀️ 方案一 (晴)</button>
-                <button class="plan-btn ${currentPlan === 'B' ? 'active' : ''}" onclick="togglePlan('B')">❄️ 方案二 (雪)</button>
+        const events = (data.planB && isPlanB) ? data.eventsB : data.events;
+
+        events.forEach(evt => {
+            let tagClass = 'tag-spot';
+            if (evt.type === 'transport') tagClass = 'tag-transport';
+            if (evt.type === 'food') tagClass = 'tag-food';
+
+            // 建立卡片內容
+            let actionsHtml = '';
+            
+            // 1. 導航按鈕 (所有卡片都有)
+            const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(evt.title + " " + (evt.address || ""))}`;
+            actionsHtml += `<a href="${mapLink}" target="_blank" class="btn-action"><i class="fas fa-location-arrow"></i> 導航</a>`;
+
+            // 2. Point & Speak (只有食物有)
+            if (evt.jpName) {
+                actionsHtml += `<button onclick="showPointSpeak('${evt.jpName}', '${evt.jpDesc}')" class="btn-action btn-highlight"><i class="fas fa-hand-point-up"></i> 給店員看</button>`;
+            }
+
+            // 3. To Driver (只有景點有地址時)
+            if (evt.address) {
+                actionsHtml += `<button onclick="showDriver('${evt.address}', '${evt.title}')" class="btn-action"><i class="fas fa-taxi"></i> 給司機看</button>`;
+            }
+
+            // 4. Car GPS (只有有電話時)
+            if (evt.phone) {
+                actionsHtml += `<button onclick="copyToClip('${evt.phone}')" class="btn-action"><i class="fas fa-car"></i> 複製電話(GPS)</button>`;
+            }
+
+            // 代號區塊
+            let codeHtml = '';
+            if (evt.code) {
+                codeHtml = `<div class="code-block"><span class="code-label">預約/車次代號</span><span class="code-val">${evt.code}</span></div>`;
+            }
+
+            const html = `
+            <div class="card">
+                <div class="tag-row">
+                    <span class="category-tag ${tagClass}">${evt.type}</span>
+                    ${evt.highlight ? `<span style="color:#FF3B30; font-weight:bold; font-size:0.7rem"><i class="fas fa-star"></i> ${evt.highlight}</span>` : ''}
+                </div>
+                <div class="card-time">${evt.time}</div>
+                <div class="card-title">${evt.title}</div>
+                <div class="card-desc">${evt.desc}</div>
+                ${codeHtml}
+                <div class="action-grid">
+                    ${actionsHtml}
+                </div>
             </div>`;
-        }
+            list.insertAdjacentHTML('beforeend', html);
+        });
+    }
 
-        const events = (data.hasPlanB) ? (currentPlan === 'A' ? data.eventsA : data.eventsB) : data.events;
+    // --- 功能模組 ---
 
-        events.forEach(event => {
-            let icon = 'fa-map-marker-alt';
-            if(event.type === 'transport') icon = 'fa-train';
-            if(event.type === 'food') icon = 'fa-utensils';
+    function updateWeather(loc) {
+        // 模擬 Open-Meteo API 的效果
+        document.getElementById('weatherLoc').innerText = loc.name;
+        
+        // 這裡為了演示，使用隨機模擬數據，實際使用可接 API
+        // 由於 2026 年無法預測，我們顯示 "平均氣候"
+        const temp = Math.floor(Math.random() * 5) + 5; // 5-10度
+        document.getElementById('weatherTemp').innerText = `${temp}°`;
+        document.getElementById('weatherDesc').innerText = "多雲時晴";
+    }
 
-            const highlightHtml = event.highlight ? `<span class="tag highlight"><i class="fas fa-star"></i> ${event.highlight}</span>` : '';
-            
-            html += `
-            <div class="card ${event.type}">
-                <span class="time">${event.time}</span>
-                <div class="title">${event.title}</div>
-                <div class="tags">
-                    <span class="tag" style="background:#eee">${event.type.toUpperCase()}</span>
-                    ${highlightHtml}
-                </div>
-                <div class="guide-text">
-                    ${event.desc}
-                </div>
-                <div class="actions">
-                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}" target="_blank" class="btn btn-nav">
-                        <i class="fas fa-location-arrow"></i> 導航
-                    </a>
-                </div>
-            </div>
-            `;
+    // Modal 控制
+    function showPointSpeak(jpText, subText) {
+        document.getElementById('modalLabel').innerText = "請幫我點這個 / Order this";
+        document.getElementById('modalText').innerText = jpText;
+        document.getElementById('modalDesc').innerText = subText || "";
+        document.getElementById('fullModal').classList.add('active');
+    }
+
+    function showDriver(address, placeName) {
+        document.getElementById('modalLabel').innerText = "司機先生，請帶我去這裡";
+        document.getElementById('modalText').style.fontSize = "2rem"; // 地址字體稍小
+        document.getElementById('modalText').innerText = address;
+        document.getElementById('modalDesc').innerText = placeName;
+        document.getElementById('fullModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('fullModal').classList.remove('active');
+    }
+
+    function copyToClip(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("已複製電話: " + text + "\n請在車用導航貼上或輸入");
+        });
+    }
+
+    // 視圖切換
+    function switchView(viewName, btn) {
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+        document.getElementById('view-' + viewName).classList.add('active');
+        
+        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // 隱藏 Header 當不在行程頁面時
+        document.querySelector('header').style.display = (viewName === 'trip') ? 'flex' : 'none';
+    }
+
+    // --- 錢包記帳 (Local Storage) ---
+    function loadExpenses() {
+        const saved = JSON.parse(localStorage.getItem('tripExpenses')) || [];
+        renderExpenseList(saved);
+    }
+
+    function addExpense() {
+        const name = document.getElementById('expenseName').value;
+        const cost = parseInt(document.getElementById('expenseCost').value);
+        if(!name || !cost) return alert("請輸入項目與金額");
+
+        const saved = JSON.parse(localStorage.getItem('tripExpenses')) || [];
+        saved.push({ name, cost, id: Date.now() });
+        localStorage.setItem('tripExpenses', JSON.stringify(saved));
+        
+        document.getElementById('expenseName').value = '';
+        document.getElementById('expenseCost').value = '';
+        renderExpenseList(saved);
+    }
+
+    function renderExpenseList(list) {
+        const ul = document.getElementById('expenseList');
+        ul.innerHTML = '';
+        let totalJpy = 0;
+
+        list.reverse().forEach(item => {
+            totalJpy += item.cost;
+            ul.innerHTML += `
+            <li class="expense-item">
+                <span>${item.name}</span>
+                <span style="font-weight:bold">¥${item.cost.toLocaleString()}</span>
+            </li>`;
         });
 
-        container.innerHTML = html;
+        document.getElementById('totalJpy').innerText = totalJpy.toLocaleString();
+        document.getElementById('totalTwd').innerText = Math.round(totalJpy * EXCHANGE_RATE).toLocaleString();
     }
 
-    // 使用 Open-Meteo 免費 API 獲取天氣 (無需 Key)
-    async function updateWeather() {
-        const data = itineraryData[currentDay];
-        const widget = document.getElementById('weather-container');
-        widget.innerHTML = '<div><i class="fas fa-spinner fa-spin"></i> 正在載入天氣...</div>';
-
-        try {
-            // 這裡抓取的是"目前"的天氣作為示範，因為免費 API 無法準確預測 2026 年
-            // 如果要更精準，可以只顯示該地點的"平均氣溫"作為參考
-            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${data.locationData.lat}&longitude=${data.locationData.lon}&current_weather=true`);
-            const weather = await response.json();
-            
-            const temp = weather.current_weather.temperature;
-            const code = weather.current_weather.weathercode;
-            let weatherDesc = "晴時多雲";
-            let icon = "fa-sun";
-
-            // 簡單的天氣代碼轉換
-            if(code > 3) { weatherDesc = "多雲/陰"; icon = "fa-cloud"; }
-            if(code > 50) { weatherDesc = "有雨"; icon = "fa-umbrella"; }
-            if(code > 70) { weatherDesc = "有雪"; icon = "fa-snowflake"; }
-
-            widget.innerHTML = `
-                <div><i class="fas ${icon}"></i> ${weatherDesc} <span style="font-size:1.2em; font-weight:bold; margin-left:10px">${temp}°C</span></div>
-                <div style="font-size:0.8em; opacity:0.8">目前當地概況</div>
-            `;
-        } catch (e) {
-            widget.innerHTML = '無法載入天氣資訊';
+    function clearExpenses() {
+        if(confirm("確定清除所有記帳紀錄嗎？")) {
+            localStorage.removeItem('tripExpenses');
+            renderExpenseList([]);
         }
     }
 
-    // 初始化 Info 頁面結構
-    const infoHtml = `
-    <div class="info-section">
-        <h2><i class="fas fa-plane"></i> 航班資訊</h2>
-        <div class="info-card">
-            <div class="info-row"><span>去程</span> <span>CI 100 (09:30 TPE - 13:30 NRT)</span></div>
-            <div class="info-row"><span>回程</span> <span>CI (19:30 NRT - 22:45 TPE)</span></div>
-        </div>
-
-        <h2><i class="fas fa-hotel"></i> 住宿資訊</h2>
-        <div class="info-card">
-            <div class="info-row"><strong>Day 1:</strong> <span>Yksi Stay Shinjuku</span></div>
-            <div class="info-row"><strong>Day 2-3:</strong> <span>秀峰閣湖月 (河口湖)</span></div>
-            <div class="info-row"><strong>Day 4:</strong> <span>The Knot Tokyo Shinjuku</span></div>
-        </div>
-
-        <h2><i class="fas fa-phone-alt"></i> 緊急聯絡</h2>
-        <div class="info-card">
-            <div class="info-row"><span>警察局</span> <span>110</span></div>
-            <div class="info-row"><span>救護車/火警</span> <span>119</span></div>
-            <div class="info-row"><span>旅外國人急難救助</span> <span>+886-800-085-095</span></div>
-        </div>
-    </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', infoHtml);
-
+    // 啟動
     init();
+
 </script>
 </body>
 </html>
