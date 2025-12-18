@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>我的第一個 PWA</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="測試PWA">
+
+</head>
+<body>
+
+<h1>🎉 成功了！</h1>
+<p>如果你看到這行字，代表 GitHub Pages 一定能成功。</p>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+
+</body>
+</html>
