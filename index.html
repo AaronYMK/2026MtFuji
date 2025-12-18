@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>富士山獵人旅遊手冊</title>
+    <title>2026 冬季。富士山</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="富士山獵人">
+    <meta name="apple-mobile-web-app-title" content="MtFuji">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -79,36 +79,40 @@
           {
             day: 1,
             date: "2026—01—26",
-            title: "啟程：東京登陸作戰",
+            title: "出發 ～ 耍廢叻！",
             themeColor: "from-green-100 to-green-50",
             headerBg: "bg-gradient-to-b from-green-100 to-green-50",
             accent: "text-green-600",
             events: [
-              { time: "06:30", icon: "car", title: "機場接送出門", type: "transport" },
-              { time: "09:30", icon: "plane", title: "航班 CI 100", desc: "TPE 桃園機場出發，展開獵人冒險。", type: "transport" },
-              { time: "13:30", icon: "mapPin", title: "抵達成田 (NRT)", desc: "降落東京，準備切換鐵路模式。", type: "arrival" },
+              { time: "06:30", icon: "car", title: "UGO 送機", type: "transport" },
+              { time: "09:30", icon: "plane", title: "「 航班 CI 100 」09：30 ─ 13：30", desc: "TPE 桃園機場出發", type: "transport" },
+              { time: "13:30", icon: "mapPin", title: "抵達：成田 (NRT)", desc: "降落東京", type: "arrival" },
               { 
                 time: "15:14", 
                 icon: "train", 
                 title: "成田特快 NEX", 
-                desc: "搭乘舒適的紅色閃電直奔新宿。請鎖定成田32號或34號班次，享受沿途的日本鄉村風景。",
-                location: "機場 B1 JR月台",
+                desc: "搭乘舒適的紅色閃電直奔新宿。班次時間「 15：14～16：41 成田32號 」or「 15：44～17：12 成田34號 」",
+                location: "機場 B1 JR 月台",
                 type: "highlight"
               },
-              { time: "17:00", icon: "hotel", title: "Yksi Stay", desc: "新宿的質感住宿，放下裝備，整備休息的秘密基地。", type: "stay" },
+              { time: "17:00", icon: "hotel", title: "Yksi Stay", desc: "新宿的質感住宿，整備休息的秘密基地。", type: "stay" },
               { 
                 time: "18:00", 
                 icon: "utensils", 
                 title: "牛かつもと村", 
-                desc: "新宿必吃的炸牛排，外酥內嫩的口感，在石板上滋滋作響，是補充念能力的最佳補給品。", 
+                desc: "新宿必吃的炸牛排，外酥內嫩的口感，在石板上滋滋作響。", 
                 type: "food" 
               },
-              { time: "18:45", icon: "coffee", title: "Pearl Lady CHA BAR", type: "snack" },
+              { time: "18:45",
+                icon: "coffee",
+                title:"Pearl Lady CHA BAR",
+                desc: "珍珠奶茶是最佳補給品。", 
+                type: "snack" },
               { 
                 time: "19:00", 
                 icon: "shopping", 
                 title: "新宿逛街 & 扭蛋任務", 
-                desc: "LUMINE EST → 愛迪達 → BicCamera → C-Pla → Gacha no Mori。鎖定目標，全神貫注！",
+                desc: "LUMINE EST → 愛迪達 → BicCamera → C-Pla → Gacha no Mori",
                 mapDetails: ["LUMINE EST", "Adidas", "BicCamera", "Gacha no Mori"],
                 type: "shopping"
               },
