@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>2026 東京河口湖</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -20,8 +20,8 @@
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-light: #64748b;
-            --primary-blue: #0ea5e9; /* Sky Blue 500 */
-            --light-blue: #e0f2fe;    /* Sky Blue 100 */
+            --primary-blue: #0ea5e9;
+            --light-blue: #e0f2fe;
             --highlight-blue: #38bdf8;
             --accent-orange: #f97316;
             --line-color: #e2e8f0;
@@ -41,7 +41,7 @@
             padding-bottom: 100px;
         }
 
-        /* Modal (Point & Speak / Driver) */
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; z-index: 2000; display: none;
@@ -57,8 +57,7 @@
         .modal-content-box { width: 100%; }
         .modal-jp {
             font-family: var(--font-serif); font-size: 3rem; font-weight: 800;
-            line-height: 1.3; margin-bottom: 15px; color: #000;
-            word-break: keep-all;
+            line-height: 1.3; margin-bottom: 15px; color: #000; word-break: keep-all;
         }
         .modal-sub { font-size: 1.2rem; color: #94a3b8; margin-bottom: 50px; }
         .modal-close {
@@ -67,7 +66,7 @@
             border-radius: 50px; font-size: 1rem; cursor: pointer;
         }
 
-        /* 頂部 Header */
+        /* --- Header --- */
         header {
             background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(10px);
             padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center;
@@ -82,60 +81,94 @@
             border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px;
         }
 
-        /* 日期滾動條 (置頂) */
+        /* --- 日期滾動條 (新版樣式) --- */
         .date-scroller {
-            display: flex; overflow-x: auto; padding: 10px 20px 20px 20px; /* 底部padding加大，留位給圓點 */
-            gap: 28px;
+            display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px;
             scrollbar-width: none; background: rgba(248, 250, 252, 0.95);
             border-bottom: 1px solid var(--line-color);
         }
         .date-scroller::-webkit-scrollbar { display: none; }
-        
         .date-item {
             display: flex; flex-direction: column; align-items: center; min-width: 45px;
             color: #94a3b8; cursor: pointer; transition: all 0.3s;
-            position: relative; /* 為了定位圓點 */
+            position: relative;
+            padding-bottom: 15px; /* 留空間給圓點 */
         }
+        .date-item.active { color: var(--text-main); } /* 選中日期文字變深色 */
         
-        /* 選中狀態：字體變色 + 放大 */
-        .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
-        
-        /* 選中狀態：下方新增小圓點 */
-        .date-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -10px; /* 控制圓點與日期的距離 */
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--primary-blue); /* 天空藍 */
-            box-shadow: 0 0 4px rgba(14, 165, 233, 0.4); /* 增加一點光暈質感 */
-        }
-
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        .date-item.active .d-date { font-weight: 700; }
         
-        /* Hero */
-        .hero-section { padding: 20px 20px 10px; }
+        /* 新增：日期下方的天空藍圓點 */
+        .date-item::after {
+            content: '';
+            position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            opacity: 0; /* 預設隱藏 */
+            transition: opacity 0.3s ease;
+        }
+        .date-item.active::after {
+            opacity: 1; /* 選中時顯示 */
+        }
+
+        /* --- Hero Section (左側文字 + 右側大圖) --- */
+        .hero-section {
+            display: flex; /* 改為 Flex 佈局 */
+            align-items: center;
+            padding: 25px 20px 15px;
+            gap: 15px; /* 文字與圖片的間距 */
+        }
+        
+        /* 左側直排文字 */
+        .day-vertical {
+            writing-mode: vertical-rl;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.3em;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+        }
+
+        /* 右側圖片卡片 (放大) */
         .hero-card {
-            /* 修改處：高度變為原來的2倍 (160px -> 320px) */
-            height: 320px; 
-            border-radius: var(--radius); overflow: hidden; position: relative;
-            background-size: cover; background-position: center;
-            display: flex; align-items: flex-end; box-shadow: var(--shadow);
+            flex: 1; /* 佔滿剩餘寬度 */
+            height: 220px; /* 高度增加 */
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); /* 加強陰影增加立體感 */
         }
         .hero-overlay {
-            width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            width: 100%; padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
             color: white;
         }
-        .hero-badge {
-            background: rgba(255,255,255,0.25); backdrop-filter: blur(4px);
-            padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; display: inline-block; margin-bottom: 5px;
+        
+        /* 圖片內的標籤列 */
+        .hero-meta-row {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
         }
-        .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; }
+        .hero-badge {
+            border: 1px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; 
+            letter-spacing: 1px;
+        }
+        .hero-city {
+            font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;
+            color: rgba(255,255,255,0.9);
+        }
 
-        /* 天氣與住宿區塊 */
+        .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
+
+        /* --- 天氣與住宿 --- */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: var(--text-main); }
@@ -148,16 +181,14 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); }
 
-        /* 住宿資訊 (還原圖片: 放在天氣下方) */
         .hotel-bar {
             margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line-color);
             display: flex; align-items: center;
         }
-        .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; } /* 微粉色點綴 */
+        .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; }
         .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
         .hotel-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text-main); font-weight: 600; }
 
-        /* 分支切換 (Day 3) */
         .branch-toggle {
             margin: 10px 20px 20px; background: #f1f5f9; padding: 4px; border-radius: 10px; display: flex;
         }
@@ -167,19 +198,16 @@
         }
         .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* --- Timeline 核心樣式 (還原圖片) --- */
+        /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
-        
         .timeline-row { display: flex; position: relative; padding-bottom: 30px; }
         
-        /* 左側時間 */
         .t-time-col { 
             width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
             font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600;
             padding-top: 2px;
         }
         
-        /* 中間線條 */
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { width: 2px; background: var(--line-color); height: 100%; position: absolute; top: 10px; z-index: 1; }
         .t-dot { 
@@ -187,7 +215,6 @@
             margin-top: 8px; box-shadow: 0 0 0 3px var(--bg-color); transition: 0.3s;
         }
         
-        /* 亮燈狀態 (Current Active) */
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { 
             background: var(--primary-blue); 
@@ -196,7 +223,6 @@
         }
         .timeline-row.active .t-line { background: linear-gradient(to bottom, var(--primary-blue) 0%, var(--line-color) 100%); }
 
-        /* 右側卡片 */
         .t-card-col { flex: 1; padding-left: 5px; }
         .t-card {
             background: var(--card-bg); border-radius: var(--radius); padding: 18px;
@@ -212,7 +238,6 @@
             color: #64748b; text-transform: uppercase; margin-bottom: 5px; display: inline-block;
         }
         
-        /* 智能導遊 */
         .smart-guide {
             margin-top: 12px; background: #f8fafc; border-radius: 8px; padding: 12px;
             border: 1px dashed #cbd5e1;
@@ -222,7 +247,6 @@
         .must-eat-tags { margin-top: 8px; display: flex; gap: 5px; flex-wrap: wrap; }
         .me-tag { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
 
-        /* 按鈕區 */
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
         .action-btn {
             background: #f1f5f9; border: none; padding: 10px; border-radius: 8px;
@@ -232,7 +256,7 @@
         }
         .action-btn.primary { background: var(--light-blue); color: var(--primary-blue); font-weight: 500; }
 
-        /* 錢包頁 */
+        /* 錢包 & 資訊 & 底部導航 */
         .wallet-container { padding: 20px; }
         .balance-card { 
             background: white; border-radius: 16px; padding: 25px; text-align: center;
@@ -245,7 +269,6 @@
         }
         .input-std:focus { border-color: var(--primary-blue); }
         .btn-add { background: var(--text-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 1.2rem; }
-        
         .expense-list { margin-top: 20px; }
         .exp-item { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -254,11 +277,9 @@
         .exp-date { font-size: 0.75rem; color: var(--primary-blue); background: var(--light-blue); padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-family: var(--font-num); }
         .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1rem; padding: 5px; }
 
-        /* 資訊頁 */
         .info-block { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; }
         .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
 
-        /* 底部導航 */
         .bottom-nav {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 400px;
@@ -271,11 +292,9 @@
         .nav-icon { font-size: 1.3rem; color: #94a3b8; padding: 10px; cursor: pointer; transition: 0.3s; }
         .nav-icon.active { color: var(--primary-blue); transform: translateY(-2px); }
 
-        /* Views */
         .view-section { display: none; animation: fadeIn 0.4s ease; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-
     </style>
 </head>
 <body>
@@ -299,9 +318,14 @@
     <div class="date-scroller" id="dateScroller"></div>
 
     <div class="hero-section">
+        <div class="day-vertical" id="dayVertical">第一天</div>
+        
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <span class="hero-badge" id="heroDay">DAY 1</span>
+                <div class="hero-meta-row">
+                    <span class="hero-badge" id="heroDay">DAY 1</span>
+                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
+                </div>
                 <h2 class="hero-title" id="heroTitle">抵達。新宿</h2>
             </div>
         </div>
@@ -398,16 +422,8 @@
                 <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">RC-2026-888</div>
             </div>
             <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 1 (1/26)：Yksi Stay</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023F3EFB</div>
-            </div>
-            <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 2 (1/27)：Shuhokaku Kogetsu</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">6166895693</div>
-            </div>
-            <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 4 (1/29)：The Knot</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">1675787208</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Yksi Stay</div>
+                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023</div>
             </div>
         </div>
 
@@ -428,15 +444,13 @@
 </nav>
 
 <script>
-    // --- Config & State ---
     const RATE = 0.22;
     let currentBranch = 'A'; 
     let currentDayIdx = 0;
 
-    // --- Data ---
     const itineraryData = [
         {
-            day: 1, date: "26", week: "MON", title: "抵達。新宿", 
+            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "抵達。新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
@@ -453,7 +467,7 @@
             ]
         },
         {
-            day: 2, date: "27", week: "TUE", title: "忍野八海 & 山中湖", 
+            day: 2, dayCN: "第二天", date: "27", week: "TUE", title: "忍野八海 & 山中湖", heroCity: "忍野村",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
             events: [
@@ -467,7 +481,7 @@
             ]
         },
         {
-            day: 3, date: "28", week: "WED", title: "河口湖", 
+            day: 3, dayCN: "第三天", date: "28", week: "WED", title: "河口湖", heroCity: "河口湖",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
             hasBranch: true,
@@ -490,7 +504,7 @@
             ]
         },
         {
-            day: 4, date: "29", week: "THU", title: "下吉田 & 新宿", 
+            day: 4, dayCN: "第四天", date: "29", week: "THU", title: "下吉田 & 新宿", heroCity: "吉田市",
             loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
             bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
@@ -507,7 +521,7 @@
             ]
         },
         {
-            day: 5, date: "30", week: "FRI", title: "新宿。回家", 
+            day: 5, dayCN: "第五天", date: "30", week: "FRI", title: "新宿。回家", heroCity: "東京都",
             loc: "Shinjuku", hotel: "溫暖的家",
             bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
             events: [
@@ -518,19 +532,14 @@
         }
     ];
 
-    // --- Init ---
     function init() {
         renderDateScroller();
         switchDay(0);
-        
-        // 設定預設日期為今天
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('expDate').value = today;
-        
         loadExpenses();
     }
 
-    // --- Logic ---
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
         el.innerHTML = itineraryData.map((d, i) => `
@@ -545,23 +554,20 @@
         currentDayIdx = idx;
         const data = itineraryData[idx];
         
-        // Update Dates
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
 
-        // Update Hero
+        // Update Hero Section
         document.getElementById('heroCard').style.backgroundImage = `url('${data.bg}')`;
+        document.getElementById('dayVertical').innerText = data.dayCN; // 直排文字
         document.getElementById('heroDay').innerText = `DAY ${data.day}`;
+        document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`; // 城市
         document.getElementById('heroTitle').innerText = data.title;
         document.getElementById('wLoc').innerText = data.loc;
         document.getElementById('hotelName').innerText = data.hotel;
 
-        // Toggle Branch
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
 
-        // Render Timeline
         renderTimeline(data);
-        
-        // Mock Weather
         renderWeather();
     }
 
@@ -577,12 +583,9 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
 
-        // 模擬現在時間以觸發 Highlight (假設現在是 11:30)
-        const mockNow = "11:30"; // 實際使用可改為 new Date() 邏輯
+        const mockNow = "11:30"; 
         
         container.innerHTML = events.map(evt => {
-            // 判斷是否為「現在進行式」的簡單邏輯 (範例)
-            // 這裡為了演示效果，假設第二天10:45的行程正在進行
             const isActive = (data.day === 2 && evt.time === "10:45") ? 'active' : '';
 
             let btns = '';
@@ -590,7 +593,6 @@
             if(evt.pointSpeak) btns += `<button onclick="openModal('POINT & SPEAK', '${evt.pointSpeak.jp}', '${evt.pointSpeak.sub}')" class="action-btn primary"><i class="fas fa-hand-point-up"></i> 給店員看</button>`;
             if(evt.addressJP) btns += `<button onclick="openModal('TO DRIVER', '${evt.addressJP}', '${evt.title}')" class="action-btn"><i class="fas fa-taxi"></i> 給司機看</button>`;
 
-            // 智能導遊區塊
             let guideHTML = '';
             if(evt.guide) {
                 const tags = evt.mustEat ? evt.mustEat.map(f => `<span class="me-tag">#${f}</span>`).join('') : '';
@@ -637,7 +639,6 @@
         el.innerHTML = html;
     }
 
-    // --- Modal ---
     function openModal(tag, main, sub) {
         document.getElementById('modalTag').innerText = tag;
         document.getElementById('modalMain').innerText = main;
@@ -648,7 +649,6 @@
         document.getElementById('modalOverlay').classList.remove('active');
     }
 
-    // --- Wallet ---
     function calcRate(src) {
         const jpy = document.getElementById('calcJpy');
         const twd = document.getElementById('calcTwd');
@@ -710,7 +710,6 @@
         document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
     }
 
-    // --- View Switch ---
     function switchView(view, btn) {
         document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
         document.getElementById('view-' + view).classList.add('active');
