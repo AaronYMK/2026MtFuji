@@ -84,16 +84,34 @@
 
         /* 日期滾動條 (置頂) */
         .date-scroller {
-            display: flex; overflow-x: auto; padding: 10px 20px 15px 20px; gap: 28px;
+            display: flex; overflow-x: auto; padding: 10px 20px 20px 20px; /* 底部padding加大，留位給圓點 */
+            gap: 28px;
             scrollbar-width: none; background: rgba(248, 250, 252, 0.95);
             border-bottom: 1px solid var(--line-color);
         }
         .date-scroller::-webkit-scrollbar { display: none; }
+        
         .date-item {
             display: flex; flex-direction: column; align-items: center; min-width: 45px;
             color: #94a3b8; cursor: pointer; transition: all 0.3s;
+            position: relative; /* 為了定位圓點 */
         }
+        
+        /* 選中狀態：字體變色 + 放大 */
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
+        
+        /* 選中狀態：下方新增小圓點 */
+        .date-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; /* 控制圓點與日期的距離 */
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-blue); /* 天空藍 */
+            box-shadow: 0 0 4px rgba(14, 165, 233, 0.4); /* 增加一點光暈質感 */
+        }
+
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
         .date-item.active .d-date { font-weight: 700; }
@@ -101,7 +119,9 @@
         /* Hero */
         .hero-section { padding: 20px 20px 10px; }
         .hero-card {
-            height: 160px; border-radius: var(--radius); overflow: hidden; position: relative;
+            /* 修改處：高度變為原來的2倍 (160px -> 320px) */
+            height: 320px; 
+            border-radius: var(--radius); overflow: hidden; position: relative;
             background-size: cover; background-position: center;
             display: flex; align-items: flex-end; box-shadow: var(--shadow);
         }
@@ -381,11 +401,9 @@
                 <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 1 (1/26)：Yksi Stay</div>
                 <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023F3EFB</div>
             </div>
-            </div>
             <div style="margin-bottom:10px;">
                 <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 2 (1/27)：Shuhokaku Kogetsu</div>
                 <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">6166895693</div>
-            </div>
             </div>
             <div style="margin-bottom:10px;">
                 <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Day 4 (1/29)：The Knot</div>
