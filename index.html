@@ -15,7 +15,6 @@
     
     <style>
         :root {
-            /* 天空水藍色系 */
             --bg-color: #fcfcfc;
             --text-main: #334155;
             --text-light: #94a3b8;
@@ -50,90 +49,43 @@
         .modal-overlay.active { display: flex; }
         @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
         
-        .modal-scroll-area {
-            width: 100%; max-height: 80vh; overflow-y: auto; 
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .modal-tag {
-            color: var(--primary-blue); border: 1px solid var(--primary-blue);
-            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 2px;
-        }
-        .modal-title {
-            font-family: var(--font-serif); font-size: 2.5rem; font-weight: 800;
-            line-height: 1.3; margin-bottom: 15px; color: #0f172a; word-break: keep-all;
-        }
+        .modal-scroll-area { width: 100%; max-height: 80vh; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
+        .modal-tag { color: var(--primary-blue); border: 1px solid var(--primary-blue); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 2px; }
+        .modal-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 800; line-height: 1.3; margin-bottom: 15px; color: #0f172a; word-break: keep-all; }
         .modal-desc { font-size: 1rem; color: #64748b; margin-bottom: 30px; line-height: 1.6; max-width: 90%; }
-        
         .modal-btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
-        .modal-btn {
-            padding: 15px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.2s;
-        }
+        .modal-btn { padding: 15px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.2s; }
         .btn-nav { background: #0f172a; color: white; }
         .btn-speak { background: var(--light-blue); color: var(--primary-blue); font-weight: bold; }
         .modal-close { margin-top: 40px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; cursor: pointer; }
 
         /* --- Header --- */
-        header {
-            background: rgba(252, 252, 252, 0.95); backdrop-filter: blur(10px);
-            padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center;
-        }
-        .trip-tag {
-            font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue);
-            font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px;
-        }
+        header { background: rgba(252, 252, 252, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
+        .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
         .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; }
-        .trip-badge { 
-            background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px;
-            border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px;
-        }
+        .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
 
         /* --- Date Scroller --- */
-        .date-scroller {
-            display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px;
-            scrollbar-width: none; background: rgba(252, 252, 252, 0.95);
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(252, 252, 252, 0.95); border-bottom: 1px solid #f1f5f9; }
         .date-scroller::-webkit-scrollbar { display: none; }
-        .date-item {
-            display: flex; flex-direction: column; align-items: center; min-width: 45px;
-            color: #cbd5e1; cursor: pointer; transition: all 0.3s;
-            position: relative; padding-bottom: 15px;
-        }
+        .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #cbd5e1; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--text-main); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        .date-item::after {
-            content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
+        .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
 
         /* --- Hero --- */
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; }
-        .day-vertical {
-            writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem;
-            font-weight: 700; color: var(--text-main); letter-spacing: 0.3em;
-        }
-        .hero-card {
-            flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative;
-            background-size: cover; background-position: center; display: flex; align-items: flex-end;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15);
-        }
-        .hero-overlay {
-            width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); color: white;
-        }
+        .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.3em; }
+        .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); }
+        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); color: white; }
         .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .hero-badge {
-            border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px);
-            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px;
-        }
+        .hero-badge { border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; }
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
 
-        /* --- Weather & Hotel --- */
+        /* --- Weather --- */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: var(--text-main); }
@@ -144,7 +96,6 @@
         .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); }
-
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; }
         .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; }
         .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
@@ -156,26 +107,14 @@
 
         /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
-        .timeline-row { display: flex; position: relative; min-height: 100px; }
-        .t-time-col { 
-            width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
-            font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600; padding-top: 0;
-        }
+        .timeline-row { display: flex; position: relative; min-height: 100px; } 
+        .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600; padding-top: 0; }
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-        .t-line { 
-            width: 2px; background: var(--line-color); 
-            position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; 
-        }
+        .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
         .timeline-row:last-child .t-line { display: none; }
-        .t-dot { 
-            width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); 
-            border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s;
-        }
+        .t-dot { width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
-        .timeline-row.active .t-dot { 
-            background: var(--primary-blue); border-color: var(--primary-blue);
-            box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3);
-        }
+        .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3); }
         .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; }
         .t-content-col:active { opacity: 0.7; }
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: var(--text-main); }
@@ -184,31 +123,32 @@
         .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* Wallet & Info */
+        /* --- Wallet & Info --- */
         .wallet-container { padding: 20px; }
         .balance-card { background: white; border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; }
         
-        /* 匯率計算機 */
         .calc-box { display: flex; flex-direction: column; gap: 12px; }
-        .calc-row { display: flex; align-items: center; background: #f8fafc; border-radius: 10px; padding: 10px; }
+        .calc-row { display: flex; align-items: center; background: #f8fafc; border-radius: 10px; padding: 10px; position: relative; }
         .calc-label { font-weight: bold; color: #64748b; width: 50px; font-size: 0.9rem; }
         .calc-input { flex: 1; border: none; background: transparent; font-size: 1.2rem; text-align: right; outline: none; font-family: var(--font-num); }
         
-        /* 雙向箭頭 */
-        .calc-divider { text-align: center; color: #cbd5e1; font-size: 1rem; }
-        
-        /* 日期選擇器客製化 */
-        .date-input-wrapper {
-            position: relative; width: 130px; height: 45px; 
-            border: 1px solid #e2e8f0; border-radius: 10px; background: #fff;
-            display: flex; align-items: center; justify-content: center;
+        /* 雙向切換按鈕 */
+        .calc-swap-btn {
+            background: #fff; border: 1px solid #e2e8f0; border-radius: 50%; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center; margin: -15px auto;
+            color: var(--primary-blue); cursor: pointer; z-index: 5; font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;
         }
-        .date-display-text {
-            font-size: 0.95rem; color: #334155; pointer-events: none; /* 讓點擊穿透到 input */
+        .calc-swap-btn:active { transform: scale(0.9); }
+
+        /* 自定義日期選擇器樣式 */
+        .date-picker-wrapper {
+            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            color: #94a3b8; font-size: 0.8rem; margin-bottom: 5px; cursor: pointer;
         }
-        .date-real-input {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; z-index: 2; cursor: pointer;
+        .date-picker-input {
+            border: none; background: transparent; font-size: 0.8rem; color: #94a3b8; 
+            font-family: inherit; width: 100px; text-align: center; outline: none;
         }
 
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
@@ -247,11 +187,8 @@
     <div class="modal-scroll-area">
         <div id="modalTag" class="modal-tag">TYPE</div>
         <div id="modalTitle" class="modal-title">Title</div>
-        <div id="modalDesc" class="modal-desc">Description content...</div>
-        
-        <div class="modal-btn-group" id="modalBtns">
-            </div>
-        
+        <div id="modalDesc" class="modal-desc">Description</div>
+        <div class="modal-btn-group" id="modalBtns"></div>
         <button class="modal-close" onclick="closeDetailModal()">關閉視窗</button>
     </div>
 </div>
@@ -262,9 +199,7 @@
 </header>
 
 <div id="view-trip" class="view-section active">
-    
     <div class="date-scroller" id="dateScroller"></div>
-
     <div class="hero-section">
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
@@ -277,7 +212,6 @@
             </div>
         </div>
     </div>
-
     <div class="weather-container">
         <div class="weather-header">
             <div>
@@ -295,12 +229,10 @@
             </div>
         </div>
     </div>
-
     <div class="branch-toggle" id="branchToggle" style="display:none;">
         <button class="branch-btn active" onclick="switchBranch('A')"><i class="fas fa-sun"></i> 晴天方案</button>
         <button class="branch-btn" onclick="switchBranch('B')"><i class="fas fa-snowflake"></i> 雪天備案</button>
     </div>
-
     <div class="timeline-wrapper" id="timelineList"></div>
 </div>
 
@@ -309,32 +241,31 @@
         <div class="balance-card" style="padding:15px; margin-bottom:15px;">
             <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率計算 (0.22)</div>
             <div class="calc-box">
-                <div class="calc-row">
-                    <span class="calc-label">JPY</span>
-                    <input type="number" id="calcJpy" class="calc-input" placeholder="0" oninput="calcRate('jpy')">
+                <div class="calc-row" id="rowTop">
+                    <span class="calc-label" id="labelTop">JPY</span>
+                    <input type="number" id="inputTop" class="calc-input" placeholder="0" oninput="calcRate('top')">
                 </div>
-                <div class="calc-divider"><i class="fas fa-arrow-down-up"></i></div>
-                <div class="calc-row">
-                    <span class="calc-label">TWD</span>
-                    <input type="number" id="calcTwd" class="calc-input" placeholder="0" oninput="calcRate('twd')">
+                <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-exchange-alt"></i></button>
+                <div class="calc-row" id="rowBottom">
+                    <span class="calc-label" id="labelBottom">TWD</span>
+                    <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
                 </div>
             </div>
         </div>
 
         <div class="balance-card">
-            <div style="color:#94a3b8; font-size:0.8rem; margin-bottom:5px;">總支出 Total (TWD)</div>
+            <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
+                總支出 Total ( <span id="displayDateLabel">12月30日</span> )
+                <i class="fas fa-chevron-down" style="font-size:0.6rem"></i>
+            </div>
+            <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
+
             <div style="font-size:2.5rem; font-family:var(--font-serif); color:var(--text-main); font-weight:700;" id="totalDisplay">$0</div>
+            
             <div style="margin-top:20px;">
                 <div class="input-row">
-                    <div class="date-input-wrapper">
-                        <span id="dateDisplay" class="date-display-text">1月26日</span>
-                        <input type="date" id="expDate" class="date-real-input" onchange="updateDateDisplay()">
-                    </div>
-                    
                     <input type="text" id="expName" class="input-std" style="flex:1;" placeholder="項目">
-                </div>
-                <div class="input-row">
-                    <input type="number" id="expCost" class="input-std" style="flex:1;" placeholder="日幣金額">
+                    <input type="number" id="expCost" class="input-std" style="width:100px;" placeholder="日幣">
                     <button class="btn-add" onclick="addExpense()">+</button>
                 </div>
             </div>
@@ -380,9 +311,10 @@
 </nav>
 
 <script>
+    // --- Config & State ---
     let RATE = 0.22;
     let currentBranch = 'A'; 
-    let currentDayIdx = 0;
+    let isJpyTop = true; // true: JPY在上 (JPY->TWD), false: TWD在上 (TWD->JPY)
 
     const itineraryData = [
         {
@@ -473,30 +405,28 @@
         renderDateScroller();
         switchDay(0);
         
-        // 初始化日期選擇器
+        // 設定預設日期為今天
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('expDate').value = today;
-        updateDateDisplay(); // 執行自定義顯示更新
+        updateDateLabel(today); // 初始化日期標籤
         
         loadExpenses();
+        
         updateTimeHighlight();
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
-        setInterval(updateRate, 3600000); 
+        setInterval(updateRate, 3600000);
     }
 
-    // --- 日期顯示更新邏輯 ---
-    function updateDateDisplay() {
-        const input = document.getElementById('expDate');
-        const display = document.getElementById('dateDisplay');
-        if(input.value) {
-            const parts = input.value.split('-');
-            const m = parseInt(parts[1]); // 去除0
-            const d = parseInt(parts[2]); // 去除0
-            display.innerText = `${m}月${d}日`;
-        }
+    // --- 日期格式處理 ---
+    function updateDateLabel(dateStr) {
+        const d = new Date(dateStr);
+        // 顯示為 12月30日
+        const label = `${d.getMonth() + 1}月${d.getDate()}日`;
+        document.getElementById('displayDateLabel').innerText = label;
     }
 
+    // --- 匯率邏輯 (雙向) ---
     async function updateRate() {
         try {
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
@@ -504,15 +434,40 @@
             if(data && data.rates && data.rates.TWD) {
                 RATE = data.rates.TWD;
                 document.getElementById('rateTitle').innerText = `匯率計算 (${RATE.toFixed(3)})`;
-                const jpyVal = document.getElementById('calcJpy').value;
-                if(jpyVal) calcRate('jpy');
-                loadExpenses();
             }
-        } catch(e) {
-            console.log('匯率更新失敗');
+        } catch(e) {}
+    }
+
+    function swapCurrency() {
+        isJpyTop = !isJpyTop;
+        
+        // 交換標籤
+        document.getElementById('labelTop').innerText = isJpyTop ? "JPY" : "TWD";
+        document.getElementById('labelBottom').innerText = isJpyTop ? "TWD" : "JPY";
+        
+        // 清空輸入框
+        document.getElementById('inputTop').value = "";
+        document.getElementById('inputBottom').value = "";
+    }
+
+    function calcRate(pos) {
+        const val = document.getElementById(pos === 'top' ? 'inputTop' : 'inputBottom').value;
+        const target = document.getElementById(pos === 'top' ? 'inputBottom' : 'inputTop');
+        
+        if (isJpyTop) {
+            // 上(JPY) -> 下(TWD)
+            if(pos === 'top') target.value = Math.round(val * RATE);
+            // 下(TWD) -> 上(JPY)
+            else target.value = Math.round(val / RATE);
+        } else {
+            // 上(TWD) -> 下(JPY)
+            if(pos === 'top') target.value = Math.round(val / RATE);
+            // 下(JPY) -> 上(TWD)
+            else target.value = Math.round(val * RATE);
         }
     }
 
+    // --- 其他渲染邏輯 ---
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
         el.innerHTML = itineraryData.map((d, i) => `
@@ -603,9 +558,7 @@
             if (!timeText) return;
             const [h, m] = timeText.split(':').map(Number);
             const eventTotalMins = h * 60 + m;
-            if (eventTotalMins <= currentTotalMins) {
-                activeRow = row; 
-            }
+            if (eventTotalMins <= currentTotalMins) activeRow = row; 
         });
         if (activeRow) activeRow.classList.add('active');
     }
@@ -625,9 +578,7 @@
         document.getElementById('detailModal').classList.add('active');
     }
 
-    function closeDetailModal() {
-        document.getElementById('detailModal').classList.remove('active');
-    }
+    function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
 
     function renderWeather() {
         const el = document.getElementById('weatherStrip');
@@ -637,13 +588,6 @@
             html += `<div class="w-col"><div class="w-time">${t}:00</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div></div>`;
         }
         el.innerHTML = html;
-    }
-
-    function calcRate(src) {
-        const jpy = document.getElementById('calcJpy');
-        const twd = document.getElementById('calcTwd');
-        if(src==='jpy') twd.value = Math.round(jpy.value * RATE);
-        else jpy.value = Math.round(twd.value / RATE);
     }
 
     function addExpense() {
@@ -688,9 +632,7 @@
                     <span class="exp-date">${dateDisplay}</span>
                     <span class="exp-name">${item.name}</span>
                 </div>
-                <div class="exp-price">
-                    ¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})
-                </div>
+                <div class="exp-price">¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})</div>
                 <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
             </div>`;
         }).join('');
