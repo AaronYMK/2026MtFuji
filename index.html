@@ -39,7 +39,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal (詳細資訊卡片) --- */
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.95); z-index: 2000; display: none;
@@ -72,11 +72,7 @@
         }
         .btn-nav { background: #0f172a; color: white; }
         .btn-speak { background: var(--light-blue); color: var(--primary-blue); font-weight: bold; }
-        
-        .modal-close {
-            margin-top: 40px; background: transparent; border: none; 
-            color: #94a3b8; font-size: 0.9rem; cursor: pointer;
-        }
+        .modal-close { margin-top: 40px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; cursor: pointer; }
 
         /* --- Header --- */
         header {
@@ -93,7 +89,7 @@
             border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px;
         }
 
-        /* --- 日期滾動條 --- */
+        /* --- Date Scroller --- */
         .date-scroller {
             display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px;
             scrollbar-width: none; background: rgba(252, 252, 252, 0.95);
@@ -108,8 +104,6 @@
         .date-item.active { color: var(--text-main); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        
-        /* 日期藍點 */
         .date-item::after {
             content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
             width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%;
@@ -117,7 +111,7 @@
         }
         .date-item.active::after { opacity: 1; }
 
-        /* --- Hero Section --- */
+        /* --- Hero --- */
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; }
         .day-vertical {
             writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem;
@@ -139,7 +133,7 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
 
-        /* --- 天氣與住宿 --- */
+        /* --- Weather & Hotel --- */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: var(--text-main); }
@@ -160,61 +154,62 @@
         .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
         .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* --- Timeline (無框線設計) --- */
+        /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
-        .timeline-row { display: flex; position: relative; min-height: 100px; } 
-        
+        .timeline-row { display: flex; position: relative; min-height: 100px; }
         .t-time-col { 
             width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
-            font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600;
-            padding-top: 0;
+            font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600; padding-top: 0;
         }
-        
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { 
             width: 2px; background: var(--line-color); 
             position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; 
         }
         .timeline-row:last-child .t-line { display: none; }
-
         .t-dot { 
             width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); 
             border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s;
         }
-        
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { 
             background: var(--primary-blue); border-color: var(--primary-blue);
             box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3);
         }
-        
-        .t-content-col { 
-            flex: 1; padding-left: 15px; padding-bottom: 30px; 
-            cursor: pointer;
-        }
+        .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; }
         .t-content-col:active { opacity: 0.7; }
-
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: var(--text-main); }
-        
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
         .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
-        .t-tag-text { 
-            font-size: 0.7rem; color: #94a3b8; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num);
-        }
-        
+        .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* 錢包 & 資訊 & 底部導航 */
+        /* Wallet & Info */
         .wallet-container { padding: 20px; }
         .balance-card { background: white; border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; }
         
-        /* 匯率計算區塊優化 (垂直排列) */
+        /* 匯率計算機 */
         .calc-box { display: flex; flex-direction: column; gap: 12px; }
         .calc-row { display: flex; align-items: center; background: #f8fafc; border-radius: 10px; padding: 10px; }
         .calc-label { font-weight: bold; color: #64748b; width: 50px; font-size: 0.9rem; }
         .calc-input { flex: 1; border: none; background: transparent; font-size: 1.2rem; text-align: right; outline: none; font-family: var(--font-num); }
-        .calc-divider { text-align: center; color: #cbd5e1; font-size: 0.8rem; }
+        
+        /* 雙向箭頭 */
+        .calc-divider { text-align: center; color: #cbd5e1; font-size: 1rem; }
+        
+        /* 日期選擇器客製化 */
+        .date-input-wrapper {
+            position: relative; width: 130px; height: 45px; 
+            border: 1px solid #e2e8f0; border-radius: 10px; background: #fff;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .date-display-text {
+            font-size: 0.95rem; color: #334155; pointer-events: none; /* 讓點擊穿透到 input */
+        }
+        .date-real-input {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; z-index: 2; cursor: pointer;
+        }
 
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
         .input-std { padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: #fff; outline: none; }
@@ -318,7 +313,7 @@
                     <span class="calc-label">JPY</span>
                     <input type="number" id="calcJpy" class="calc-input" placeholder="0" oninput="calcRate('jpy')">
                 </div>
-                <div class="calc-divider"><i class="fas fa-arrow-down"></i></div>
+                <div class="calc-divider"><i class="fas fa-arrow-down-up"></i></div>
                 <div class="calc-row">
                     <span class="calc-label">TWD</span>
                     <input type="number" id="calcTwd" class="calc-input" placeholder="0" oninput="calcRate('twd')">
@@ -331,7 +326,11 @@
             <div style="font-size:2.5rem; font-family:var(--font-serif); color:var(--text-main); font-weight:700;" id="totalDisplay">$0</div>
             <div style="margin-top:20px;">
                 <div class="input-row">
-                    <input type="date" id="expDate" class="input-std" style="width:130px; font-size:0.9rem;">
+                    <div class="date-input-wrapper">
+                        <span id="dateDisplay" class="date-display-text">1月26日</span>
+                        <input type="date" id="expDate" class="date-real-input" onchange="updateDateDisplay()">
+                    </div>
+                    
                     <input type="text" id="expName" class="input-std" style="flex:1;" placeholder="項目">
                 </div>
                 <div class="input-row">
@@ -381,7 +380,6 @@
 </nav>
 
 <script>
-    // --- Config & State ---
     let RATE = 0.22;
     let currentBranch = 'A'; 
     let currentDayIdx = 0;
@@ -474,36 +472,44 @@
     function init() {
         renderDateScroller();
         switchDay(0);
+        
+        // 初始化日期選擇器
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('expDate').value = today;
-        loadExpenses();
+        updateDateDisplay(); // 執行自定義顯示更新
         
-        // 啟動時間檢查與匯率更新
+        loadExpenses();
         updateTimeHighlight();
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
-        setInterval(updateRate, 3600000); // 每小時更新匯率
+        setInterval(updateRate, 3600000); 
     }
 
-    // --- 自動更新匯率 ---
+    // --- 日期顯示更新邏輯 ---
+    function updateDateDisplay() {
+        const input = document.getElementById('expDate');
+        const display = document.getElementById('dateDisplay');
+        if(input.value) {
+            const parts = input.value.split('-');
+            const m = parseInt(parts[1]); // 去除0
+            const d = parseInt(parts[2]); // 去除0
+            display.innerText = `${m}月${d}日`;
+        }
+    }
+
     async function updateRate() {
         try {
-            // 使用免費的公開 API 抓取匯率
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
             const data = await res.json();
             if(data && data.rates && data.rates.TWD) {
                 RATE = data.rates.TWD;
                 document.getElementById('rateTitle').innerText = `匯率計算 (${RATE.toFixed(3)})`;
-                
-                // 如果計算機有數字，自動重算
                 const jpyVal = document.getElementById('calcJpy').value;
                 if(jpyVal) calcRate('jpy');
-                
-                // 重新載入記帳列表以更新 TWD 金額
                 loadExpenses();
             }
         } catch(e) {
-            console.log('匯率更新失敗，使用預設值');
+            console.log('匯率更新失敗');
         }
     }
 
@@ -520,9 +526,7 @@
     function switchDay(idx) {
         currentDayIdx = idx;
         const data = itineraryData[idx];
-        
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
-
         document.getElementById('heroCard').style.backgroundImage = `url('${data.bg}')`;
         document.getElementById('dayVertical').innerText = data.dayCN;
         document.getElementById('heroDay').innerText = `DAY ${data.day}`;
@@ -530,9 +534,7 @@
         document.getElementById('heroTitle').innerText = data.title;
         document.getElementById('wLoc').innerText = data.loc;
         document.getElementById('hotelName').innerText = data.hotel;
-
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
-
         renderTimeline(data);
         renderWeather();
         updateTimeHighlight();
@@ -551,7 +553,6 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
 
         container.innerHTML = events.map((evt, idx) => {
-            // Icon mapping
             let iconClass = 'fa-circle';
             if(evt.iconType === 'plane') iconClass = 'fa-plane';
             else if(evt.iconType === 'car') iconClass = 'fa-car';
@@ -565,10 +566,8 @@
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
 
-            // 智能說明截斷邏輯
             let displayDesc = evt.desc;
             if(evt.guide) {
-                // 如果有 guide，優先顯示 guide，並截斷
                 displayDesc = evt.guide.length > 50 ? evt.guide.substring(0, 50) + "..." : evt.guide;
             }
 
@@ -596,10 +595,8 @@
         const currentHour = now.getHours();
         const currentMin = now.getMinutes();
         const currentTotalMins = currentHour * 60 + currentMin;
-
         const rows = document.querySelectorAll('.timeline-row');
         rows.forEach(r => r.classList.remove('active'));
-
         let activeRow = null;
         rows.forEach(row => {
             const timeText = row.getAttribute('data-time');
@@ -610,31 +607,21 @@
                 activeRow = row; 
             }
         });
-
         if (activeRow) activeRow.classList.add('active');
     }
 
     function openDetailModal(evt) {
         document.getElementById('modalTag').innerText = evt.type.toUpperCase();
         document.getElementById('modalTitle').innerText = evt.title;
-        
         let descHtml = evt.desc;
         if(evt.guide) descHtml += `<br><br><strong style="color:#0ea5e9">智能導遊：</strong><br>${evt.guide}`;
         document.getElementById('modalDesc').innerHTML = descHtml;
-
         const btnGroup = document.getElementById('modalBtns');
         btnGroup.innerHTML = ''; 
-
         const mapLink = evt.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(evt.title)}`;
         btnGroup.innerHTML += `<a href="${mapLink}" target="_blank" class="modal-btn btn-nav"><i class="fas fa-location-arrow"></i> 開啟導航</a>`;
-
-        if(evt.pointSpeak) {
-            btnGroup.innerHTML += `<div class="modal-btn btn-speak" onclick="alert('${evt.pointSpeak.jp}\\n(${evt.pointSpeak.sub})')"><i class="fas fa-hand-point-up"></i> 給店員看 (大字卡)</div>`;
-        }
-        if(evt.addressJP) {
-            btnGroup.innerHTML += `<div class="modal-btn btn-speak" onclick="alert('${evt.addressJP}\\n(前往這裡)')"><i class="fas fa-taxi"></i> 給司機看 (地址)</div>`;
-        }
-
+        if(evt.pointSpeak) btnGroup.innerHTML += `<div class="modal-btn btn-speak" onclick="alert('${evt.pointSpeak.jp}\\n(${evt.pointSpeak.sub})')"><i class="fas fa-hand-point-up"></i> 給店員看 (大字卡)</div>`;
+        if(evt.addressJP) btnGroup.innerHTML += `<div class="modal-btn btn-speak" onclick="alert('${evt.addressJP}\\n(前往這裡)')"><i class="fas fa-taxi"></i> 給司機看 (地址)</div>`;
         document.getElementById('detailModal').classList.add('active');
     }
 
@@ -660,16 +647,13 @@
     }
 
     function addExpense() {
-        const dateStr = document.getElementById('expDate').value; // YYYY-MM-DD
+        const dateStr = document.getElementById('expDate').value;
         const name = document.getElementById('expName').value;
         const cost = parseInt(document.getElementById('expCost').value);
         if(!dateStr || !name || !cost) return alert("請填寫完整資訊");
-
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        // 儲存完整日期字串，不只月日
         data.push({ id: Date.now(), date: dateStr, name, cost });
         localStorage.setItem('tripExp2026', JSON.stringify(data));
-        
         document.getElementById('expName').value = '';
         document.getElementById('expCost').value = '';
         loadExpenses();
@@ -693,15 +677,11 @@
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         const list = document.getElementById('expenseList');
         let total = 0;
-        
         list.innerHTML = data.reverse().map(item => {
             total += item.cost;
             const twd = Math.round(item.cost * RATE);
-            
-            // 格式化日期：2026-01-26 -> 2026年1月26日
             const dObj = new Date(item.date);
             const dateDisplay = `${dObj.getFullYear()}年${dObj.getMonth()+1}月${dObj.getDate()}日`;
-
             return `
             <div class="exp-item">
                 <div style="flex:1">
@@ -714,7 +694,6 @@
                 <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
             </div>`;
         }).join('');
-
         document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
     }
 
