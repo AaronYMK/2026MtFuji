@@ -16,12 +16,12 @@
     <style>
         :root {
             /* 天空水藍色系 */
-            --bg-color: #fcfcfc; /* 背景更白一點，配合無框設計 */
+            --bg-color: #fcfcfc;
             --text-main: #334155;
             --text-light: #94a3b8;
-            --primary-blue: #0ea5e9; /* Sky Blue 500 */
-            --light-blue: #e0f2fe;    /* Sky Blue 100 */
-            --line-color: #bae6fd;    /* 淺藍色線條 */
+            --primary-blue: #0ea5e9;
+            --light-blue: #e0f2fe;
+            --line-color: #bae6fd;
             --accent-orange: #f97316;
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -162,45 +162,40 @@
 
         /* --- Timeline (無框線設計) --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
-        .timeline-row { display: flex; position: relative; min-height: 100px; } /* 確保高度 */
+        .timeline-row { display: flex; position: relative; min-height: 100px; } 
         
-        /* 1. 時間 */
         .t-time-col { 
             width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
             font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600;
             padding-top: 0;
         }
         
-        /* 2. 線條與圓點 */
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { 
             width: 2px; background: var(--line-color); 
             position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; 
         }
-        .timeline-row:last-child .t-line { display: none; } /* 最後一個行程不畫線 */
+        .timeline-row:last-child .t-line { display: none; }
 
         .t-dot { 
             width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); 
             border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s;
         }
         
-        /* 亮燈狀態 (Active Highlight) */
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { 
             background: var(--primary-blue); border-color: var(--primary-blue);
             box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3);
         }
         
-        /* 3. 內容區域 (無框) */
         .t-content-col { 
             flex: 1; padding-left: 15px; padding-bottom: 30px; 
-            cursor: pointer; /* 讓使用者知道可以點 */
+            cursor: pointer;
         }
         .t-content-col:active { opacity: 0.7; }
 
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: var(--text-main); }
         
-        /* 標籤列 (Icon + Tag) */
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
         .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
         .t-tag-text { 
@@ -210,16 +205,27 @@
         
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* 錢包 & 資訊 & 底部導航 (維持原樣) */
+        /* 錢包 & 資訊 & 底部導航 */
         .wallet-container { padding: 20px; }
         .balance-card { background: white; border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; }
+        
+        /* 匯率計算區塊優化 (垂直排列) */
+        .calc-box { display: flex; flex-direction: column; gap: 12px; }
+        .calc-row { display: flex; align-items: center; background: #f8fafc; border-radius: 10px; padding: 10px; }
+        .calc-label { font-weight: bold; color: #64748b; width: 50px; font-size: 0.9rem; }
+        .calc-input { flex: 1; border: none; background: transparent; font-size: 1.2rem; text-align: right; outline: none; font-family: var(--font-num); }
+        .calc-divider { text-align: center; color: #cbd5e1; font-size: 0.8rem; }
+
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
         .input-std { padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: #fff; outline: none; }
         .btn-add { background: var(--text-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 1.2rem; }
+        
         .expense-list { margin-top: 20px; }
-        .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; }
-        .exp-date { font-size: 0.75rem; color: var(--primary-blue); background: var(--light-blue); padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-family: var(--font-num); }
-        .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1rem; padding: 5px; }
+        .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #e2e8f0; }
+        .exp-date { font-size: 0.75rem; color: #94a3b8; display: block; margin-bottom: 4px; font-family: var(--font-num); }
+        .exp-name { font-size: 1rem; font-weight: 500; color: var(--text-main); }
+        .exp-price { font-weight: 700; color: var(--text-main); font-family: var(--font-num); font-size: 1rem; }
+        .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1.1rem; padding: 5px; }
 
         .info-block { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; }
         .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
@@ -272,7 +278,7 @@
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
                 </div>
-                <h2 class="hero-title" id="heroTitle">東京副都心－新宿</h2>
+                <h2 class="hero-title" id="heroTitle">抵達。新宿</h2>
             </div>
         </div>
     </div>
@@ -306,13 +312,20 @@
 <div id="view-wallet" class="view-section">
     <div class="wallet-container">
         <div class="balance-card" style="padding:15px; margin-bottom:15px;">
-            <div style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:10px; font-weight:700;">匯率計算 (0.22)</div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <input type="number" id="calcJpy" class="input-std" placeholder="JPY" oninput="calcRate('jpy')" style="flex:1; text-align:right;">
-                <i class="fas fa-exchange-alt" style="color:#cbd5e1"></i>
-                <input type="number" id="calcTwd" class="input-std" placeholder="TWD" oninput="calcRate('twd')" style="flex:1; text-align:right;">
+            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率計算 (0.22)</div>
+            <div class="calc-box">
+                <div class="calc-row">
+                    <span class="calc-label">JPY</span>
+                    <input type="number" id="calcJpy" class="calc-input" placeholder="0" oninput="calcRate('jpy')">
+                </div>
+                <div class="calc-divider"><i class="fas fa-arrow-down"></i></div>
+                <div class="calc-row">
+                    <span class="calc-label">TWD</span>
+                    <input type="number" id="calcTwd" class="calc-input" placeholder="0" oninput="calcRate('twd')">
+                </div>
             </div>
         </div>
+
         <div class="balance-card">
             <div style="color:#94a3b8; font-size:0.8rem; margin-bottom:5px;">總支出 Total (TWD)</div>
             <div style="font-size:2.5rem; font-family:var(--font-serif); color:var(--text-main); font-weight:700;" id="totalDisplay">$0</div>
@@ -368,13 +381,14 @@
 </nav>
 
 <script>
-    const RATE = 0.22;
+    // --- Config & State ---
+    let RATE = 0.22;
     let currentBranch = 'A'; 
     let currentDayIdx = 0;
 
     const itineraryData = [
         {
-            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
+            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "抵達。新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
@@ -393,7 +407,7 @@
         {
             day: 2, dayCN: "第二天", date: "27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
-            bg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzeeSUnf690JcSUnQI0RMBaCW0Pr4L3vxeFS3NBhggaO_gimbDy_immUtsRZQNRo-hdpFEZKWpm7Gwfqy_vcfOiDaVOkA0loWOKI3tvPrym2v9nqN8uVWDgLIE9GqJFKCX9sYR23GhCju1/s1600/16.JPG",
+            bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
                 { time: "09:45", type: "Transport", iconType: "car", title: "Budget 租車", desc: "河口湖站前店取車，請出示護照與駕照譯本" },
                 { 
@@ -408,7 +422,7 @@
         {
             day: 3, dayCN: "第三天", date: "28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
-            bg: "https://resources.matcha-jp.com/resize/720x2000/2023/11/13-152040.webp",
+            bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
             hasBranch: true,
             eventsA: [
                 { 
@@ -431,7 +445,7 @@
         {
             day: 4, dayCN: "第四天", date: "29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市",
             loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
-            bg: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_640,h_426/w_39,x_7,y_7,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/w6btfudoggu7tn67nyfd/%E5%AF%8C%E5%A3%AB%E5%B1%B1%EF%BC%86%E4%BA%94%E9%87%8D%E5%A1%94%EF%BC%86%E6%99%82%E4%B9%8B%E6%A0%96%E7%87%88%E5%85%89%E7%A7%80%EF%BC%86%E6%99%AF%E8%A7%80%E7%BA%9C%E8%BB%8A%E4%B8%80%E6%97%A5%E9%81%8A.jpg",
+            bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
             events: [
                 { 
                     time: "12:00", type: "Spot", iconType: "camera", title: "新倉山淺間公園", desc: "五重塔與富士山", 
@@ -464,9 +478,33 @@
         document.getElementById('expDate').value = today;
         loadExpenses();
         
-        // 啟動時間檢查
+        // 啟動時間檢查與匯率更新
         updateTimeHighlight();
-        setInterval(updateTimeHighlight, 60000); // 每分鐘檢查一次
+        setInterval(updateTimeHighlight, 60000); 
+        updateRate();
+        setInterval(updateRate, 3600000); // 每小時更新匯率
+    }
+
+    // --- 自動更新匯率 ---
+    async function updateRate() {
+        try {
+            // 使用免費的公開 API 抓取匯率
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
+            const data = await res.json();
+            if(data && data.rates && data.rates.TWD) {
+                RATE = data.rates.TWD;
+                document.getElementById('rateTitle').innerText = `匯率計算 (${RATE.toFixed(3)})`;
+                
+                // 如果計算機有數字，自動重算
+                const jpyVal = document.getElementById('calcJpy').value;
+                if(jpyVal) calcRate('jpy');
+                
+                // 重新載入記帳列表以更新 TWD 金額
+                loadExpenses();
+            }
+        } catch(e) {
+            console.log('匯率更新失敗，使用預設值');
+        }
     }
 
     function renderDateScroller() {
@@ -497,7 +535,7 @@
 
         renderTimeline(data);
         renderWeather();
-        updateTimeHighlight(); // 切換日期時也要重算亮燈
+        updateTimeHighlight();
     }
 
     function switchBranch(type) {
@@ -527,7 +565,13 @@
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
 
-            // 將整個卡片區域包裝成可點擊，傳遞索引以便開啟 Modal
+            // 智能說明截斷邏輯
+            let displayDesc = evt.desc;
+            if(evt.guide) {
+                // 如果有 guide，優先顯示 guide，並截斷
+                displayDesc = evt.guide.length > 50 ? evt.guide.substring(0, 50) + "..." : evt.guide;
+            }
+
             return `
             <div class="timeline-row" data-time="${evt.time}">
                 <div class="t-time-col">${evt.time}</div>
@@ -541,13 +585,12 @@
                         <i class="fas ${iconClass} t-tag-icon"></i>
                         <span class="t-tag-text">${evt.type.toUpperCase()}</span>
                     </div>
-                    <div class="t-desc">${evt.desc}</div>
+                    <div class="t-desc">${displayDesc}</div>
                 </div>
             </div>`;
         }).join('');
     }
 
-    // --- Time Highlight Logic ---
     function updateTimeHighlight() {
         const now = new Date();
         const currentHour = now.getHours();
@@ -555,50 +598,37 @@
         const currentTotalMins = currentHour * 60 + currentMin;
 
         const rows = document.querySelectorAll('.timeline-row');
-        
-        // 移除所有 active
         rows.forEach(r => r.classList.remove('active'));
 
-        // 找出最接近且小於當前時間的行程
         let activeRow = null;
-        
         rows.forEach(row => {
-            const timeText = row.getAttribute('data-time'); // "06:30"
+            const timeText = row.getAttribute('data-time');
             if (!timeText) return;
-            
             const [h, m] = timeText.split(':').map(Number);
             const eventTotalMins = h * 60 + m;
-
             if (eventTotalMins <= currentTotalMins) {
-                activeRow = row; // 暫存符合條件的最後一個 (即最近的一個)
+                activeRow = row; 
             }
         });
 
-        if (activeRow) {
-            activeRow.classList.add('active');
-        }
+        if (activeRow) activeRow.classList.add('active');
     }
 
-    // --- Detail Modal ---
     function openDetailModal(evt) {
         document.getElementById('modalTag').innerText = evt.type.toUpperCase();
         document.getElementById('modalTitle').innerText = evt.title;
         
-        // 組合詳細說明
         let descHtml = evt.desc;
         if(evt.guide) descHtml += `<br><br><strong style="color:#0ea5e9">智能導遊：</strong><br>${evt.guide}`;
         document.getElementById('modalDesc').innerHTML = descHtml;
 
         const btnGroup = document.getElementById('modalBtns');
-        btnGroup.innerHTML = ''; // 清空
+        btnGroup.innerHTML = ''; 
 
-        // 導航按鈕 (預設都有)
         const mapLink = evt.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(evt.title)}`;
         btnGroup.innerHTML += `<a href="${mapLink}" target="_blank" class="modal-btn btn-nav"><i class="fas fa-location-arrow"></i> 開啟導航</a>`;
 
-        // 給店員看 / 給司機看
         if(evt.pointSpeak) {
-            // 這邊簡單處理，直接跳 alert 或做子 modal，這裡演示直接 alert 方便
             btnGroup.innerHTML += `<div class="modal-btn btn-speak" onclick="alert('${evt.pointSpeak.jp}\\n(${evt.pointSpeak.sub})')"><i class="fas fa-hand-point-up"></i> 給店員看 (大字卡)</div>`;
         }
         if(evt.addressJP) {
@@ -612,7 +642,6 @@
         document.getElementById('detailModal').classList.remove('active');
     }
 
-    // --- Weather, Wallet, etc. (Existing) ---
     function renderWeather() {
         const el = document.getElementById('weatherStrip');
         let html = '';
@@ -631,13 +660,16 @@
     }
 
     function addExpense() {
-        const date = document.getElementById('expDate').value;
+        const dateStr = document.getElementById('expDate').value; // YYYY-MM-DD
         const name = document.getElementById('expName').value;
         const cost = parseInt(document.getElementById('expCost').value);
-        if(!date || !name || !cost) return alert("請填寫完整資訊");
+        if(!dateStr || !name || !cost) return alert("請填寫完整資訊");
+
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        data.push({ id: Date.now(), date: date.slice(5), name, cost });
+        // 儲存完整日期字串，不只月日
+        data.push({ id: Date.now(), date: dateStr, name, cost });
         localStorage.setItem('tripExp2026', JSON.stringify(data));
+        
         document.getElementById('expName').value = '';
         document.getElementById('expCost').value = '';
         loadExpenses();
@@ -661,11 +693,28 @@
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         const list = document.getElementById('expenseList');
         let total = 0;
+        
         list.innerHTML = data.reverse().map(item => {
             total += item.cost;
             const twd = Math.round(item.cost * RATE);
-            return `<div class="exp-item"><div style="flex:1"><span class="exp-date">${item.date}</span><span style="font-size:0.95rem;">${item.name}</span></div><div style="text-align:right;"><div style="font-weight:700;">¥${item.cost.toLocaleString()}</div><div style="font-size:0.75rem; color:#94a3b8;">$${twd.toLocaleString()}</div></div><button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button></div>`;
+            
+            // 格式化日期：2026-01-26 -> 2026年1月26日
+            const dObj = new Date(item.date);
+            const dateDisplay = `${dObj.getFullYear()}年${dObj.getMonth()+1}月${dObj.getDate()}日`;
+
+            return `
+            <div class="exp-item">
+                <div style="flex:1">
+                    <span class="exp-date">${dateDisplay}</span>
+                    <span class="exp-name">${item.name}</span>
+                </div>
+                <div class="exp-price">
+                    ¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})
+                </div>
+                <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
+            </div>`;
         }).join('');
+
         document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
     }
 
