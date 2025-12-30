@@ -15,21 +15,15 @@
     
     <style>
         :root {
-            /* 天空水藍色系 */
             --bg-color: #f8fafc;
-            --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-light: #64748b;
-            --primary-blue: #0ea5e9;
+            --primary-blue: #0ea5e9; /* 天空藍 */
             --light-blue: #e0f2fe;
-            --highlight-blue: #38bdf8;
-            --accent-orange: #f97316;
             --line-color: #e2e8f0;
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
             --font-num: 'Lato', sans-serif;
-            --radius: 12px;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -41,32 +35,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 2000; display: none;
-            flex-direction: column; justify-content: center; align-items: center;
-            padding: 30px; text-align: center; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .modal-overlay.active { display: flex; }
-        @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
-        .modal-tag {
-            color: var(--primary-blue); border: 1px solid var(--primary-blue);
-            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 25px; letter-spacing: 2px;
-        }
-        .modal-content-box { width: 100%; }
-        .modal-jp {
-            font-family: var(--font-serif); font-size: 3rem; font-weight: 800;
-            line-height: 1.3; margin-bottom: 15px; color: #000; word-break: keep-all;
-        }
-        .modal-sub { font-size: 1.2rem; color: #94a3b8; margin-bottom: 50px; }
-        .modal-close {
-            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-            background: #0f172a; color: #fff; border: none; padding: 15px 50px;
-            border-radius: 50px; font-size: 1rem; cursor: pointer;
-        }
-
-        /* --- Header --- */
+        /* --- Header & Nav (維持不變) --- */
         header {
             background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(10px);
             padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center;
@@ -81,7 +50,55 @@
             border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px;
         }
 
-        /* --- 日期滾動條 (新版樣式) --- */
+        /* --- Detail Modal (新版詳情卡片) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
+            justify-content: center; align-items: flex-end; /* 手機版從下方滑出 */
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-card {
+            background: #fff; width: 100%; max-width: 500px;
+            border-top-left-radius: 20px; border-top-right-radius: 20px;
+            padding: 25px; max-height: 90vh; overflow-y: auto;
+            position: relative; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .modal-time { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); }
+        .modal-type { font-size: 0.7rem; background: var(--light-blue); color: var(--primary-blue); padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 1px;}
+        .modal-title { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+        .modal-desc { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
+        
+        /* 區塊樣式 */
+        .modal-section { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #f1f5f9; }
+        .sec-title { font-size: 0.75rem; font-weight: 700; color: var(--text-light); margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        
+        /* 大字卡 (給店員看) */
+        .big-text-box { text-align: center; padding: 10px 0; }
+        .big-jp { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 5px; }
+        .big-sub { font-size: 0.9rem; color: #94a3b8; }
+
+        /* 導航按鈕 */
+        .nav-btn-large {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; background: var(--primary-blue); color: white;
+            padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: 600;
+            text-decoration: none; margin-top: 10px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+        
+        .modal-close-btn {
+            position: absolute; top: 15px; right: 15px;
+            background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%;
+            font-size: 1rem; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
+        @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        /* --- Timeline (無框設計) --- */
         .date-scroller {
             display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px;
             scrollbar-width: none; background: rgba(248, 250, 252, 0.95);
@@ -90,222 +107,166 @@
         .date-scroller::-webkit-scrollbar { display: none; }
         .date-item {
             display: flex; flex-direction: column; align-items: center; min-width: 45px;
-            color: #94a3b8; cursor: pointer; transition: all 0.3s;
-            position: relative;
-            padding-bottom: 15px; /* 留空間給圓點 */
+            color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px;
         }
-        .date-item.active { color: var(--text-main); } /* 選中日期文字變深色 */
-        
+        .date-item.active { color: var(--text-main); }
+        .date-item.active::after {
+            content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%;
+        }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        
-        /* 新增：日期下方的天空藍圓點 */
-        .date-item::after {
-            content: '';
-            position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px;
-            background-color: var(--primary-blue);
-            border-radius: 50%;
-            opacity: 0; /* 預設隱藏 */
-            transition: opacity 0.3s ease;
-        }
-        .date-item.active::after {
-            opacity: 1; /* 選中時顯示 */
-        }
 
-        /* --- Hero Section (左側文字 + 右側大圖) --- */
-        .hero-section {
-            display: flex; /* 改為 Flex 佈局 */
-            align-items: center;
-            padding: 25px 20px 15px;
-            gap: 15px; /* 文字與圖片的間距 */
-        }
-        
-        /* 左側直排文字 */
-        .day-vertical {
-            writing-mode: vertical-rl;
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 0.3em;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
-        }
-
-        /* 右側圖片卡片 (放大) */
+        /* Hero */
+        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; }
+        .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.3em; }
         .hero-card {
-            flex: 1; /* 佔滿剩餘寬度 */
-            height: 220px; /* 高度增加 */
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); /* 加強陰影增加立體感 */
+            flex: 1; height: 220px; border-radius: 12px; overflow: hidden; position: relative;
+            background-size: cover; background-position: center; display: flex; align-items: flex-end;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15);
         }
-        .hero-overlay {
-            width: 100%; padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
-            color: white;
-        }
-        
-        /* 圖片內的標籤列 */
-        .hero-meta-row {
-            display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
-        }
-        .hero-badge {
-            border: 1px solid rgba(255,255,255,0.6);
-            backdrop-filter: blur(4px);
-            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; 
-            letter-spacing: 1px;
-        }
-        .hero-city {
-            font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;
-            color: rgba(255,255,255,0.9);
-        }
+        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); color: white; }
+        .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .hero-badge { border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
+        .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; }
 
-        .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
-
-        /* --- 天氣與住宿 --- */
+        /* Weather & Hotel */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
-        .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: var(--text-main); }
-        .weather-sub { font-size: 0.8rem; color: var(--text-light); margin-top: 5px; }
-        
         .weather-strip { display: flex; gap: 25px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .weather-strip::-webkit-scrollbar { display: none; }
         .w-col { text-align: center; min-width: 35px; }
-        .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
-        .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
-        .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); }
-
-        .hotel-bar {
-            margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line-color);
-            display: flex; align-items: center;
-        }
+        .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line-color); display: flex; align-items: center; }
         .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; }
-        .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
-        .hotel-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text-main); font-weight: 600; }
 
-        .branch-toggle {
-            margin: 10px 20px 20px; background: #f1f5f9; padding: 4px; border-radius: 10px; display: flex;
-        }
-        .branch-btn {
-            flex: 1; border: none; background: none; padding: 8px; border-radius: 8px;
-            font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s;
-        }
-        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-
-        /* --- Timeline --- */
-        .timeline-wrapper { padding: 10px 20px; position: relative; }
-        .timeline-row { display: flex; position: relative; padding-bottom: 30px; }
+        /* --- Timeline Rows (核心修改) --- */
+        .timeline-wrapper { padding: 10px 20px; }
+        .timeline-row { display: flex; position: relative; padding-bottom: 40px; cursor: pointer; }
         
+        /* 左側時間 */
         .t-time-col { 
             width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
             font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600;
-            padding-top: 2px;
+            padding-top: 0px;
         }
-        
+        .t-ampm { font-size: 0.7rem; color: #94a3b8; font-weight: 400; }
+
+        /* 中間直線 (直直的，貫穿) */
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-        .t-line { width: 2px; background: var(--line-color); height: 100%; position: absolute; top: 10px; z-index: 1; }
+        .t-line { 
+            width: 2px; background: var(--line-color); height: 100%; 
+            position: absolute; top: 10px; z-index: 1; 
+        }
+        /* 圓點 */
         .t-dot { 
-            width: 8px; height: 8px; background: #cbd5e1; border-radius: 50%; z-index: 2; 
-            margin-top: 8px; box-shadow: 0 0 0 3px var(--bg-color); transition: 0.3s;
+            width: 10px; height: 10px; background: #fff; border: 2px solid #cbd5e1; 
+            border-radius: 50%; z-index: 2; margin-top: 6px; transition: 0.3s;
         }
-        
-        .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
+
+        /* 呼吸燈效果 (當前時間) */
         .timeline-row.active .t-dot { 
-            background: var(--primary-blue); 
-            box-shadow: 0 0 0 4px var(--light-blue);
-            transform: scale(1.2);
+            background: var(--primary-blue); border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+            animation: pulse 2s infinite;
         }
-        .timeline-row.active .t-line { background: linear-gradient(to bottom, var(--primary-blue) 0%, var(--line-color) 100%); }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0.4); }
+            100% { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); }
+        }
+        /* 讓當前事件的時間也亮起來 */
+        .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.05); transition: 0.3s; }
 
-        .t-card-col { flex: 1; padding-left: 5px; }
-        .t-card {
-            background: var(--card-bg); border-radius: var(--radius); padding: 18px;
-            box-shadow: var(--shadow); position: relative; border-left: 4px solid transparent;
-        }
-        .t-card.type-Transport { border-left-color: #64748b; }
-        .t-card.type-Food { border-left-color: var(--accent-orange); }
-        .t-card.type-Spot { border-left-color: var(--primary-blue); }
+        /* 右側內容 (無框) */
+        .t-content-col { flex: 1; padding-left: 10px; }
         
-        .t-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; line-height: 1.4; }
+        .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
         .t-tag { 
-            font-size: 0.6rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; 
-            color: #64748b; text-transform: uppercase; margin-bottom: 5px; display: inline-block;
+            font-size: 0.65rem; color: #94a3b8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            background: #f1f5f9; padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; gap: 4px;
         }
+        .t-tag i { font-size: 0.7rem; }
         
-        .smart-guide {
-            margin-top: 12px; background: #f8fafc; border-radius: 8px; padding: 12px;
-            border: 1px dashed #cbd5e1;
-        }
-        .guide-head { font-size: 0.75rem; color: var(--primary-blue); font-weight: 700; margin-bottom: 5px; }
-        .guide-text { font-size: 0.85rem; color: #475569; line-height: 1.6; text-align: justify; }
-        .must-eat-tags { margin-top: 8px; display: flex; gap: 5px; flex-wrap: wrap; }
-        .me-tag { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
+        .t-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .t-desc { font-size: 0.9rem; color: var(--text-light); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
 
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-        .action-btn {
-            background: #f1f5f9; border: none; padding: 10px; border-radius: 8px;
-            font-size: 0.85rem; color: var(--text-main); cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 5px;
-            text-decoration: none;
-        }
-        .action-btn.primary { background: var(--light-blue); color: var(--primary-blue); font-weight: 500; }
+        /* 分支切換 */
+        .branch-toggle { margin: 10px 20px 20px; background: #f1f5f9; padding: 4px; border-radius: 10px; display: flex; }
+        .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; color: #64748b; }
+        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* 錢包 & 資訊 & 底部導航 */
-        .wallet-container { padding: 20px; }
-        .balance-card { 
-            background: white; border-radius: 16px; padding: 25px; text-align: center;
-            box-shadow: var(--shadow); margin-bottom: 20px;
-        }
-        .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        .input-std { 
-            padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; 
-            font-size: 1rem; background: #fff; outline: none; transition: 0.2s;
-        }
-        .input-std:focus { border-color: var(--primary-blue); }
-        .btn-add { background: var(--text-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 1.2rem; }
-        .expense-list { margin-top: 20px; }
-        .exp-item { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 0; border-bottom: 1px dashed #e2e8f0; 
-        }
-        .exp-date { font-size: 0.75rem; color: var(--primary-blue); background: var(--light-blue); padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-family: var(--font-num); }
-        .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1rem; padding: 5px; }
-
-        .info-block { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; }
-        .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-
+        /* 底部導航 */
         .bottom-nav {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            border-radius: 50px; padding: 10px 30px;
-            display: flex; justify-content: space-between;
-            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2); z-index: 1000;
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-radius: 50px; padding: 10px 30px;
+            display: flex; justify-content: space-between; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2); z-index: 1000;
             border: 1px solid rgba(255,255,255,0.6);
         }
-        .nav-icon { font-size: 1.3rem; color: #94a3b8; padding: 10px; cursor: pointer; transition: 0.3s; }
-        .nav-icon.active { color: var(--primary-blue); transform: translateY(-2px); }
+        .nav-icon { font-size: 1.3rem; color: #94a3b8; padding: 10px; cursor: pointer; }
+        .nav-icon.active { color: var(--primary-blue); }
 
-        .view-section { display: none; animation: fadeIn 0.4s ease; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.4s; }
+        
+        /* 錢包相關 */
+        .balance-card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin: 20px; }
+        .input-std { width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:10px; font-size:1rem;}
+        .btn-add { width:100%; padding:12px; background:var(--primary-blue); color:white; border:none; border-radius:10px; font-size:1rem;}
+        .exp-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; }
+
+        /* 資訊相關 */
+        .info-card { background: white; border-radius: 12px; padding: 20px; margin: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
-<div id="modalOverlay" class="modal-overlay">
-    <div id="modalTag" class="modal-tag">TAG</div>
-    <div class="modal-content-box">
-        <div id="modalMain" class="modal-jp">Text</div>
-        <div id="modalSub" class="modal-sub">Sub</div>
+<div id="detailModal" class="modal-overlay">
+    <div class="modal-card">
+        <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        
+        <div class="modal-header">
+            <div>
+                <span class="modal-time" id="mTime">10:00</span>
+                <span class="modal-type" id="mType">TRANSPORT</span>
+                <div class="modal-title" id="mTitle">標題</div>
+            </div>
+        </div>
+
+        <div class="modal-desc" id="mDesc">描述內容...</div>
+
+        <a href="#" id="mNavBtn" target="_blank" class="nav-btn-large">
+            <i class="fas fa-location-arrow"></i> 開啟導航
+        </a>
+
+        <div style="margin-top:20px;"></div>
+
+        <div id="mResvSection" class="modal-section" style="display:none;">
+            <span class="sec-title">預約資訊 RESERVATION</span>
+            <div id="mResvContent" style="font-family:monospace; font-size:1.1rem; color:#333;"></div>
+        </div>
+
+        <div id="mPointSection" class="modal-section" style="display:none; background:#fff7ed; border-color:#ffedd5;">
+            <span class="sec-title" style="color:#c2410c;">給店員看 POINT & SPEAK</span>
+            <div class="big-text-box">
+                <div class="big-jp" id="mBigJp">日本語</div>
+                <div class="big-sub" id="mBigSub">中文意思</div>
+            </div>
+        </div>
+
+        <div id="mDriverSection" class="modal-section" style="display:none; background:#ecfccb; border-color:#d9f99d;">
+            <span class="sec-title" style="color:#365314;">給司機看 TO DRIVER</span>
+            <div class="big-text-box">
+                <div class="big-jp" id="mDriverAddr" style="font-size:1.5rem;">地址</div>
+                <div class="big-sub">請帶我到這裡</div>
+            </div>
+        </div>
+
+        <div id="mGuideSection" class="modal-section" style="display:none;">
+            <span class="sec-title"><i class="fas fa-robot"></i> 智能導遊 GUIDE</span>
+            <div id="mGuideText" style="font-size:0.9rem; line-height:1.6; color:#475569;"></div>
+            <div id="mMustEat" style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;"></div>
+        </div>
+
     </div>
-    <button class="modal-close" onclick="closeModal()">關閉 Close</button>
 </div>
 
 <header>
@@ -314,17 +275,15 @@
 </header>
 
 <div id="view-trip" class="view-section active">
-    
     <div class="date-scroller" id="dateScroller"></div>
 
     <div class="hero-section">
         <div class="day-vertical" id="dayVertical">第一天</div>
-        
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
-                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
+                    <span style="font-size:0.85rem; color:rgba(255,255,255,0.9)" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
                 </div>
                 <h2 class="hero-title" id="heroTitle">抵達。新宿</h2>
             </div>
@@ -334,13 +293,12 @@
     <div class="weather-container">
         <div class="weather-header">
             <div>
-                <div class="weather-loc" id="wLoc">Tokyo</div>
+                <div class="weather-loc" style="font-family:var(--font-serif); font-size:1.8rem;" id="wLoc">Tokyo</div>
                 <div class="weather-sub">未來 24 小時預報</div>
             </div>
             <i class="fas fa-sun" style="font-size:1.8rem; color:var(--primary-blue)"></i>
         </div>
         <div class="weather-strip" id="weatherStrip"></div>
-        
         <div class="hotel-bar">
             <div class="hotel-line"></div>
             <div>
@@ -351,89 +309,29 @@
     </div>
 
     <div class="branch-toggle" id="branchToggle" style="display:none;">
-        <button class="branch-btn active" onclick="switchBranch('A')"><i class="fas fa-sun"></i> 晴天方案</button>
-        <button class="branch-btn" onclick="switchBranch('B')"><i class="fas fa-snowflake"></i> 雪天備案</button>
+        <button class="branch-btn active" onclick="switchBranch('A')">☀️ 晴天方案</button>
+        <button class="branch-btn" onclick="switchBranch('B')">❄️ 雪天備案</button>
     </div>
 
     <div class="timeline-wrapper" id="timelineList"></div>
 </div>
 
 <div id="view-wallet" class="view-section">
-    <div class="wallet-container">
-        <div class="balance-card" style="padding:15px; margin-bottom:15px;">
-            <div style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:10px; font-weight:700;">匯率計算 (0.22)</div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <input type="number" id="calcJpy" class="input-std" placeholder="JPY" oninput="calcRate('jpy')" style="flex:1; text-align:right;">
-                <i class="fas fa-exchange-alt" style="color:#cbd5e1"></i>
-                <input type="number" id="calcTwd" class="input-std" placeholder="TWD" oninput="calcRate('twd')" style="flex:1; text-align:right;">
-            </div>
-        </div>
-
-        <div class="balance-card">
-            <div style="color:#94a3b8; font-size:0.8rem; margin-bottom:5px;">總支出 Total (TWD)</div>
-            <div style="font-size:2.5rem; font-family:var(--font-serif); color:var(--text-main); font-weight:700;" id="totalDisplay">$0</div>
-            
-            <div style="margin-top:20px;">
-                <div class="input-row">
-                    <input type="date" id="expDate" class="input-std" style="width:130px; font-size:0.9rem;">
-                    <input type="text" id="expName" class="input-std" style="flex:1;" placeholder="項目">
-                </div>
-                <div class="input-row">
-                    <input type="number" id="expCost" class="input-std" style="flex:1;" placeholder="日幣金額">
-                    <button class="btn-add" onclick="addExpense()">+</button>
-                </div>
-            </div>
-
-            <div class="expense-list" id="expenseList"></div>
-            
-            <button onclick="clearAllExpenses()" style="width:100%; border:none; background:none; color:#ef4444; margin-top:20px; font-size:0.9rem;">清除所有紀錄</button>
-        </div>
+    <div class="balance-card">
+        <h3>記帳本 Wallet</h3>
+        <div style="margin:20px 0; font-size:2rem; font-weight:700;" id="totalDisplay">$0</div>
+        <input type="text" id="expName" class="input-std" placeholder="項目">
+        <input type="number" id="expCost" class="input-std" placeholder="日幣金額">
+        <button class="btn-add" onclick="addExpense()">新增支出</button>
+        <div class="expense-list" id="expenseList"></div>
     </div>
 </div>
 
 <div id="view-info" class="view-section">
-    <div class="wallet-container">
-        <div class="info-block">
-            <div class="info-title"><i class="fas fa-plane-departure"></i> 航班資訊 Flight</div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px dashed #e2e8f0; padding-bottom:12px;">
-                <div>
-                    <div style="font-weight:700;">CI 100 (去程)</div>
-                    <div style="font-size:0.85rem; color:#64748b;">09:30 TPE ➝ 13:30 NRT</div>
-                </div>
-                <div style="color:var(--primary-blue); font-size:0.8rem; background:var(--light-blue); padding:4px 8px; border-radius:6px; height:fit-content;">已確認</div>
-            </div>
-            <div style="display:flex; justify-content:space-between;">
-                <div>
-                    <div style="font-weight:700;">CI 109 (回程)</div>
-                    <div style="font-size:0.85rem; color:#64748b;">20:00 NRT ➝ 22:55 TPE</div>
-                </div>
-                <div style="color:var(--primary-blue); font-size:0.8rem; background:var(--light-blue); padding:4px 8px; border-radius:6px; height:fit-content;">已確認</div>
-            </div>
-        </div>
-
-        <div class="info-block">
-            <div class="info-title"><i class="fas fa-ticket-alt"></i> 預約代碼</div>
-            <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] 中華航空</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">5IPVMR</div>
-            </div>
-            <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] Budget</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">RC-2026-888</div>
-            </div>
-            <div style="margin-bottom:10px;">
-                <div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Yksi Stay</div>
-                <div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023</div>
-            </div>
-        </div>
-
-        <div class="info-block">
-            <div class="info-title"><i class="fas fa-exclamation-circle"></i> 緊急聯絡</div>
-            <div class="btn-grid">
-                <a href="tel:110" class="action-btn"><i class="fas fa-user-shield"></i> 警察 110</a>
-                <a href="tel:119" class="action-btn"><i class="fas fa-ambulance"></i> 救護 119</a>
-            </div>
-        </div>
+    <div class="info-card">
+        <h3>航班資訊</h3>
+        <div style="margin-bottom:10px;"><b>CI 100</b> 09:30 TPE ➝ 13:30 NRT</div>
+        <div><b>CI 109</b> 20:00 NRT ➝ 22:55 TPE</div>
     </div>
 </div>
 
@@ -444,99 +342,81 @@
 </nav>
 
 <script>
-    const RATE = 0.22;
-    let currentBranch = 'A'; 
-    let currentDayIdx = 0;
-
+    // --- Data ---
     const itineraryData = [
         {
-            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
+            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "抵達。新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", icon: "car", type: "Transport", desc: "UGO 送機" },
-                { time: "07:30", type: "Transport", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)", icon: "fa-plane" },
+                { time: "06:30", type: "Transport", title: "出發", desc: "UGO 送機", icon: "fa-car" },
+                { time: "07:30", type: "Transport", title: "TPE 桃園機場", desc: "中華航空 CI 100", icon: "fa-plane" },
                 { time: "15:14", type: "Transport", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站", icon: "fa-train" },
                 { 
-                    time: "18:00", type: "Food", title: "牛かつもと村", desc: "炸牛排定食",
-                    guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名，外酥內生。請將牛排放在眼前的石盤上炙燒，聽到「滋滋」聲約3秒翻面，搭配山葵與特製醬油，口感外酥內嫩，白飯還可以免費續加！",
-                    mustEat: ["炸牛排定食", "山藥泥"],
+                    time: "18:00", type: "Food", title: "牛かつもと村", desc: "炸牛排定食", icon: "fa-utensils",
+                    guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名。請將牛排放在石盤上炙燒，搭配山葵享用。",
                     pointSpeak: { jp: "牛かつ定食をください", sub: "請給我炸牛排定食" }
                 },
-                { time: "22:30", type: "Food", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
+                { time: "22:30", type: "Food", title: "一蘭拉麵", desc: "新宿中央東口店", icon: "fa-bowl-rice", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
             ]
         },
         {
-            day: 2, dayCN: "第二天", date: "27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
+            day: 2, dayCN: "第二天", date: "27", week: "TUE", title: "忍野八海", heroCity: "忍野村",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
-                { time: "09:45", type: "Transport", title: "Budget 租車", desc: "河口湖站前店", icon: "fa-car" },
+                { time: "09:45", type: "Transport", title: "Budget 租車", desc: "河口湖站前店取車", icon: "fa-car", resv: "RC-2026-888" },
                 { 
-                    time: "10:45", type: "Spot", title: "忍野八海", desc: "神之泉湧池", addressJP: "山梨県南都留郡忍野村忍草",
-                    guide: "【世界遺產】忍野八海是富士山融雪經過80年過濾後的湧泉群。其中「湧池」最深最藍，清澈見底。推薦在池邊買現烤的「草餅」，裡面包著紅豆餡，熱熱吃超幸福。",
+                    time: "10:45", type: "Spot", title: "忍野八海", desc: "神之泉湧池", icon: "fa-water", addressJP: "山梨県南都留郡忍野村忍草",
+                    guide: "【世界遺產】富士山融雪過濾後的湧泉群。推薦現烤草餅。",
                     mustEat: ["草餅", "泉水豆腐"]
                 },
-                { time: "12:00", type: "Food", title: "こし路 (Koshiji)", desc: "在地人食堂", mustEat: ["牛肉燴飯"] }
+                { time: "12:00", type: "Food", title: "こし路", desc: "在地人食堂", icon: "fa-utensils", mustEat: ["牛肉燴飯"] }
             ]
         },
         {
-            day: 3, dayCN: "第三天", date: "28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖",
+            day: 3, dayCN: "第三天", date: "28", week: "WED", title: "河口湖深度", heroCity: "河口湖",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
             hasBranch: true,
             eventsA: [
-                { 
-                    time: "10:45", type: "Food", title: "手打うどん 彩花", desc: "吉田烏龍麵",
-                    guide: "【全日本最硬】吉田烏龍麵以「嚼勁」著稱。彩花的麵條非常扎實，湯頭是味噌與醬油混合。配料通常有馬肉和高麗菜，加一點桌上的特製辣醬更對味。",
-                    mustEat: ["肉烏龍麵", "冷烏龍"],
-                    pointSpeak: { jp: "肉うどん", sub: "肉烏龍麵" }
-                },
-                { time: "12:15", type: "Spot", title: "天上山公園纜車", desc: "兔子神社", addressJP: "天上山公園" },
-                { 
-                    time: "14:30", type: "Spot", title: "天空鳥居", desc: "河口湖遙拝所", addressJP: "河口浅間神社",
-                    guide: "【IG打卡聖地】需爬一小段山路才能到達。這裡是拍攝「鳥居框住富士山」的絕佳地點。建議使用廣角鏡頭，由下往上仰拍，氣勢滿分。",
-                }
+                { time: "10:45", type: "Food", title: "手打うどん 彩花", desc: "吉田烏龍麵", icon: "fa-utensils", pointSpeak: {jp: "肉うどん", sub: "肉烏龍麵"} },
+                { time: "12:15", type: "Spot", title: "天上山公園", desc: "兔子神社纜車", icon: "fa-mountain" },
+                { time: "14:30", type: "Spot", title: "天空鳥居", desc: "河口湖遙拝所", icon: "fa-torii-gate", addressJP: "河口浅間神社" }
             ],
             eventsB: [
-                { time: "11:00", type: "Food", title: "不動茶屋", desc: "餺飥麵", guide: "雪天必吃！這是山梨縣的鄉土料理，南瓜湯頭濃郁甘甜。" },
-                { time: "12:30", type: "Spot", title: "音樂盒之森美術館", desc: "室內避雪", addressJP: "河口湖音楽と森の美術館" }
+                { time: "11:00", type: "Food", title: "不動茶屋", desc: "餺飥麵", icon: "fa-utensils" },
+                { time: "12:30", type: "Spot", title: "音樂盒之森", desc: "室內避雪", icon: "fa-music" }
             ]
         },
         {
-            day: 4, dayCN: "第四天", date: "29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市",
+            day: 4, dayCN: "第四天", date: "29", week: "THU", title: "下吉田", heroCity: "吉田市",
             loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
             bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
             events: [
-                { 
-                    time: "12:00", type: "Spot", title: "新倉山淺間公園", desc: "五重塔與富士山", addressJP: "新倉山浅間公園",
-                    guide: "【明信片風景】這裡就是那張著名的「櫻花+五重塔+富士山」拍攝地。雖然要爬398階樓梯，但山頂的景色絕對值得！",
-                },
-                { 
-                    time: "19:30", type: "Food", title: "焼肉うしふじ", desc: "A5和牛燒肉",
-                    guide: "【高級饗宴】行程最後一晚的犒賞。這家店提供A5等級的黑毛和牛，建議點「稀有部位拼盤」。裝潢時尚，是完美的Ending。",
-                    mustEat: ["稀有部位拼盤", "生拌牛肉"],
-                    pointSpeak: { jp: "本日の厳選和牛", sub: "今日嚴選和牛" }
-                }
+                { time: "12:00", type: "Spot", title: "新倉山淺間公園", desc: "五重塔與富士山", icon: "fa-camera", addressJP: "新倉山浅間公園" },
+                { time: "19:30", type: "Food", title: "焼肉うしふじ", desc: "A5和牛", icon: "fa-fire", mustEat: ["稀有部位拼盤"] }
             ]
         },
         {
-            day: 5, dayCN: "第五天", date: "30", week: "FRI", title: "依依不捨－捨不得回家", heroCity: "東京都",
+            day: 5, dayCN: "第五天", date: "30", week: "FRI", title: "回家", heroCity: "東京都",
             loc: "Shinjuku", hotel: "溫暖的家",
             bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
             events: [
-                { time: "08:45", type: "Food", title: "らぁ麺や 嶋", desc: "超人氣拉麵", addressJP: "東京都渋谷区西原3-7-1" },
-                { time: "15:08", type: "Transport", title: "NEX 37號", desc: "前往成田機場", icon: "fa-train" },
+                { time: "08:45", type: "Food", title: "らぁ麺や 嶋", desc: "超人氣拉麵", icon: "fa-utensils" },
+                { time: "15:08", type: "Transport", title: "NEX 37號", desc: "前往機場", icon: "fa-train" },
                 { time: "19:30", type: "Transport", title: "CI 109 回程", desc: "NRT ➝ TPE", icon: "fa-plane" }
             ]
         }
     ];
 
+    let currentDayIdx = 0;
+    let currentBranch = 'A';
+
     function init() {
         renderDateScroller();
         switchDay(0);
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('expDate').value = today;
+        renderWeather();
         loadExpenses();
     }
 
@@ -553,22 +433,18 @@
     function switchDay(idx) {
         currentDayIdx = idx;
         const data = itineraryData[idx];
-        
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
-
-        // Update Hero Section
+        
+        document.getElementById('dayVertical').innerText = data.dayCN;
         document.getElementById('heroCard').style.backgroundImage = `url('${data.bg}')`;
-        document.getElementById('dayVertical').innerText = data.dayCN; // 直排文字
         document.getElementById('heroDay').innerText = `DAY ${data.day}`;
-        document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`; // 城市
+        document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`;
         document.getElementById('heroTitle').innerText = data.title;
         document.getElementById('wLoc').innerText = data.loc;
         document.getElementById('hotelName').innerText = data.hotel;
-
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
 
         renderTimeline(data);
-        renderWeather();
     }
 
     function switchBranch(type) {
@@ -579,46 +455,52 @@
     }
 
     function renderTimeline(data) {
-        const container = document.getElementById('timelineList');
-        let events = data.events;
-        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
-
-        const mockNow = "11:30"; 
+        const list = document.getElementById('timelineList');
+        let events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
         
-        container.innerHTML = events.map(evt => {
-            const isActive = (data.day === 2 && evt.time === "10:45") ? 'active' : '';
-
-            let btns = '';
-            btns += `<a href="https://www.google.com/maps/search/?api=1&query=${evt.title}" target="_blank" class="action-btn"><i class="fas fa-location-arrow"></i> 導航</a>`;
-            if(evt.pointSpeak) btns += `<button onclick="openModal('POINT & SPEAK', '${evt.pointSpeak.jp}', '${evt.pointSpeak.sub}')" class="action-btn primary"><i class="fas fa-hand-point-up"></i> 給店員看</button>`;
-            if(evt.addressJP) btns += `<button onclick="openModal('TO DRIVER', '${evt.addressJP}', '${evt.title}')" class="action-btn"><i class="fas fa-taxi"></i> 給司機看</button>`;
-
-            let guideHTML = '';
-            if(evt.guide) {
-                const tags = evt.mustEat ? evt.mustEat.map(f => `<span class="me-tag">#${f}</span>`).join('') : '';
-                guideHTML = `
-                <div class="smart-guide">
-                    <div class="guide-head"><i class="fas fa-robot"></i> 智能導遊 Smart Guide</div>
-                    <div class="guide-text">${evt.guide}</div>
-                    <div class="must-eat-tags">${tags}</div>
-                </div>`;
+        // 呼吸燈邏輯：比對現在時間
+        const now = new Date();
+        const curMin = now.getHours() * 60 + now.getMinutes(); 
+        
+        list.innerHTML = events.map((evt, idx) => {
+            // 解析事件時間 "07:30" -> 450
+            const [hh, mm] = evt.time.split(':').map(Number);
+            const evtMin = hh * 60 + mm;
+            
+            // 找出「下一個事件」的時間，用來判斷區間
+            let nextEvtMin = 9999;
+            if(idx < events.length - 1) {
+                const [nh, nm] = events[idx+1].time.split(':').map(Number);
+                nextEvtMin = nh * 60 + nm;
             }
 
+            // 判斷：現在時間 >= 事件時間 且 < 下一個事件時間
+            const isActive = (curMin >= evtMin && curMin < nextEvtMin);
+            const activeClass = isActive ? 'active' : '';
+
+            // 處理圖標
+            let iconHtml = '';
+            if(evt.icon) iconHtml = `<i class="fas ${evt.icon}"></i>`;
+
+            // 將事件數據轉為 JSON 字串存入 onclick，方便開啟 Modal
+            // 注意：要處理引號跳脫
+            const evtJson = JSON.stringify(evt).replace(/"/g, '&quot;');
+
             return `
-            <div class="timeline-row ${isActive}">
-                <div class="t-time-col">${evt.time}</div>
+            <div class="timeline-row ${activeClass}" onclick="openDetailModal(${evtJson})">
+                <div class="t-time-col">
+                    ${evt.time}
+                </div>
                 <div class="t-line-col">
                     <div class="t-dot"></div>
                     <div class="t-line"></div>
                 </div>
-                <div class="t-card-col">
-                    <div class="t-card type-${evt.type}">
-                        <span class="t-tag">${evt.type}</span>
-                        <div class="t-title">${evt.title}</div>
-                        <div style="font-size:0.9rem; color:#64748b;">${evt.desc || ''}</div>
-                        ${guideHTML}
-                        <div class="btn-grid">${btns}</div>
+                <div class="t-content-col">
+                    <div class="t-tag-row">
+                        <span class="t-tag">${iconHtml} ${evt.type}</span>
                     </div>
+                    <div class="t-title">${evt.title}</div>
+                    <div class="t-desc">${evt.desc}</div>
                 </div>
             </div>`;
         }).join('');
@@ -629,85 +511,89 @@
         let html = '';
         for(let i=0; i<8; i++) {
             let t = 9 + i*2;
-            html += `
-            <div class="w-col">
-                <div class="w-time">${t}:00</div>
-                <div class="w-icon"><i class="fas fa-sun"></i></div>
-                <div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div>
-            </div>`;
+            html += `<div class="w-col"><div class="w-time">${t}:00</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10+Math.floor(Math.random()*5)}°</div></div>`;
         }
         el.innerHTML = html;
     }
 
-    function openModal(tag, main, sub) {
-        document.getElementById('modalTag').innerText = tag;
-        document.getElementById('modalMain').innerText = main;
-        document.getElementById('modalSub').innerText = sub;
-        document.getElementById('modalOverlay').classList.add('active');
-    }
-    function closeModal() {
-        document.getElementById('modalOverlay').classList.remove('active');
-    }
-
-    function calcRate(src) {
-        const jpy = document.getElementById('calcJpy');
-        const twd = document.getElementById('calcTwd');
-        if(src==='jpy') twd.value = Math.round(jpy.value * RATE);
-        else jpy.value = Math.round(twd.value / RATE);
-    }
-
-    function addExpense() {
-        const date = document.getElementById('expDate').value;
-        const name = document.getElementById('expName').value;
-        const cost = parseInt(document.getElementById('expCost').value);
-        if(!date || !name || !cost) return alert("請填寫完整資訊");
-
-        const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        data.push({ id: Date.now(), date: date.slice(5), name, cost });
-        localStorage.setItem('tripExp2026', JSON.stringify(data));
+    // --- Modal Logic ---
+    function openDetailModal(evt) {
+        document.getElementById('mTime').innerText = evt.time;
+        document.getElementById('mType').innerText = evt.type;
+        document.getElementById('mTitle').innerText = evt.title;
+        document.getElementById('mDesc').innerText = evt.desc;
         
-        document.getElementById('expName').value = '';
-        document.getElementById('expCost').value = '';
-        loadExpenses();
-    }
+        // 導航連結
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(evt.title)}`;
+        document.getElementById('mNavBtn').href = mapUrl;
 
-    function delExpense(id) {
-        let data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        data = data.filter(i => i.id !== id);
-        localStorage.setItem('tripExp2026', JSON.stringify(data));
-        loadExpenses();
-    }
-
-    function clearAllExpenses() {
-        if(confirm("確定刪除全部紀錄？")) {
-            localStorage.removeItem('tripExp2026');
-            loadExpenses();
+        // 預約資訊 (如有 resv)
+        const resvSec = document.getElementById('mResvSection');
+        if(evt.resv) {
+            resvSec.style.display = 'block';
+            document.getElementById('mResvContent').innerText = evt.resv;
+        } else {
+            resvSec.style.display = 'none';
         }
+
+        // Point & Speak
+        const ptSec = document.getElementById('mPointSection');
+        if(evt.pointSpeak) {
+            ptSec.style.display = 'block';
+            document.getElementById('mBigJp').innerText = evt.pointSpeak.jp;
+            document.getElementById('mBigSub').innerText = evt.pointSpeak.sub;
+        } else {
+            ptSec.style.display = 'none';
+        }
+
+        // Driver
+        const drSec = document.getElementById('mDriverSection');
+        if(evt.addressJP) {
+            drSec.style.display = 'block';
+            document.getElementById('mDriverAddr').innerText = evt.addressJP;
+        } else {
+            drSec.style.display = 'none';
+        }
+
+        // Guide
+        const guSec = document.getElementById('mGuideSection');
+        if(evt.guide) {
+            guSec.style.display = 'block';
+            document.getElementById('mGuideText').innerText = evt.guide;
+            const eats = evt.mustEat ? evt.mustEat.map(f=>`<span style="background:#fff7ed;color:#c2410c;padding:2px 8px;border-radius:10px;font-size:0.7rem;border:1px solid #ffedd5;">#${f}</span>`).join('') : '';
+            document.getElementById('mMustEat').innerHTML = eats;
+        } else {
+            guSec.style.display = 'none';
+        }
+
+        document.getElementById('detailModal').classList.add('active');
     }
 
+    function closeModal() {
+        document.getElementById('detailModal').classList.remove('active');
+    }
+
+    // --- Wallet ---
+    const RATE = 0.22;
+    function addExpense() {
+        const name = document.getElementById('expName').value;
+        const cost = document.getElementById('expCost').value;
+        if(!name || !cost) return;
+        const data = JSON.parse(localStorage.getItem('tripExp2026')||'[]');
+        data.push({name, cost: parseInt(cost), date: new Date().toLocaleDateString()});
+        localStorage.setItem('tripExp2026', JSON.stringify(data));
+        document.getElementById('expName').value=''; document.getElementById('expCost').value='';
+        loadExpenses();
+    }
     function loadExpenses() {
-        const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
+        const data = JSON.parse(localStorage.getItem('tripExp2026')||'[]');
         const list = document.getElementById('expenseList');
         let total = 0;
-        
-        list.innerHTML = data.reverse().map(item => {
-            total += item.cost;
-            const twd = Math.round(item.cost * RATE);
-            return `
-            <div class="exp-item">
-                <div style="flex:1">
-                    <span class="exp-date">${item.date}</span>
-                    <span style="font-size:0.95rem;">${item.name}</span>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-weight:700;">¥${item.cost.toLocaleString()}</div>
-                    <div style="font-size:0.75rem; color:#94a3b8;">$${twd.toLocaleString()}</div>
-                </div>
-                <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
-            </div>`;
+        list.innerHTML = data.map(i => {
+            total += i.cost;
+            return `<div class="exp-item"><span>${i.name}</span><span>¥${i.cost}</span></div>`;
         }).join('');
-
-        document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
+        document.getElementById('totalDisplay').innerText = '$'+Math.round(total*RATE).toLocaleString();
     }
 
     function switchView(view, btn) {
