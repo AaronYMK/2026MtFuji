@@ -132,7 +132,7 @@
         .calc-label { font-weight: bold; color: #64748b; width: 50px; font-size: 0.9rem; }
         .calc-input { flex: 1; border: none; background: transparent; font-size: 1.2rem; text-align: right; outline: none; font-family: var(--font-num); }
         
-        /* 雙向切換按鈕 */
+        /* 雙向切換按鈕 (垂直) */
         .calc-swap-btn {
             background: #fff; border: 1px solid #e2e8f0; border-radius: 50%; width: 30px; height: 30px;
             display: flex; align-items: center; justify-content: center; margin: -15px auto;
@@ -141,19 +141,27 @@
         }
         .calc-swap-btn:active { transform: scale(0.9); }
 
-        /* 自定義日期選擇器樣式 */
+        /* 日期選擇器按鈕放大優化 */
         .date-picker-wrapper {
             display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-            color: #94a3b8; font-size: 0.8rem; margin-bottom: 5px; cursor: pointer;
+            color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; cursor: pointer;
+            padding: 5px 10px; border-radius: 8px; transition: 0.2s; /* 增加點擊區域 */
         }
-        .date-picker-input {
-            border: none; background: transparent; font-size: 0.8rem; color: #94a3b8; 
-            font-family: inherit; width: 100px; text-align: center; outline: none;
+        .date-picker-wrapper:active { background: #f1f5f9; }
+        .date-chevron {
+            font-size: 0.7rem; transform: scale(1.5); /* 放大箭頭 */
+            margin-left: 5px; color: var(--primary-blue);
         }
 
-        .input-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        /* 項目框框縮短 */
+        .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .input-std { padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: #fff; outline: none; }
-        .btn-add { background: var(--text-main); color: white; border: none; padding: 0 15px; border-radius: 10px; font-size: 1.2rem; }
+        .input-name { width: 60%; } /* 縮短項目框框 */
+        .input-cost { flex: 1; }    /* 金額框框自適應 */
+        .btn-add { 
+            background: var(--text-main); color: white; border: none; padding: 0; width: 45px; height: 45px; 
+            border-radius: 10px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+        }
         
         .expense-list { margin-top: 20px; }
         .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #e2e8f0; }
@@ -245,7 +253,7 @@
                     <span class="calc-label" id="labelTop">JPY</span>
                     <input type="number" id="inputTop" class="calc-input" placeholder="0" oninput="calcRate('top')">
                 </div>
-                <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-exchange-alt"></i></button>
+                <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-arrows-alt-v"></i></button>
                 <div class="calc-row" id="rowBottom">
                     <span class="calc-label" id="labelBottom">TWD</span>
                     <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
@@ -256,7 +264,7 @@
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
                 總支出 Total ( <span id="displayDateLabel">12月30日</span> )
-                <i class="fas fa-chevron-down" style="font-size:0.6rem"></i>
+                <i class="fas fa-chevron-down date-chevron"></i>
             </div>
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
 
@@ -264,8 +272,8 @@
             
             <div style="margin-top:20px;">
                 <div class="input-row">
-                    <input type="text" id="expName" class="input-std" style="flex:1;" placeholder="項目">
-                    <input type="number" id="expCost" class="input-std" style="width:100px;" placeholder="日幣">
+                    <input type="text" id="expName" class="input-std input-name" placeholder="項目">
+                    <input type="number" id="expCost" class="input-std input-cost" placeholder="日幣">
                     <button class="btn-add" onclick="addExpense()">+</button>
                 </div>
             </div>
@@ -318,7 +326,7 @@
 
     const itineraryData = [
         {
-            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "抵達。新宿", heroCity: "東京都",
+            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
@@ -408,7 +416,7 @@
         // 設定預設日期為今天
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('expDate').value = today;
-        updateDateLabel(today); // 初始化日期標籤
+        updateDateLabel(today);
         
         loadExpenses();
         
@@ -421,7 +429,6 @@
     // --- 日期格式處理 ---
     function updateDateLabel(dateStr) {
         const d = new Date(dateStr);
-        // 顯示為 12月30日
         const label = `${d.getMonth() + 1}月${d.getDate()}日`;
         document.getElementById('displayDateLabel').innerText = label;
     }
@@ -455,14 +462,10 @@
         const target = document.getElementById(pos === 'top' ? 'inputBottom' : 'inputTop');
         
         if (isJpyTop) {
-            // 上(JPY) -> 下(TWD)
             if(pos === 'top') target.value = Math.round(val * RATE);
-            // 下(TWD) -> 上(JPY)
             else target.value = Math.round(val / RATE);
         } else {
-            // 上(TWD) -> 下(JPY)
             if(pos === 'top') target.value = Math.round(val / RATE);
-            // 下(JPY) -> 上(TWD)
             else target.value = Math.round(val * RATE);
         }
     }
