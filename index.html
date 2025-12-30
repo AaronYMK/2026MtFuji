@@ -15,13 +15,21 @@
     
     <style>
         :root {
+            /* 基礎色系 */
             --bg-color: #fcfcfc;
             --text-main: #334155;
             --text-light: #94a3b8;
             --primary-blue: #0ea5e9;
             --light-blue: #e0f2fe;
-            --line-color: #bae6fd;
-            --accent-orange: #f97316;
+            
+            /* 新的類別顏色 (舒適色調) */
+            --col-transport: #ef4444; /* 交通: 紅色 */
+            --col-food: #3b82f6;      /* 餐飲: 藍色 */
+            --col-sight: #f97316;     /* 景點: 橘色 */
+            
+            /* 時間軸線條顏色 */
+            --line-color: #e2e8f0;    /* 淺灰色 */
+
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
             --font-num: 'Lato', sans-serif;
@@ -38,7 +46,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal --- */
+        /* --- Modal (詳細資訊卡片) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.95); z-index: 2000; display: none;
@@ -49,43 +57,95 @@
         .modal-overlay.active { display: flex; }
         @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
         
-        .modal-scroll-area { width: 100%; max-height: 80vh; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
-        .modal-tag { color: var(--primary-blue); border: 1px solid var(--primary-blue); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 2px; }
-        .modal-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 800; line-height: 1.3; margin-bottom: 15px; color: #0f172a; word-break: keep-all; }
+        .modal-scroll-area {
+            width: 100%; max-height: 80vh; overflow-y: auto; 
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .modal-tag {
+            color: var(--text-light); border: 1px solid var(--text-light);
+            padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 2px;
+        }
+        .modal-title {
+            font-family: var(--font-serif); font-size: 2.5rem; font-weight: 800;
+            line-height: 1.3; margin-bottom: 15px; color: #0f172a; word-break: keep-all;
+        }
         .modal-desc { font-size: 1rem; color: #64748b; margin-bottom: 30px; line-height: 1.6; max-width: 90%; }
+        
         .modal-btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
-        .modal-btn { padding: 15px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.2s; }
+        .modal-btn {
+            padding: 15px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.2s;
+        }
         .btn-nav { background: #0f172a; color: white; }
         .btn-speak { background: var(--light-blue); color: var(--primary-blue); font-weight: bold; }
-        .modal-close { margin-top: 40px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; cursor: pointer; }
+        
+        .modal-close {
+            margin-top: 40px; background: transparent; border: none; 
+            color: #94a3b8; font-size: 0.9rem; cursor: pointer;
+        }
 
         /* --- Header --- */
-        header { background: rgba(252, 252, 252, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
-        .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        header {
+            background: rgba(252, 252, 252, 0.95); backdrop-filter: blur(10px);
+            padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center;
+        }
+        .trip-tag {
+            font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue);
+            font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px;
+        }
         .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; }
-        .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
+        .trip-badge { 
+            background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px;
+            border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px;
+        }
 
-        /* --- Date Scroller --- */
-        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(252, 252, 252, 0.95); border-bottom: 1px solid #f1f5f9; }
+        /* --- 日期滾動條 --- */
+        .date-scroller {
+            display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px;
+            scrollbar-width: none; background: rgba(252, 252, 252, 0.95);
+            border-bottom: 1px solid #f1f5f9;
+        }
         .date-scroller::-webkit-scrollbar { display: none; }
-        .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #cbd5e1; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
+        .date-item {
+            display: flex; flex-direction: column; align-items: center; min-width: 45px;
+            color: #cbd5e1; cursor: pointer; transition: all 0.3s;
+            position: relative; padding-bottom: 15px;
+        }
         .date-item.active { color: var(--text-main); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
+        
+        .date-item::after {
+            content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
         .date-item.active::after { opacity: 1; }
 
-        /* --- Hero --- */
+        /* --- Hero Section --- */
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; }
-        .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.3em; }
-        .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); }
-        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); color: white; }
+        .day-vertical {
+            writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem;
+            font-weight: 700; color: var(--text-main); letter-spacing: 0.3em;
+        }
+        .hero-card {
+            flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative;
+            background-size: cover; background-position: center; display: flex; align-items: flex-end;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15);
+        }
+        .hero-overlay {
+            width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); color: white;
+        }
         .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .hero-badge { border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; }
+        .hero-badge {
+            border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px);
+            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px;
+        }
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
 
-        /* --- Weather --- */
+        /* --- 天氣與住宿 --- */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: var(--text-main); }
@@ -96,6 +156,7 @@
         .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); }
+
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; }
         .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; }
         .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
@@ -105,25 +166,68 @@
         .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
         .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* --- Timeline --- */
+        /* --- Timeline (無框線 + 左側彩色線條) --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
         .timeline-row { display: flex; position: relative; min-height: 100px; } 
-        .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600; padding-top: 0; }
+        
+        .t-time-col { 
+            width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0;
+            font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600;
+            padding-top: 0;
+        }
+        
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-        .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
+        
+        /* 中間貫穿線改為淺灰色 */
+        .t-line { 
+            width: 2px; background: var(--line-color); 
+            position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; 
+        }
         .timeline-row:last-child .t-line { display: none; }
-        .t-dot { width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
+
+        .t-dot { 
+            width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); 
+            border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s;
+        }
+        
+        /* 亮燈狀態 */
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
-        .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3); }
-        .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; }
-        .t-content-col:active { opacity: 0.7; }
+        .timeline-row.active .t-dot { 
+            background: var(--primary-blue); border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3);
+        }
+        
+        /* 內容區域 */
+        .t-content-col { 
+            flex: 1; padding-left: 15px; padding-bottom: 30px; 
+            cursor: pointer; position: relative;
+        }
+        
+        /* 左側短直線 (不同類別顏色) */
+        .t-bar {
+            position: absolute; left: 0; top: 5px; bottom: 35px; width: 3px; border-radius: 2px;
+        }
+        .type-transport .t-bar { background-color: var(--col-transport); } /* 紅 */
+        .type-car .t-bar { background-color: var(--col-transport); }
+        .type-bus .t-bar { background-color: var(--col-transport); }
+        .type-walk .t-bar { background-color: var(--col-transport); }
+        .type-flight .t-bar { background-color: var(--col-transport); }
+        
+        .type-food .t-bar { background-color: var(--col-food); }           /* 藍 */
+        .type-sightseeing .t-bar { background-color: var(--col-sight); }   /* 橘 */
+
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: var(--text-main); }
+        
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
         .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
-        .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
+        .t-tag-text { 
+            font-size: 0.7rem; color: #94a3b8; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num);
+        }
+        
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* --- Wallet & Info --- */
+        /* --- Wallet --- */
         .wallet-container { padding: 20px; }
         .balance-card { background: white; border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; }
         
@@ -132,7 +236,6 @@
         .calc-label { font-weight: bold; color: #64748b; width: 50px; font-size: 0.9rem; }
         .calc-input { flex: 1; border: none; background: transparent; font-size: 1.2rem; text-align: right; outline: none; font-family: var(--font-num); }
         
-        /* 雙向切換按鈕 (垂直) */
         .calc-swap-btn {
             background: #fff; border: 1px solid #e2e8f0; border-radius: 50%; width: 30px; height: 30px;
             display: flex; align-items: center; justify-content: center; margin: -15px auto;
@@ -141,23 +244,23 @@
         }
         .calc-swap-btn:active { transform: scale(0.9); }
 
-        /* 日期選擇器按鈕放大優化 */
+        /* 日期按鈕放大優化 */
         .date-picker-wrapper {
-            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-            color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; cursor: pointer;
-            padding: 5px 10px; border-radius: 8px; transition: 0.2s; /* 增加點擊區域 */
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            color: #94a3b8; font-size: 1rem; margin-bottom: 5px; cursor: pointer;
+            padding: 8px 16px; border-radius: 20px; background: #f8fafc;
+            border: 1px solid #f1f5f9; transition: 0.2s;
         }
-        .date-picker-wrapper:active { background: #f1f5f9; }
-        .date-chevron {
-            font-size: 0.7rem; transform: scale(1.5); /* 放大箭頭 */
-            margin-left: 5px; color: var(--primary-blue);
-        }
+        .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
+        .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
-        /* 項目框框縮短 */
+        /* 項目與金額欄位平均分配 */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
-        .input-std { padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: #fff; outline: none; }
-        .input-name { width: 60%; } /* 縮短項目框框 */
-        .input-cost { flex: 1; }    /* 金額框框自適應 */
+        .input-std { 
+            padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; 
+            font-size: 1rem; background: #fff; outline: none; 
+            flex: 1; /* 平均分配關鍵 */
+        }
         .btn-add { 
             background: var(--text-main); color: white; border: none; padding: 0; width: 45px; height: 45px; 
             border-radius: 10px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
@@ -272,8 +375,8 @@
             
             <div style="margin-top:20px;">
                 <div class="input-row">
-                    <input type="text" id="expName" class="input-std input-name" placeholder="項目">
-                    <input type="number" id="expCost" class="input-std input-cost" placeholder="日幣">
+                    <input type="text" id="expName" class="input-std" placeholder="項目">
+                    <input type="number" id="expCost" class="input-std" placeholder="日幣">
                     <button class="btn-add" onclick="addExpense()">+</button>
                 </div>
             </div>
@@ -319,10 +422,9 @@
 </nav>
 
 <script>
-    // --- Config & State ---
     let RATE = 0.22;
     let currentBranch = 'A'; 
-    let isJpyTop = true; // true: JPY在上 (JPY->TWD), false: TWD在上 (TWD->JPY)
+    let isJpyTop = true; 
 
     const itineraryData = [
         {
@@ -330,16 +432,16 @@
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", iconType: "car", type: "Transport", desc: "UGO 送機" },
-                { time: "07:30", type: "Transport", iconType: "plane", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)" },
-                { time: "15:14", type: "Transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
+                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機" },
+                { time: "07:30", type: "flight", iconType: "plane", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)" },
+                { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
                 { 
-                    time: "18:00", type: "Food", iconType: "utensils", title: "牛かつもと村", desc: "炸牛排定食 (新宿南口店)",
+                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", desc: "炸牛排定食 (新宿南口店)",
                     guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名，外酥內生。請將牛排放在眼前的石盤上炙燒，聽到「滋滋」聲約3秒翻面，搭配山葵與特製醬油，口感外酥內嫩，白飯還可以免費續加！",
                     pointSpeak: { jp: "牛かつ定食をください", sub: "請給我炸牛排定食" },
                     mapUrl: "https://maps.app.goo.gl/example"
                 },
-                { time: "22:30", type: "Food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
+                { time: "22:30", type: "food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
             ]
         },
         {
@@ -347,14 +449,14 @@
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
-                { time: "09:45", type: "Transport", iconType: "car", title: "Budget 租車", desc: "河口湖站前店取車，請出示護照與駕照譯本" },
+                { time: "09:45", type: "car", iconType: "car", title: "Budget 租車", desc: "河口湖站前店取車，請出示護照與駕照譯本" },
                 { 
-                    time: "10:45", type: "Spot", iconType: "water", title: "忍野八海", desc: "神之泉湧池",
+                    time: "10:45", type: "sightseeing", iconType: "water", title: "忍野八海", desc: "神之泉湧池",
                     guide: "【世界遺產】忍野八海是富士山融雪經過80年過濾後的湧泉群。其中「湧池」最深最藍，清澈見底。推薦在池邊買現烤的「草餅」，裡面包著紅豆餡，熱熱吃超幸福。",
                     addressJP: "山梨県南都留郡忍野村忍草",
                     mapUrl: "https://maps.app.goo.gl/example"
                 },
-                { time: "12:00", type: "Food", iconType: "utensils", title: "こし路 (Koshiji)", desc: "在地人食堂：牛肉燴飯" }
+                { time: "12:00", type: "food", iconType: "utensils", title: "こし路 (Koshiji)", desc: "在地人食堂：牛肉燴飯" }
             ]
         },
         {
@@ -364,20 +466,20 @@
             hasBranch: true,
             eventsA: [
                 { 
-                    time: "10:45", type: "Food", iconType: "utensils", title: "手打うどん 彩花", desc: "吉田烏龍麵",
+                    time: "10:45", type: "food", iconType: "utensils", title: "手打うどん 彩花", desc: "吉田烏龍麵",
                     guide: "【全日本最硬】吉田烏龍麵以「嚼勁」著稱。彩花的麵條非常扎實，湯頭是味噌與醬油混合。配料通常有馬肉和高麗菜，加一點桌上的特製辣醬更對味。",
                     pointSpeak: { jp: "肉うどん", sub: "肉烏龍麵" }
                 },
-                { time: "12:15", type: "Spot", iconType: "mountain", title: "天上山公園纜車", desc: "兔子神社 & 絕景鞦韆" },
+                { time: "12:15", type: "sightseeing", iconType: "mountain", title: "天上山公園纜車", desc: "兔子神社 & 絕景鞦韆" },
                 { 
-                    time: "14:30", type: "Spot", iconType: "torii-gate", title: "天空鳥居", desc: "河口湖遙拝所", 
+                    time: "14:30", type: "sightseeing", iconType: "torii-gate", title: "天空鳥居", desc: "河口湖遙拝所", 
                     guide: "【IG打卡聖地】需爬一小段山路才能到達。這裡是拍攝「鳥居框住富士山」的絕佳地點。建議使用廣角鏡頭，由下往上仰拍，氣勢滿分。",
                     addressJP: "河口湖浅間神社遙拝所"
                 }
             ],
             eventsB: [
-                { time: "11:00", type: "Food", iconType: "utensils", title: "不動茶屋", desc: "餺飥麵 (東戀路店)" },
-                { time: "12:30", type: "Spot", iconType: "music", title: "音樂盒之森美術館", desc: "室內避雪備案", addressJP: "河口湖音楽と森の美術館" }
+                { time: "11:00", type: "food", iconType: "utensils", title: "不動茶屋", desc: "餺飥麵 (東戀路店)" },
+                { time: "12:30", type: "sightseeing", iconType: "music", title: "音樂盒之森美術館", desc: "室內避雪備案", addressJP: "河口湖音楽と森の美術館" }
             ]
         },
         {
@@ -386,12 +488,12 @@
             bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
             events: [
                 { 
-                    time: "12:00", type: "Spot", iconType: "camera", title: "新倉山淺間公園", desc: "五重塔與富士山", 
+                    time: "12:00", type: "sightseeing", iconType: "camera", title: "新倉山淺間公園", desc: "五重塔與富士山", 
                     guide: "【明信片風景】這裡就是那張著名的「櫻花+五重塔+富士山」拍攝地。雖然要爬398階樓梯，但山頂的景色絕對值得！",
                     addressJP: "新倉山浅間公園"
                 },
                 { 
-                    time: "19:30", type: "Food", iconType: "fire", title: "焼肉うしふじ", desc: "A5和牛燒肉",
+                    time: "19:30", type: "food", iconType: "fire", title: "焼肉うしふじ", desc: "A5和牛燒肉",
                     guide: "【高級饗宴】行程最後一晚的犒賞。這家店提供A5等級的黑毛和牛，建議點「稀有部位拼盤」。裝潢時尚，是完美的Ending。",
                     pointSpeak: { jp: "本日の厳選和牛", sub: "今日嚴選和牛" }
                 }
@@ -402,9 +504,9 @@
             loc: "Shinjuku", hotel: "溫暖的家",
             bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
             events: [
-                { time: "08:45", type: "Food", iconType: "utensils", title: "らぁ麺や 嶋", desc: "超人氣拉麵", addressJP: "東京都渋谷区西原3-7-1" },
-                { time: "15:08", type: "Transport", iconType: "train", title: "NEX 37號", desc: "前往成田機場" },
-                { time: "19:30", type: "Transport", iconType: "plane", title: "CI 109 回程", desc: "NRT ➝ TPE" }
+                { time: "08:45", type: "food", iconType: "utensils", title: "らぁ麺や 嶋", desc: "超人氣拉麵", addressJP: "東京都渋谷区西原3-7-1" },
+                { time: "15:08", type: "transport", iconType: "train", title: "NEX 37號", desc: "前往成田機場" },
+                { time: "19:30", type: "flight", iconType: "plane", title: "CI 109 回程", desc: "NRT ➝ TPE" }
             ]
         }
     ];
@@ -412,28 +514,22 @@
     function init() {
         renderDateScroller();
         switchDay(0);
-        
-        // 設定預設日期為今天
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('expDate').value = today;
         updateDateLabel(today);
-        
         loadExpenses();
-        
         updateTimeHighlight();
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
         setInterval(updateRate, 3600000);
     }
 
-    // --- 日期格式處理 ---
     function updateDateLabel(dateStr) {
         const d = new Date(dateStr);
         const label = `${d.getMonth() + 1}月${d.getDate()}日`;
         document.getElementById('displayDateLabel').innerText = label;
     }
 
-    // --- 匯率邏輯 (雙向) ---
     async function updateRate() {
         try {
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
@@ -447,12 +543,8 @@
 
     function swapCurrency() {
         isJpyTop = !isJpyTop;
-        
-        // 交換標籤
         document.getElementById('labelTop').innerText = isJpyTop ? "JPY" : "TWD";
         document.getElementById('labelBottom').innerText = isJpyTop ? "TWD" : "JPY";
-        
-        // 清空輸入框
         document.getElementById('inputTop').value = "";
         document.getElementById('inputBottom').value = "";
     }
@@ -460,7 +552,6 @@
     function calcRate(pos) {
         const val = document.getElementById(pos === 'top' ? 'inputTop' : 'inputBottom').value;
         const target = document.getElementById(pos === 'top' ? 'inputBottom' : 'inputTop');
-        
         if (isJpyTop) {
             if(pos === 'top') target.value = Math.round(val * RATE);
             else target.value = Math.round(val / RATE);
@@ -470,7 +561,6 @@
         }
     }
 
-    // --- 其他渲染邏輯 ---
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
         el.innerHTML = itineraryData.map((d, i) => `
@@ -530,13 +620,14 @@
             }
 
             return `
-            <div class="timeline-row" data-time="${evt.time}">
+            <div class="timeline-row type-${evt.type}" data-time="${evt.time}">
                 <div class="t-time-col">${evt.time}</div>
                 <div class="t-line-col">
                     <div class="t-dot"></div>
                     <div class="t-line"></div>
                 </div>
                 <div class="t-content-col" onclick='openDetailModal(${JSON.stringify(evt)})'>
+                    <div class="t-bar"></div>
                     <div class="t-title">${evt.title}</div>
                     <div class="t-tag-row">
                         <i class="fas ${iconClass} t-tag-icon"></i>
