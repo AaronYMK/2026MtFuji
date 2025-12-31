@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 東京河口湖 】</title>
+    <title>2026 東京河口湖</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -45,7 +45,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal (詳細資訊卡片 - 上方留白 1/5) --- */
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -95,6 +95,7 @@
         }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
+        /* Food Recommendation */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
         .food-rec-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -102,8 +103,8 @@
         }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
-        .rec-name-jp:active { opacity: 0.7; }
 
+        /* Combined Transport Box */
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -126,6 +127,7 @@
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
+        /* Sightseeing */
         .ps-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
             display: flex; justify-content: space-between; align-items: center;
@@ -133,6 +135,7 @@
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
+        /* About Box */
         .about-box { 
             background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
             display: flex; align-items: center; gap: 15px; 
@@ -141,11 +144,13 @@
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
+        /* Vertical Desc */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
+        /* Buttons */
         .m-btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
@@ -169,7 +174,7 @@
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 文字大小一致 */
+        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
@@ -310,6 +315,11 @@
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .action-btn { background: #fff; border: 1px solid #dbeafe; padding: 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; font-weight: 500; cursor: default; }
 
+        /* 記帳功能按鈕群 (匯出/刪除) */
+        .wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-export { flex: 1; background: #fff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
+        .btn-clear { flex: 1; background: #fee2e2; border: none; color: #ef4444; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
+
         .bottom-nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 50px; padding: 12px 35px; display: flex; justify-content: space-between; box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.25); z-index: 1000; border: 1px solid rgba(255,255,255,0.8); }
         .nav-icon { font-size: 1.4rem; color: #94a3b8; padding: 5px; cursor: pointer; transition: 0.3s; }
         .nav-icon.active { color: var(--primary-blue); transform: translateY(-3px); }
@@ -348,7 +358,9 @@
 
 <header>
     <span class="trip-tag">Winter Mt.Fuji</span>
-    <div class="trip-title">河口湖之旅</div>
+    <div class="trip-title">
+        河口湖之旅 <span class="trip-badge">2026</span>
+    </div>
 </header>
 
 <div id="view-trip" class="view-section active">
@@ -420,7 +432,11 @@
                 </div>
             </div>
             <div class="expense-list" id="expenseList"></div>
-            <button onclick="askClearAll()" style="width:100%; border:none; background:none; color:#ef4444; margin-top:20px; font-size:0.9rem;">清除所有紀錄</button>
+            
+            <div class="wallet-actions">
+                <button class="btn-export" onclick="exportExpenses()">匯出紀錄 (TXT)</button>
+                <button class="btn-clear" onclick="askClearAll()">清除所有紀錄</button>
+            </div>
         </div>
     </div>
 </div>
@@ -764,10 +780,7 @@
             // Reservation Combined
             html += `<div class="res-combined-box">
                         <div class="res-top">
-                            <div class="res-left">
-                                <div class="res-label">RESERVATION</div>
-                                <div class="res-tag-abc">ABC</div>
-                            </div>
+                            <div class="res-label">RESERVATION <span class="res-tag-abc">ABC</span></div>
                             <a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a>
                         </div>
                         <div class="res-divider"></div>
@@ -849,18 +862,13 @@
     }
 
     // --- Confirm Modal Logic ---
-    let pendingDeleteId = null; // 用來暫存要刪除的ID
+    let pendingDeleteId = null; 
 
-    // 確認刪除單筆
     function delExpense(id) {
-        pendingDeleteId = id; // 存起來
+        pendingDeleteId = id; 
         document.querySelector('.confirm-text').innerText = "確定要刪除這筆紀錄嗎？";
         document.getElementById('confirmModal').classList.add('active');
-        
-        // 綁定確認按鈕事件
-        document.getElementById('confirmYesBtn').onclick = function() {
-            performDeleteSingle();
-        };
+        document.getElementById('confirmYesBtn').onclick = function() { performDeleteSingle(); };
     }
 
     function performDeleteSingle() {
@@ -871,15 +879,10 @@
         closeConfirm();
     }
 
-    // 確認清除全部
     function askClearAll() {
         document.querySelector('.confirm-text').innerText = "確定要清除所有紀錄嗎？";
         document.getElementById('confirmModal').classList.add('active');
-        
-        // 綁定確認按鈕事件
-        document.getElementById('confirmYesBtn').onclick = function() {
-            performClearAll();
-        };
+        document.getElementById('confirmYesBtn').onclick = function() { performClearAll(); };
     }
 
     function performClearAll() {
@@ -893,17 +896,41 @@
         pendingDeleteId = null;
     }
 
+    // --- Export Logic (TXT) ---
+    function exportExpenses() {
+        const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
+        if(data.length === 0) {
+            alert("目前沒有任何記帳紀錄可匯出！");
+            return;
+        }
+
+        let txtContent = "2026 東京河口湖 - 記帳紀錄\n-------------------------\n";
+        let total = 0;
+        data.reverse().forEach(item => {
+            const twd = Math.round(item.cost * RATE);
+            total += item.cost;
+            txtContent += `${item.date} | ${item.name} | JPY ${item.cost} (TWD ${twd})\n`;
+        });
+        
+        txtContent += "-------------------------\n";
+        txtContent += `總計: JPY ${total} (約 TWD ${Math.round(total * RATE)})`;
+
+        // 建立 Blob 並下載
+        const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "travel_expenses.txt";
+        link.click();
+    }
+
     // --- Utils ---
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            // 靜默複製，不跳窗
-        });
+        navigator.clipboard.writeText(text).then(() => {});
     }
 
     function renderWeather() {
         const el = document.getElementById('weatherStrip');
         let html = '';
-        // 24小時制
         for(let i=0; i<24; i++) {
             let t = i < 10 ? `0${i}:00` : `${i}:00`;
             html += `<div class="w-col"><div class="w-time">${t}</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div></div>`;
