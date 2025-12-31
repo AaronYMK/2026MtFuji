@@ -15,21 +15,19 @@
     
     <style>
         :root {
-            /* 全面藍色系背景設定 */
-            --bg-color: #eff6ff;       /* 網頁背景：淺藍 */
-            --card-bg: #f8fbff;        /* 卡片背景：極淡藍白 */
+            --bg-color: #eff6ff;       
+            --card-bg: #f8fbff;        
             
-            --text-main: #1e3a8a;     /* 深藍色文字 */
+            --text-main: #1e3a8a;     
             --text-light: #64748b;
             
             --primary-blue: #3b82f6;
             --light-blue: #dbeafe;
             --line-color: #bfdbfe;
 
-            /* 類別顏色 */
-            --col-transport: #ef4444; /* 紅 */
-            --col-food: #2563eb;      /* 藍 */
-            --col-sight: #f97316;     /* 橘 */
+            --col-transport: #ef4444; 
+            --col-food: #2563eb;      
+            --col-sight: #f97316;     
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -97,7 +95,6 @@
         }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
-        /* Food Recommendation */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
         .food-rec-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -105,8 +102,8 @@
         }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
+        .rec-name-jp:active { opacity: 0.7; }
 
-        /* Combined Transport Box */
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -129,7 +126,6 @@
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
-        /* Sightseeing */
         .ps-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
             display: flex; justify-content: space-between; align-items: center;
@@ -137,7 +133,6 @@
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
-        /* About Box */
         .about-box { 
             background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
             display: flex; align-items: center; gap: 15px; 
@@ -146,13 +141,11 @@
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Vertical Desc */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
-        /* Buttons */
         .m-btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
@@ -163,51 +156,53 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) */
+        /* Center Popup (Big Card) - 淡藍色 */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80%; max-width: 320px; background: #fff; z-index: 3000; display: none;
+            width: 80%; max-width: 320px; z-index: 3000; display: none;
             border-radius: 20px; padding: 30px 20px; text-align: center;
-            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.25);
+            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
+            background: #eff6ff; /* 淡藍色背景 */
             animation: zoomIn 0.2s ease-out;
         }
-        
-        /* 藍色模式 (Food) */
-        .center-popup.blue-theme {
-            background: var(--primary-blue);
-        }
-        .center-popup.blue-theme .cp-content {
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .center-popup.blue-theme .cp-sub { /* 中文 */
-            color: #fff; font-size: 1.5rem; font-weight: 700; order: 1;
-        }
-        .center-popup.blue-theme .cp-spacer { /* 間隔 */
-            height: 40px; width: 100%; order: 2;
-        }
-        .center-popup.blue-theme .cp-jp { /* 日文 */
-            color: #fff; font-family: var(--font-serif); font-size: 2.5rem; font-weight: 900; order: 3;
-        }
-        .center-popup.blue-theme .cp-close {
-            background: rgba(255,255,255,0.2); color: #fff;
-        }
-
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
-        /* Default styles for popup (if used elsewhere) */
-        .cp-jp { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 10px; color: #1e3a8a; }
-        .cp-sub { font-size: 1rem; color: #94a3b8; }
+        .cp-content { display: flex; flex-direction: column; align-items: center; }
+        /* 文字大小一致 */
+        .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
+        .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
+        .cp-spacer { height: 40px; width: 100%; order: 2; }
         .cp-close { 
-            position: absolute; top: 15px; right: 15px; background: #f1f5f9; color: #64748b; 
-            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
+            position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
+            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center;
         }
+
+        /* --- Custom Confirm Modal (取代原生 confirm) --- */
+        .confirm-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); z-index: 4000; display: none;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .confirm-overlay.active { display: flex; }
+        .confirm-box {
+            background: #eff6ff; /* 淡藍色背景 */
+            width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
+        .confirm-btns { display: flex; gap: 10px; justify-content: center; }
+        .confirm-btn { 
+            flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
+        }
+        .btn-yes { background: #ef4444; color: white; }
+        .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
 
         /* --- Header & Tabs --- */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
         .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
         .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .trip-icon { font-size: 1rem; color: #94a3b8; } 
         .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
 
         .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(239, 246, 255, 0.95); border-bottom: 1px solid #dbeafe; }
@@ -287,7 +282,7 @@
         .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
-        /* Wallet Inputs Sizing (Resized to 0.85 of previous) */
+        /* Wallet Inputs Sizing: Same Height (60px), Width 1.2x of original 35% -> ~42% */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
         .input-std { 
             padding: 0 15px; 
@@ -295,12 +290,12 @@
             font-size: 1.1rem; 
             background: #fff; outline: none; 
             width: 42%; 
-            height: 52px; /* Fixed Height */
+            height: 60px; /* Fixed Height */
         }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 52px; height: 52px; /* Same Height */
-            border-radius: 14px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; /* Same Height */
+            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         
         .expense-list { margin-top: 20px; }
@@ -341,11 +336,19 @@
     </div>
 </div>
 
+<div id="confirmModal" class="confirm-overlay">
+    <div class="confirm-box">
+        <div class="confirm-text">確定要清除紀錄嗎？</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
+            <button class="confirm-btn btn-yes" id="confirmYesBtn">確定</button>
+        </div>
+    </div>
+</div>
+
 <header>
     <span class="trip-tag">Winter Mt.Fuji</span>
-    <div class="trip-title">
-        河口湖之旅 <i class="fas fa-calendar-alt trip-icon" style="font-size:1rem; color:#94a3b8; margin-left:5px"></i> <span class="trip-badge">2026</span>
-    </div>
+    <div class="trip-title">2026 東京河口湖</div>
 </header>
 
 <div id="view-trip" class="view-section active">
@@ -417,7 +420,7 @@
                 </div>
             </div>
             <div class="expense-list" id="expenseList"></div>
-            <button onclick="clearAllExpenses()" style="width:100%; border:none; background:none; color:#ef4444; margin-top:20px; font-size:0.9rem;">清除所有紀錄</button>
+            <button onclick="askClearAll()" style="width:100%; border:none; background:none; color:#ef4444; margin-top:20px; font-size:0.9rem;">清除所有紀錄</button>
         </div>
     </div>
 </div>
@@ -845,6 +848,51 @@
         document.getElementById('centerPopup').classList.remove('active');
     }
 
+    // --- Confirm Modal Logic ---
+    let pendingDeleteId = null; // 用來暫存要刪除的ID
+
+    // 確認刪除單筆
+    function delExpense(id) {
+        pendingDeleteId = id; // 存起來
+        document.querySelector('.confirm-text').innerText = "確定要刪除這筆紀錄嗎？";
+        document.getElementById('confirmModal').classList.add('active');
+        
+        // 綁定確認按鈕事件
+        document.getElementById('confirmYesBtn').onclick = function() {
+            performDeleteSingle();
+        };
+    }
+
+    function performDeleteSingle() {
+        let data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
+        data = data.filter(i => i.id !== pendingDeleteId);
+        localStorage.setItem('tripExp2026', JSON.stringify(data));
+        loadExpenses();
+        closeConfirm();
+    }
+
+    // 確認清除全部
+    function askClearAll() {
+        document.querySelector('.confirm-text').innerText = "確定要清除所有紀錄嗎？";
+        document.getElementById('confirmModal').classList.add('active');
+        
+        // 綁定確認按鈕事件
+        document.getElementById('confirmYesBtn').onclick = function() {
+            performClearAll();
+        };
+    }
+
+    function performClearAll() {
+        localStorage.removeItem('tripExp2026');
+        loadExpenses();
+        closeConfirm();
+    }
+
+    function closeConfirm() {
+        document.getElementById('confirmModal').classList.remove('active');
+        pendingDeleteId = null;
+    }
+
     // --- Utils ---
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
@@ -874,20 +922,6 @@
         document.getElementById('expName').value = '';
         document.getElementById('expCost').value = '';
         loadExpenses();
-    }
-
-    function delExpense(id) {
-        let data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        data = data.filter(i => i.id !== id);
-        localStorage.setItem('tripExp2026', JSON.stringify(data));
-        loadExpenses();
-    }
-
-    function clearAllExpenses() {
-        if(confirm("確定刪除全部紀錄？")) {
-            localStorage.removeItem('tripExp2026');
-            loadExpenses();
-        }
     }
 
     function loadExpenses() {
