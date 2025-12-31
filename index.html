@@ -15,19 +15,21 @@
     
     <style>
         :root {
-            --bg-color: #eff6ff;       
-            --card-bg: #f8fbff;        
+            /* 全面藍色系背景設定 */
+            --bg-color: #eff6ff;       /* 網頁背景：淺藍 */
+            --card-bg: #f8fbff;        /* 卡片背景：極淡藍白 */
             
-            --text-main: #1e3a8a;     
+            --text-main: #1e3a8a;     /* 深藍色文字 */
             --text-light: #64748b;
             
             --primary-blue: #3b82f6;
             --light-blue: #dbeafe;
             --line-color: #bfdbfe;
 
-            --col-transport: #ef4444; 
-            --col-food: #2563eb;      
-            --col-sight: #f97316;     
+            /* 類別顏色 */
+            --col-transport: #ef4444; /* 紅 */
+            --col-food: #2563eb;      /* 藍 */
+            --col-sight: #f97316;     /* 橘 */
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -45,7 +47,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal --- */
+        /* --- Modal (詳細資訊卡片 - 上方留白 1/5) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -114,10 +116,7 @@
             background: #fff;
         }
         .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
-        
-        /* 新增：ABC 標題樣式 */
         .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; margin-top: 2px; font-family: var(--font-num); }
-
         .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
         
         .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
@@ -164,7 +163,7 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup */
+        /* Center Popup (Big Card) */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; background: #fff; z-index: 3000; display: none;
@@ -172,20 +171,43 @@
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.25);
             animation: zoomIn 0.2s ease-out;
         }
+        
+        /* 藍色模式 (Food) */
+        .center-popup.blue-theme {
+            background: var(--primary-blue);
+        }
+        .center-popup.blue-theme .cp-content {
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .center-popup.blue-theme .cp-sub { /* 中文 */
+            color: #fff; font-size: 1.5rem; font-weight: 700; order: 1;
+        }
+        .center-popup.blue-theme .cp-spacer { /* 間隔 */
+            height: 40px; width: 100%; order: 2;
+        }
+        .center-popup.blue-theme .cp-jp { /* 日文 */
+            color: #fff; font-family: var(--font-serif); font-size: 2.5rem; font-weight: 900; order: 3;
+        }
+        .center-popup.blue-theme .cp-close {
+            background: rgba(255,255,255,0.2); color: #fff;
+        }
+
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
+        /* Default styles for popup (if used elsewhere) */
         .cp-jp { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 10px; color: #1e3a8a; }
         .cp-sub { font-size: 1rem; color: #94a3b8; }
         .cp-close { 
             position: absolute; top: 15px; right: 15px; background: #f1f5f9; color: #64748b; 
-            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
         /* --- Header & Tabs --- */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
         .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
-        .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; }
+        .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .trip-icon { font-size: 1rem; color: #94a3b8; } 
         .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
 
         .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(239, 246, 255, 0.95); border-bottom: 1px solid #dbeafe; }
@@ -265,20 +287,20 @@
         .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
-        /* Wallet Inputs Sizing: Same Height (60px), Width 1.2x of original 35% -> ~42% */
+        /* Wallet Inputs Sizing (Resized to 0.85 of previous) */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
         .input-std { 
-            padding: 0 15px; /* Horizontal padding */
+            padding: 0 15px; 
             border: 1px solid #cbd5e1; border-radius: 12px; 
             font-size: 1.1rem; 
             background: #fff; outline: none; 
-            width: 42%; /* Increased width */
-            height: 60px; /* Fixed Height */
+            width: 42%; 
+            height: 52px; /* Fixed Height */
         }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; /* Same Height */
-            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 52px; height: 52px; /* Same Height */
+            border-radius: 14px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         
         .expense-list { margin-top: 20px; }
@@ -312,13 +334,18 @@
 
 <div id="centerPopup" class="center-popup">
     <button class="cp-close" onclick="closeCenterPopup()"><i class="fas fa-times"></i></button>
-    <div id="cpJp" class="cp-jp"></div>
-    <div id="cpSub" class="cp-sub"></div>
+    <div id="cpContent" class="cp-content">
+        <div id="cpSub" class="cp-sub"></div>
+        <div class="cp-spacer"></div>
+        <div id="cpJp" class="cp-jp"></div>
+    </div>
 </div>
 
 <header>
     <span class="trip-tag">Winter Mt.Fuji</span>
-    <div class="trip-title">2026 東京河口湖</div>
+    <div class="trip-title">
+        河口湖之旅 <i class="fas fa-calendar-alt trip-icon" style="font-size:1rem; color:#94a3b8; margin-left:5px"></i> <span class="trip-badge">2026</span>
+    </div>
 </header>
 
 <div id="view-trip" class="view-section active">
@@ -702,15 +729,15 @@
             // Rec (Vertical)
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
             <div class="food-rec-list">
-                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ')">
+                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ', 'blue')">
                     <span class="rec-name-cn">ABC</span>
                     <span class="rec-name-jp">XYZ</span>
                 </div>
-                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ')">
+                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ', 'blue')">
                     <span class="rec-name-cn">ABC</span>
                     <span class="rec-name-jp">XYZ</span>
                 </div>
-                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ')">
+                <div class="food-rec-item" onclick="openCenterPopup('ABC', 'XYZ', 'blue')">
                     <span class="rec-name-cn">ABC</span>
                     <span class="rec-name-jp">XYZ</span>
                 </div>
@@ -802,10 +829,17 @@
     function closeDetailModal() { document.querySelector('.modal-overlay').classList.remove('active'); }
 
     // --- Center Popup Logic (Food Big Card) ---
-    function openCenterPopup(cn, jp) {
+    function openCenterPopup(cn, jp, theme) {
         document.getElementById('cpJp').innerText = jp;
         document.getElementById('cpSub').innerText = cn;
-        document.getElementById('centerPopup').classList.add('active');
+        
+        const modal = document.getElementById('centerPopup');
+        if(theme === 'blue') {
+            modal.classList.add('blue-theme');
+        } else {
+            modal.classList.remove('blue-theme');
+        }
+        modal.classList.add('active');
     }
     function closeCenterPopup() {
         document.getElementById('centerPopup').classList.remove('active');
