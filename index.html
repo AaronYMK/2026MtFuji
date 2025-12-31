@@ -15,23 +15,26 @@
     
     <style>
         :root {
-            --bg-color: #fcfcfc;
+            /* 全域背景改為淡藍色 */
+            --bg-color: #f0f9ff; 
+            --card-bg: #ffffff;
+            
             --text-main: #334155;
-            --text-light: #94a3b8;
+            --text-light: #64748b;
             --primary-blue: #0ea5e9;
             --light-blue: #e0f2fe;
-            --line-color: #e2e8f0; /* 淺灰色線條 */
+            --line-color: #bae6fd;
             
-            /* 類別顏色定義 */
-            --col-transport: #ef4444; /* 紅色 */
-            --col-food: #3b82f6;      /* 藍色 */
-            --col-sight: #f97316;     /* 橘色 */
+            /* 類別顏色 */
+            --col-transport: #ef4444; /* 紅 */
+            --col-food: #3b82f6;      /* 藍 */
+            --col-sight: #f97316;     /* 橘 */
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
             --font-num: 'Lato', sans-serif;
-            --radius: 12px;
-            --shadow: 0 4px 15px -3px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --shadow: 0 4px 20px -2px rgba(14, 165, 233, 0.15); /* 帶一點藍色的陰影 */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -43,112 +46,119 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal (詳細資訊卡片 - 重新設計) --- */
+        /* --- Modal (卡片詳情) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.98); z-index: 2000; display: none;
-            justify-content: center; align-items: flex-start; /* 改為上方對齊，方便長內容捲動 */
+            background: rgba(240, 249, 255, 0.95); /* 背景也帶一點透藍 */
+            z-index: 2000; display: none;
+            justify-content: center; align-items: flex-start;
             overflow-y: auto; padding: 20px;
             animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
         }
         .modal-overlay.active { display: flex; }
         @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
         
         .modal-container {
-            width: 100%; max-width: 450px; background: transparent; 
+            width: 100%; max-width: 450px; background: #fff; 
             margin-top: 40px; margin-bottom: 40px; position: relative;
+            border-radius: 16px; padding: 25px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+            border-top: 6px solid transparent; /* 預留給類別顏色 */
         }
 
-        /* 關閉按鈕 (右上角 X) */
+        /* 關閉按鈕 */
         .modal-close-x {
-            position: absolute; top: -10px; right: 0; font-size: 1.5rem; 
-            color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
+            position: absolute; top: 15px; right: 15px; font-size: 1.5rem; 
+            color: #94a3b8; cursor: pointer; padding: 5px; z-index: 10;
         }
 
         /* Modal 內部排版 */
-        .m-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         .m-tag { 
-            border: 1px solid var(--text-main); color: var(--text-main);
-            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; 
-            letter-spacing: 1px; text-transform: uppercase; font-weight: 500;
+            border: 1px solid; /* 顏色由 JS 控制 */
+            padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; 
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
         }
-        .m-time { font-family: var(--font-num); font-size: 1.2rem; font-weight: 700; color: #64748b; }
+        .m-clock { color: #94a3b8; font-size: 0.9rem; }
+        .m-time { font-family: var(--font-num); font-size: 1.2rem; font-weight: 700; color: #334155; }
         
         .m-title { 
-            font-family: var(--font-serif); font-size: 2rem; font-weight: 800; 
-            line-height: 1.2; margin-bottom: 5px; color: #0f172a; 
+            font-family: var(--font-serif); font-size: 1.8rem; font-weight: 800; 
+            line-height: 1.3; margin-bottom: 10px; color: #0f172a; 
         }
-        .m-addr { font-size: 0.85rem; color: #94a3b8; margin-bottom: 25px; display: flex; align-items: center; gap: 5px;}
+        .m-addr { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
 
-        /* 分隔線標題 */
+        /* 分隔線標題 (通用) */
         .m-sec-header {
-            font-size: 0.75rem; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; 
-            border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 15px; margin-top: 25px;
+            font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
+            border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 15px; margin-top: 30px;
+            font-weight: 700; display: flex; align-items: center; gap: 8px;
         }
 
-        /* 1. 推薦品項 (橫向捲動) */
+        /* 1. 推薦品項 (橫向) */
         .rec-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
         .rec-scroll::-webkit-scrollbar { display: none; }
         .rec-card {
-            min-width: 120px; background: #fff; border: 1px solid #e2e8f0; border-radius: 4px;
+            min-width: 130px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
             padding: 12px; text-align: center; cursor: pointer; transition: 0.2s;
         }
         .rec-card:active { border-color: var(--primary-blue); background: #f0f9ff; }
-        .rec-text { font-size: 0.9rem; font-weight: 500; color: #334155; }
-        .rec-sub { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
+        .rec-text { font-size: 0.9rem; font-weight: 600; color: #334155; }
 
-        /* 2. 資訊框 (Reservation / Point Speak) */
+        /* 2. 資訊框 */
         .info-box { 
-            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; 
+            background: #fff; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 15px; 
             display: flex; justify-content: space-between; align-items: center;
         }
-        .info-label { font-size: 0.9rem; font-weight: 700; color: #334155; }
-        .info-val { font-family: var(--font-num); font-size: 1.2rem; font-weight: 700; color: #0f172a; }
-        .info-link { font-size: 0.8rem; color: #94a3b8; text-decoration: none; display: flex; align-items: center; gap: 4px;}
+        .info-label { font-size: 0.85rem; font-weight: 700; color: #64748b; }
+        .info-val { font-family: var(--font-num); font-size: 1.4rem; font-weight: 700; color: #0f172a; }
+        .info-link { font-size: 0.8rem; color: var(--primary-blue); text-decoration: none; display: flex; align-items: center; gap: 4px;}
 
         /* 3. About (MapCode) */
-        .about-box { background: #fff; border: 1px solid #e2e8f0; padding: 15px; display: flex; align-items: center; gap: 15px; }
-        .ab-icon { font-size: 1.5rem; color: #94a3b8; }
+        .about-box { background: #f1f5f9; border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .ab-icon { font-size: 1.5rem; color: #3b82f6; } /* 導航圖示 */
         .ab-code { font-family: var(--font-num); font-size: 1.3rem; font-weight: 700; color: #334155; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* 4. 三欄文字介紹 */
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 10px; }
-        .g-item { position: relative; padding-left: 10px; border-left: 2px solid #e2e8f0; }
-        .g-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; color: #334155; }
-        .g-desc { font-size: 0.8rem; color: #64748b; line-height: 1.5; text-align: justify;}
+        /* 4. 垂直文字介紹 (Vertical Layout) */
+        .desc-list { display: flex; flex-direction: column; gap: 20px; margin-top: 15px; }
+        .d-item { position: relative; padding-left: 15px; border-left: 3px solid #e2e8f0; }
+        .d-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: #334155; }
+        .d-content { font-size: 0.9rem; color: #475569; line-height: 1.6; text-align: justify; }
 
-        /* 5. 底部按鈕群 */
+        /* 5. 按鈕群 */
         .m-btn {
-            width: 100%; padding: 14px; border-radius: 0; border: none; font-size: 0.95rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
-            margin-bottom: 10px; transition: 0.2s; font-weight: 500;
+            width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
+            margin-bottom: 12px; transition: 0.2s; font-weight: 600;
         }
-        .btn-map { background: #3f4a3c; color: white; border-radius: 4px; } /* 深綠色 */
-        .btn-web { background: #222; color: white; border-radius: 4px; }     /* 黑色 */
-        .btn-vlog { background: transparent; color: #94a3b8; font-size: 0.8rem; margin-top: 5px; }
+        .btn-map { background: #1e293b; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
+        .btn-vlog { background: transparent; color: #64748b; font-size: 0.9rem; margin-top: 5px; }
+        .vlog-icon { color: #ff0000; font-size: 1.2rem; } /* Youtube 紅 */
 
         /* --- Header --- */
-        header { background: rgba(252, 252, 252, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
+        header { background: rgba(240, 249, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
         .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
         .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; }
-        .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
+        .trip-badge { background: #fff; color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; border: 1px solid #bae6fd; }
 
         /* --- Date Scroller --- */
-        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(252, 252, 252, 0.95); border-bottom: 1px solid #f1f5f9; }
+        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(240, 249, 255, 0.95); border-bottom: 1px solid #e0f2fe; }
         .date-scroller::-webkit-scrollbar { display: none; }
-        .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #cbd5e1; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
-        .date-item.active { color: var(--text-main); }
+        .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
+        .date-item.active { color: var(--primary-blue); transform: scale(1.1); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
-        .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
+        .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
 
         /* --- Hero --- */
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; }
         .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.3em; }
-        .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); }
-        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); color: white; }
+        .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.3); }
+        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, transparent 100%); color: white; }
         .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .hero-badge { border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; }
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
@@ -165,28 +175,27 @@
         .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); }
-        .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; }
+        .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; }
         .hotel-line { width: 3px; height: 30px; background: #fca5a5; margin-right: 12px; border-radius: 2px; }
         .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
         .hotel-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text-main); font-weight: 600; }
 
-        .branch-toggle { margin: 10px 20px 20px; background: #f1f5f9; padding: 4px; border-radius: 10px; display: flex; }
-        .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
-        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .branch-toggle { margin: 10px 20px 20px; background: #e0f2fe; padding: 4px; border-radius: 12px; display: flex; }
+        .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 10px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(14, 165, 233, 0.15); }
 
-        /* --- Timeline (左側線條改為淺灰色) --- */
+        /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px; position: relative; }
         .timeline-row { display: flex; position: relative; min-height: 100px; } 
         .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: var(--text-main); font-weight: 600; padding-top: 0; }
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
         .timeline-row:last-child .t-line { display: none; }
-        .t-dot { width: 8px; height: 8px; background: #fcfcfc; border: 2px solid var(--line-color); border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
+        .t-dot { width: 8px; height: 8px; background: var(--bg-color); border: 2px solid var(--line-color); border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.3); }
         .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; position: relative; }
         
-        /* 左側短直線 (顏色配置) */
         .t-bar { position: absolute; left: 0; top: 5px; bottom: 35px; width: 3px; border-radius: 2px; }
         .type-transport .t-bar, .type-car .t-bar, .type-bus .t-bar, .type-walk .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
         .type-food .t-bar { background-color: var(--col-food); }
@@ -215,26 +224,26 @@
         }
         .calc-swap-btn:active { transform: scale(0.9); }
 
-        /* 日期按鈕放大優化 */
         .date-picker-wrapper {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             color: #94a3b8; font-size: 1rem; margin-bottom: 5px; cursor: pointer;
-            padding: 8px 16px; border-radius: 20px; background: #f8fafc;
-            border: 1px solid #f1f5f9; transition: 0.2s;
+            padding: 8px 16px; border-radius: 20px; background: #f0f9ff;
+            border: 1px solid #bae6fd; transition: 0.2s;
         }
-        .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
-        .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
+        .date-picker-wrapper:active { background: #e0f2fe; }
 
-        /* 項目與金額欄位縮短 (50%) */
+        /* 欄位放大 1.3倍 & 寬度平均 */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .input-std { 
-            padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; 
-            font-size: 1rem; background: #fff; outline: none; 
-            width: 35%; /* 縮短 */
+            padding: 16px; /* 放大 */
+            border: 1px solid #e2e8f0; border-radius: 10px; 
+            font-size: 1.1rem; /* 放大 */
+            background: #f8fafc; outline: none; 
+            flex: 1; /* 平均分配 */
         }
         .btn-add { 
-            background: var(--text-main); color: white; border: none; padding: 0; width: 45px; height: 45px; 
-            border-radius: 10px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+            background: var(--text-main); color: white; border: none; padding: 0; width: 55px; height: 55px; 
+            border-radius: 12px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         
         .expense-list { margin-top: 20px; }
@@ -247,16 +256,16 @@
         .info-block { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; }
         .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .action-btn { background: #f1f5f9; border: none; padding: 10px; border-radius: 8px; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
+        .action-btn { background: #f1f5f9; border: none; padding: 12px; border-radius: 8px; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
 
         .bottom-nav {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            border-radius: 50px; padding: 10px 30px; display: flex; justify-content: space-between;
-            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.2); z-index: 1000; border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 50px; padding: 12px 30px; display: flex; justify-content: space-between;
+            box-shadow: 0 10px 30px -5px rgba(14, 165, 233, 0.3); z-index: 1000; border: 1px solid rgba(255,255,255,0.6);
         }
-        .nav-icon { font-size: 1.3rem; color: #94a3b8; padding: 10px; cursor: pointer; transition: 0.3s; }
-        .nav-icon.active { color: var(--primary-blue); transform: translateY(-2px); }
+        .nav-icon { font-size: 1.4rem; color: #94a3b8; padding: 10px; cursor: pointer; transition: 0.3s; }
+        .nav-icon.active { color: var(--primary-blue); transform: translateY(-3px); }
 
         .view-section { display: none; animation: fadeIn 0.4s ease; }
         .view-section.active { display: block; }
@@ -266,7 +275,7 @@
 <body>
 
 <div id="detailModal" class="modal-overlay">
-    <div class="modal-container">
+    <div class="modal-container" id="modalCard">
         <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
         <div id="modalContent">
             </div>
@@ -395,6 +404,7 @@
     let currentBranch = 'A'; 
     let isJpyTop = true; 
 
+    // --- Data ---
     const itineraryData = [
         {
             day: 1, dayCN: "第一天", date: "26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
@@ -626,74 +636,91 @@
         if (activeRow) activeRow.classList.add('active');
     }
 
-    // --- Modal Logic (分類顯示) ---
+    // --- Modal Logic (分類顯示 + 完整內容) ---
     function openDetailModal(evt) {
         const container = document.getElementById('modalContent');
+        const card = document.getElementById('modalCard');
+        
+        // 設定頂部邊框顏色
+        let borderColor = 'transparent';
+        if (evt.type === 'food') borderColor = 'var(--col-food)';
+        else if (evt.type === 'sightseeing') borderColor = 'var(--col-sight)';
+        else if (['transport','car','flight','bus','walk'].includes(evt.type)) borderColor = 'var(--col-transport)';
+        
+        card.style.borderTopColor = borderColor;
+        document.querySelector('.m-tag').style.color = borderColor;
+        document.querySelector('.m-tag').style.borderColor = borderColor;
+
         let html = '';
 
         // 1. Header
-        html += `<div class="m-header"><span class="m-tag">${evt.type.toUpperCase()}</span><span class="m-time">${evt.time}</span></div>`;
+        html += `<div class="m-header"><span class="m-tag" style="color:${borderColor}; border-color:${borderColor}">${evt.type.toUpperCase()}</span> <i class="fas fa-clock m-clock"></i> <span class="m-time">${evt.time}</span></div>`;
+        
         // 2. Title
         html += `<div class="m-title">${evt.title}</div>`;
+        
         // 3. Address
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> JAPANTOKYO</div>`;
 
         // 4. Special Sections
         if (evt.type === 'food') {
-            // Rec
-            html += `<div class="m-section"><div class="m-sec-header">前三名推薦品項</div><div class="rec-scroll">
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦品項 A</div></div>
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦品項 B</div></div>
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦品項 C</div></div>
-            </div></div>`;
+            // Recommendation
+            html += `<div class="m-sec-header">前三名推薦品項</div><div class="rec-scroll">
+                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦 A</div></div>
+                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦 B</div></div>
+                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">推薦 C</div></div>
+            </div>`;
             
-            // About
-            html += `<div class="m-section"><div class="m-sec-header">關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-car ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div></div>`;
+            // About (注意圖示 + 導航圖示)
+            html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div>`;
             
-            // Grid
-            html += `<div class="grid-3">
-                <div class="g-item"><div class="g-title">店名由來</div><div class="g-desc">店名由來介紹...</div></div>
-                <div class="g-item"><div class="g-title">職人堅持</div><div class="g-desc">職人堅持介紹...</div></div>
-                <div class="g-item"><div class="g-title">美食介紹</div><div class="g-desc">美食介紹內容...</div></div>
+            // Vertical Stack
+            html += `<div class="desc-list">
+                <div class="d-item"><div class="d-title">店名由來</div><div class="d-content">這是關於店名由來的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">職人堅持</div><div class="d-content">這是關於職人堅持的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">美食介紹</div><div class="d-content">這是關於美食的詳細介紹文字，完整顯示不截斷。</div></div>
             </div>`;
 
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
             // Reservation
-            html += `<div class="m-section"><div class="m-sec-header">RESERVATION</div><div class="info-box"><div class="info-label">訂單代號</div><div class="info-val">987654</div></div></div>`;
+            html += `<div class="m-sec-header">RESERVATION</div><div class="info-box"><div class="info-label">訂單代號</div><div class="info-val">987654</div></div>`;
             
             // About
-            html += `<div class="m-section"><div class="m-sec-header">關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-car ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div></div>`;
+            html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div>`;
             
-            // Grid
-            html += `<div class="grid-3">
-                <div class="g-item"><div class="g-title">接駁位置</div><div class="g-desc">接駁位置說明...</div></div>
-                <div class="g-item"><div class="g-title">坐駕介紹</div><div class="g-desc">坐駕介紹說明...</div></div>
-                <div class="g-item"><div class="g-title">注意事項</div><div class="g-desc">注意事項說明...</div></div>
+            // Vertical Stack
+            html += `<div class="desc-list">
+                <div class="d-item"><div class="d-title">接駁位置</div><div class="d-content">這是關於接駁位置的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">坐駕介紹</div><div class="d-content">這是關於坐駕的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">注意事項</div><div class="d-content">這是關於注意事項的詳細介紹文字，完整顯示不截斷。</div></div>
             </div>`;
 
         } else if (evt.type === 'sightseeing') {
             // Point & Speak
-            html += `<div class="m-section"><div class="m-sec-header">POINT & SPEAK</div><div class="info-box">
-                <div><div class="info-val" style="font-size:1rem">二之丸停車場</div><a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank" class="info-link">查看位置 <i class="fas fa-external-link-alt"></i></a></div>
-            </div></div>`;
+            html += `<div class="m-sec-header">POINT & SPEAK</div><div class="info-box">
+                <div><div class="info-val" style="font-size:1.2rem">二之丸停車場</div><a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank" class="info-link">查看位置 <i class="fas fa-external-link-alt"></i></a></div>
+            </div>`;
             
             // About
-            html += `<div class="m-section"><div class="m-sec-header">關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-car ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div></div>`;
+            html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div><div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div></div>`;
             
-            // Grid
-            html += `<div class="grid-3">
-                <div class="g-item"><div class="g-title">停車攻略</div><div class="g-desc">停車攻略說明...</div></div>
-                <div class="g-item"><div class="g-title">歷史地位</div><div class="g-desc">歷史地位說明...</div></div>
-                <div class="g-item"><div class="g-title">注意事項</div><div class="g-desc">注意事項說明...</div></div>
+            // Vertical Stack
+            html += `<div class="desc-list">
+                <div class="d-item"><div class="d-title">停車攻略</div><div class="d-content">這是關於停車攻略的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">歷史地位</div><div class="d-content">這是關於歷史地位的詳細介紹文字，完整顯示不截斷。</div></div>
+                <div class="d-item"><div class="d-title">注意事項</div><div class="d-content">這是關於注意事項的詳細介紹文字，完整顯示不截斷。</div></div>
             </div>`;
+        } else {
+             // General (Bus/Walk) - 顯示基本介紹
+             if(evt.desc) html += `<div style="margin-top:20px; line-height:1.6; color:#475569;">${evt.desc}</div>`;
         }
 
         // 5. Buttons
         const mapUrl = "https://maps.app.goo.gl/fMGUkrux8ir5rrec6";
         html += `<div style="margin-top:30px">
             <a href="${mapUrl}" target="_blank" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
-            <a href="${mapUrl}" target="_blank" class="m-btn btn-web">官方網站</a>
-            <a href="${mapUrl}" target="_blank" class="m-btn btn-vlog"><i class="fas fa-play-circle"></i> SEARCH VLOGS</a>
+            <a href="${mapUrl}" target="_blank" class="m-btn btn-web"><i class="fas fa-globe"></i> 官方網站</a>
+            <a href="${mapUrl}" target="_blank" class="m-btn btn-vlog"><i class="fab fa-youtube vlog-icon"></i> SEARCH VLOGS</a>
         </div>`;
 
         container.innerHTML = html;
