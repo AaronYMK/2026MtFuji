@@ -45,7 +45,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal --- */
+        /* --- Modal (詳細資訊卡片 - 上方留白 1/5) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -72,7 +72,7 @@
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
 
-        .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 10px; }
         .m-tag { 
             border: 1.5px solid; 
             padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; 
@@ -103,6 +103,7 @@
         }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
+        .rec-name-jp:active { opacity: 0.7; }
 
         /* Combined Transport Box */
         .res-combined-box {
@@ -114,7 +115,10 @@
             background: #fff;
         }
         .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
-        .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; margin-top: 2px; font-family: var(--font-num); }
+        
+        /* 修改：ABC 標題置於下方，這裡僅作樣式定義 */
+        .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; font-family: var(--font-num); margin-top: 4px; }
+        
         .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
         
         .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
@@ -174,16 +178,15 @@
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
         .cp-close { 
             position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
-            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
-        /* --- Custom Confirm Modal (取代原生 confirm) --- */
+        /* --- Custom Confirm Modal --- */
         .confirm-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); z-index: 4000; display: none;
@@ -192,7 +195,7 @@
         }
         .confirm-overlay.active { display: flex; }
         .confirm-box {
-            background: #eff6ff; /* 淡藍色背景 */
+            background: #eff6ff;
             width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
@@ -287,7 +290,7 @@
         .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
-        /* Wallet Inputs Sizing: Same Height (60px), Width 1.2x of original 35% -> ~42% */
+        /* Wallet Inputs Sizing */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
         .input-std { 
             padding: 0 15px; 
@@ -295,11 +298,11 @@
             font-size: 1.1rem; 
             background: #fff; outline: none; 
             width: 42%; 
-            height: 60px; /* Fixed Height */
+            height: 60px;
         }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; /* Same Height */
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px;
             border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         
@@ -780,9 +783,10 @@
             // Reservation Combined
             html += `<div class="res-combined-box">
                         <div class="res-top">
-                            <div class="res-label">RESERVATION <span class="res-tag-abc">ABC</span></div>
+                            <div class="res-label">RESERVATION</div>
                             <a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a>
                         </div>
+                        <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">ABC</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom">
                             <div>
