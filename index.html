@@ -17,13 +17,12 @@
         :root {
             /* 全面藍色系背景設定 */
             --bg-color: #eff6ff;       /* 網頁背景：淺藍 */
-            --card-bg: #f4f9ff;        /* 卡片背景：微藍白 */
-            --modal-bg: #f0f7ff;       /* 彈窗背景 */
+            --card-bg: #f8fbff;        /* 卡片背景：極淡藍白 */
             
-            --text-main: #172554;      /* 深藍色文字 */
+            --text-main: #1e3a8a;     /* 深藍色文字 */
             --text-light: #64748b;
             
-            --primary-blue: #2563eb;
+            --primary-blue: #3b82f6;
             --light-blue: #dbeafe;
             --line-color: #bfdbfe;
 
@@ -71,58 +70,72 @@
         }
 
         /* Modal Header */
-        .m-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
         .m-tag { 
             border: 1.5px solid; /* 顏色由 JS 動態控制 */
-            padding: 4px 14px; border-radius: 50px; font-size: 0.8rem; 
+            padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; 
             letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
             background: #fff;
         }
-        .m-time-icon { color: #94a3b8; font-size: 1rem; }
-        .m-time { font-family: var(--font-num); font-size: 1.4rem; font-weight: 700; color: #64748b; }
+        .m-time-icon { color: #94a3b8; font-size: 0.9rem; }
+        .m-time { font-family: var(--font-num); font-size: 1.3rem; font-weight: 700; color: #64748b; }
         
         .m-title { 
             font-family: var(--font-serif); font-size: 2rem; font-weight: 800; 
             line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; 
         }
-        .m-addr { font-size: 0.95rem; color: #64748b; margin-bottom: 30px; display: flex; align-items: center; gap: 6px;}
+        .m-addr { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; display: flex; align-items: center; gap: 6px;}
 
         /* 分隔線標題 (About / Reservation) */
         .m-sec-header {
-            font-size: 0.85rem; color: #64748b; letter-spacing: 1px; text-transform: uppercase; 
-            border-bottom: 1px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 15px; margin-top: 35px;
-            font-weight: 700; display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
+            border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px;
+            font-weight: 700; display: flex; align-items: center; gap: 6px;
         }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
-        /* 橫向捲動區 (推薦品項) */
-        .rec-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .rec-scroll::-webkit-scrollbar { display: none; }
-        .rec-card {
-            min-width: 130px; background: #fff; border: 1px solid #dbeafe; border-radius: 10px;
-            padding: 16px; text-align: center; cursor: pointer; transition: 0.2s;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
-        }
-        .rec-card:active { border-color: var(--primary-blue); background: #eff6ff; }
-        .rec-text { font-size: 1rem; font-weight: 600; color: #1e3a8a; }
-
-        /* 資訊框 */
-        .info-box { 
-            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; 
+        /* --- Food 推薦品項 (直排) --- */
+        .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
+        .food-rec-item {
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.05);
+            background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 8px;
         }
-        .info-val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
-        .info-link { font-size: 0.9rem; color: var(--primary-blue); text-decoration: none; display: flex; align-items: center; gap: 4px;}
+        .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
+        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
 
-        /* About Box (MapCode) */
+        /* --- Transport Reservation --- */
+        .res-box {
+            background: #fff; border: 1px solid #dbeafe; border-radius: 8px; padding: 15px;
+            margin-bottom: 15px;
+        }
+        .res-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;}
+        .res-title { font-size: 0.9rem; font-weight: 700; color: #334155; }
+        .res-icon { font-size: 1.2rem; color: #cbd5e1; cursor: pointer;}
+        
+        .conf-box {
+            background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .conf-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; display: block;}
+        .conf-val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
+        .conf-copy { color: #94a3b8; cursor: pointer; font-size: 1.2rem;}
+
+        /* --- Sightseeing Point & Speak --- */
+        .ps-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 8px;
+        }
+        .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
+        .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
+
+        /* About Box (Car GPS Phone) */
         .about-box { 
             background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
             display: flex; align-items: center; gap: 15px; 
         }
         .ab-icon { font-size: 1.8rem; color: var(--primary-blue); }
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
-        .ab-label { font-size: 0.75rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
+        .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
         /* 直排介紹區 (Vertical Layout - 全顯示) */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
@@ -140,6 +153,19 @@
         .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; } /* YouTube Red */
+
+        /* 全螢幕大字卡 Overlay (獨立) */
+        .big-card-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 3000; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 30px; text-align: center;
+        }
+        .big-card-overlay.active { display: flex; }
+        .bc-jp { font-family: var(--font-serif); font-size: 4rem; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #000; }
+        .bc-sub { font-size: 1.5rem; color: #94a3b8; }
+        .bc-close { position: absolute; bottom: 50px; background: #000; color: #fff; padding: 15px 40px; border-radius: 50px; border:none; font-size: 1rem; }
+
 
         /* --- Header --- */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
@@ -172,7 +198,7 @@
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: #1e3a8a; }
         .weather-sub { font-size: 0.8rem; color: #64748b; margin-top: 5px; }
-        .weather-strip { display: flex; gap: 25px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .weather-strip { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .weather-strip::-webkit-scrollbar { display: none; }
         .w-col { text-align: center; min-width: 35px; }
         .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
@@ -241,18 +267,18 @@
         .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
-        /* 項目與金額欄位放大 1.3倍 */
+        /* 輸入框放大 1.2倍 */
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .input-std { 
-            padding: 16px; /* 增加內距 */
+            padding: 18px; /* 增加內距 */
             border: 1px solid #cbd5e1; border-radius: 12px; 
-            font-size: 1.2rem; /* 增加字體 */
+            font-size: 1.3rem; /* 增加字體 */
             background: #fff; outline: none; 
             width: 35%; /* 維持比例 */
         }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; /* 增加大小 */
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; 
             border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
         }
         
@@ -289,6 +315,14 @@
         <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
         <div id="modalContent">
             </div>
+    </div>
+</div>
+
+<div id="bigCardModal" class="big-card-overlay">
+    <i class="fas fa-times modal-close-x" onclick="closeBigCard()"></i>
+    <div id="bcContent" style="width:100%; display:flex; flex-direction:column; align-items:center;">
+        <div id="bcJp" class="bc-jp"></div>
+        <div id="bcSub" class="bc-sub"></div>
     </div>
 </div>
 
@@ -680,17 +714,26 @@
         if (evt.type === 'food') {
             // Rec
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 前三名推薦品項</div>
-            <div class="rec-scroll">
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">A 品項</div><div class="rec-sub">點擊放大</div></div>
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">B 品項</div><div class="rec-sub">點擊放大</div></div>
-                <div class="rec-card" onclick="alert('DEF')"><div class="rec-text">C 品項</div><div class="rec-sub">點擊放大</div></div>
+            <div class="food-rec-list">
+                <div class="food-rec-item" onclick="openBigCard('ABC', 'XYZ')">
+                    <span class="rec-name-cn">ABC</span>
+                    <span class="rec-name-jp">XYZ</span>
+                </div>
+                <div class="food-rec-item" onclick="openBigCard('ABC', 'XYZ')">
+                    <span class="rec-name-cn">ABC</span>
+                    <span class="rec-name-jp">XYZ</span>
+                </div>
+                <div class="food-rec-item" onclick="openBigCard('ABC', 'XYZ')">
+                    <span class="rec-name-cn">ABC</span>
+                    <span class="rec-name-jp">XYZ</span>
+                </div>
             </div>`;
             
             // About
             html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box">
                 <i class="fas fa-location-arrow ab-icon"></i>
-                <div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div>
+                <div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">123-456-789</div></div>
             </div>`;
             
             // Vertical List (Full Text)
@@ -703,13 +746,24 @@
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
             // Reservation
             html += `<div class="m-sec-header"><i class="fas fa-ticket-alt"></i> RESERVATION</div>
-            <div class="info-box"><div class="info-label">訂單代號</div><div class="info-val">987654</div></div>`;
+            <div class="res-box">
+                <div class="res-header">
+                    <div class="res-title">訂單明細</div>
+                    <a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank"><i class="fas fa-file-contract res-icon"></i></a>
+                </div>
+            </div>`;
+
+            // Confirmation No
+            html += `<div class="conf-box">
+                <div><span class="conf-label">CONFIRMATION NO.</span><div class="conf-val">987654</div></div>
+                <i class="far fa-copy conf-copy" onclick="copyToClipboard('987654')"></i>
+            </div>`;
             
             // About
             html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box">
                 <i class="fas fa-location-arrow ab-icon"></i>
-                <div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div>
+                <div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">123-456-789</div></div>
             </div>`;
             
             // Vertical List
@@ -721,16 +775,17 @@
 
         } else if (evt.type === 'sightseeing') {
             // Point & Speak
-            html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> POINT & SPEAK</div>
-            <div class="info-box">
-                <div><div class="info-val" style="font-size:1.1rem">二之丸停車場</div><a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank" class="info-link">查看位置 <i class="fas fa-external-link-alt"></i></a></div>
+            html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 (POINT & SPEAK)</div>
+            <div class="ps-row">
+                <span class="ps-cn">二之丸停車場</span>
+                <a href="https://maps.app.goo.gl/fMGUkrux8ir5rrec6" target="_blank" class="ps-jp">二之丸停車場</a>
             </div>`;
             
             // About
             html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box">
                 <i class="fas fa-location-arrow ab-icon"></i>
-                <div><div class="ab-label">MAP CODE</div><div class="ab-code">123-456-789</div></div>
+                <div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">123-456-789</div></div>
             </div>`;
             
             // Vertical List
@@ -755,12 +810,30 @@
 
     function closeDetailModal() { document.querySelector('.modal-overlay').classList.remove('active'); }
 
+    // --- Big Card Logic ---
+    function openBigCard(cn, jp) {
+        document.getElementById('bcJp').innerText = jp;
+        document.getElementById('bcSub').innerText = cn;
+        document.getElementById('bigCardModal').classList.add('active');
+    }
+    function closeBigCard() {
+        document.getElementById('bigCardModal').classList.remove('active');
+    }
+
+    // --- Utils ---
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("已複製: " + text);
+        });
+    }
+
     function renderWeather() {
         const el = document.getElementById('weatherStrip');
         let html = '';
-        for(let i=0; i<8; i++) {
-            let t = 9 + i*2;
-            html += `<div class="w-col"><div class="w-time">${t}:00</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div></div>`;
+        // 24小時制
+        for(let i=0; i<24; i++) {
+            let t = i < 10 ? `0${i}:00` : `${i}:00`;
+            html += `<div class="w-col"><div class="w-time">${t}</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div></div>`;
         }
         el.innerHTML = html;
     }
