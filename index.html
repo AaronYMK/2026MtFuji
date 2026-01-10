@@ -80,10 +80,10 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* 編輯模式表單樣式 */
-        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px;}
+        /* 編輯模式樣式 */
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px; }
         .edit-group { display: flex; flex-direction: column; gap: 5px; }
-        .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
+        .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .edit-input, .edit-textarea, .edit-select { 
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
@@ -120,7 +120,6 @@
         }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
-        /* Food Recommendation */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
         .food-rec-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -130,7 +129,6 @@
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
         .rec-name-jp:active { opacity: 0.7; }
 
-        /* Combined Transport Box */
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -153,7 +151,6 @@
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
-        /* Sightseeing */
         .ps-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
             display: flex; justify-content: space-between; align-items: center;
@@ -161,7 +158,6 @@
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
-        /* About Box */
         .about-box { 
             background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
             display: flex; align-items: center; gap: 15px; 
@@ -170,13 +166,11 @@
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Vertical Desc */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
-        /* Buttons */
         .m-btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
@@ -187,20 +181,19 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) - 淡藍色 */
+        /* Center Popup */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; z-index: 3000; display: none;
             border-radius: 20px; padding: 30px 20px; text-align: center;
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
-            background: #eff6ff; /* 淡藍色背景 */
+            background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
@@ -244,7 +237,7 @@
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
-
+        
         /* Add Day Button */
         .add-day-btn {
             min-width: 45px; display: flex; align-items: center; justify-content: center; 
@@ -260,10 +253,10 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Edit & Delete Day Buttons */
-        .hero-btn-group { position: absolute; top: 20px; right: 20px; z-index: 5; display: flex; gap: 10px; }
-        .hero-btn { color: rgba(255,255,255,0.8); font-size: 1.1rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: 0.2s; }
-        .hero-btn:hover { background: rgba(255,255,255,0.9); color: var(--primary-blue); }
+        /* Delete Day Button */
+        .delete-day-btn {
+            position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5;
+        }
 
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
@@ -368,34 +361,6 @@
 </head>
 <body>
 
-<div id="dayEditModal" class="modal-overlay" style="justify-content: center; align-items: center;">
-    <div style="background: white; width: 85%; max-width: 350px; border-radius: 20px; padding: 25px; box-shadow: 0 5px 25px rgba(0,0,0,0.15);">
-        <h3 style="margin-top:0; color:#1e3a8a;">編輯日期資訊</h3>
-        <div class="edit-form" style="padding:0; gap:10px;">
-             <div class="edit-group">
-                <div class="edit-label">日期 (YYYY-MM-DD)</div>
-                <input type="date" class="edit-input" id="d-date-input">
-            </div>
-             <div class="edit-group">
-                <div class="edit-label">標題</div>
-                <input class="edit-input" id="d-title-input">
-            </div>
-             <div class="edit-group">
-                <div class="edit-label">地點</div>
-                <input class="edit-input" id="d-loc-input">
-            </div>
-             <div class="edit-group">
-                <div class="edit-label">背景圖片連結</div>
-                <input class="edit-input" id="d-bg-input">
-            </div>
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn-cancel" onclick="closeDayEditModal()" style="flex:1">取消</button>
-                <button class="btn-save" onclick="saveDayEdit()" style="flex:1; margin:0;">儲存</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="detailModal" class="modal-overlay">
     <div class="modal-container">
         <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
@@ -423,10 +388,21 @@
     </div>
 </div>
 
+<div id="dateInputModal" class="confirm-overlay">
+    <div class="confirm-box">
+        <div class="confirm-text" style="margin-bottom:10px;">請選擇日期</div>
+        <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px;">
+        <div class="confirm-btns">
+            <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active')">取消</button>
+            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" onclick="confirmAddDay()">新增</button>
+        </div>
+    </div>
+</div>
+
 <header>
     <span class="trip-tag">Winter Mt.Fuji</span>
     <div class="trip-title">
-        河口湖之旅 <span class="trip-badge">2026</span>
+        【 2026 冬季。河口湖 】
     </div>
 </header>
 
@@ -436,10 +412,7 @@
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <div class="hero-btn-group">
-                    <div class="hero-btn" onclick="openDayEditModal()"><i class="fas fa-edit"></i></div>
-                    <div class="hero-btn" onclick="deleteDay()"><i class="fas fa-trash-alt"></i></div>
-                </div>
+                <i class="fas fa-trash-alt delete-day-btn" onclick="deleteDay()"></i>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
@@ -563,34 +536,37 @@
         sightseeing: 'var(--col-sight)'
     };
 
-    // Updated Data Structure with full date for sorting and calculation
+    // Make data mutable
     let itineraryData = [
         {
-            fullDate: "2026-01-26", title: "東京副都心－新宿", heroCity: "東京都",
+            day: 1, dayCN: "第一天", date: "1/26", fullDate: "2026-01-26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", type: "car", iconType: "car", desc: "UGO 送機" },
+                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機" },
                 { time: "07:30", type: "flight", iconType: "plane", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)" },
                 { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
                 { 
-                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村",
+                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", desc: "炸牛排定食 (新宿南口店)",
+                    guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名，外酥內生...",
                     pointSpeak: { jp: "牛かつ定食をください", sub: "請給我炸牛排定食" },
                     mapUrl: "https://maps.app.goo.gl/example",
-                    // Initial data fields
+                    // Initial data
                     ps_label_1: "品項A", ps_content_1: "Menu A",
                     ps_label_2: "品項B", ps_content_2: "Menu B",
                     ps_label_3: "品項C", ps_content_3: "Menu C",
                     gps: "123-456-789",
-                    desc1_title: "店名由來", desc1_content: "【排隊名店】這家炸牛排以「只有炸60秒」聞名...",
-                    desc2_title: "職人堅持", desc2_content: "外酥內生。請將牛排放在眼前的石盤上炙燒...",
-                    desc3_title: "美食介紹", desc3_content: "口感外酥內嫩，白飯還可以免費續加！"
+                    desc1_title: "店名由來", desc1_content: "內容...",
+                    desc2_title: "職人堅持", desc2_content: "內容...",
+                    desc3_title: "美食介紹", desc3_content: "內容...",
+                    link_map: "https://maps.app.goo.gl/example",
+                    link_web: "#", link_vlog: "#"
                 },
                 { time: "22:30", type: "food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
             ]
         },
         {
-            fullDate: "2026-01-27", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
+            day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
@@ -600,7 +576,7 @@
             ]
         },
         {
-            fullDate: "2026-01-28", title: "富士五湖－河口湖", heroCity: "河口湖",
+            day: 3, dayCN: "第三天", date: "1/28", fullDate: "2026-01-28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
             bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
             hasBranch: true,
@@ -615,7 +591,7 @@
             ]
         },
         {
-            fullDate: "2026-01-29", title: "懷舊商店街－下吉田", heroCity: "吉田市",
+            day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市",
             loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
             bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
             events: [
@@ -624,7 +600,7 @@
             ]
         },
         {
-            fullDate: "2026-01-30", title: "依依不捨－捨不得回家", heroCity: "東京都",
+            day: 5, dayCN: "第五天", date: "1/30", fullDate: "2026-01-30", week: "FRI", title: "依依不捨－捨不得回家", heroCity: "東京都",
             loc: "Shinjuku", hotel: "溫暖的家",
             bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
             events: [
@@ -636,7 +612,6 @@
     ];
 
     function init() {
-        sortDays();
         renderDateScroller();
         switchDay(0);
         const today = new Date().toISOString().split('T')[0];
@@ -647,76 +622,6 @@
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
         setInterval(updateRate, 3600000);
-    }
-
-    function sortDays() {
-        itineraryData.sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
-        // Re-index days
-        itineraryData.forEach((d, i) => {
-            d.day = i + 1;
-            d.dayCN = `第${i+1}天`;
-            const dateObj = new Date(d.fullDate);
-            const m = dateObj.getMonth() + 1;
-            const dt = dateObj.getDate();
-            const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-            d.date = `${m}/${dt}`;
-            d.week = days[dateObj.getDay()];
-        });
-    }
-
-    function addDay() {
-        const lastDate = itineraryData.length > 0 ? new Date(itineraryData[itineraryData.length-1].fullDate) : new Date();
-        lastDate.setDate(lastDate.getDate() + 1);
-        const dateStr = lastDate.toISOString().split('T')[0];
-        
-        const newDay = {
-            fullDate: dateStr, title: "新行程", heroCity: "地點",
-            loc: "Location", hotel: "Hotel", bg: "", events: []
-        };
-        itineraryData.push(newDay);
-        sortDays();
-        renderDateScroller();
-        switchDay(itineraryData.length - 1);
-    }
-
-    function deleteDay() {
-        if(confirm("確定刪除當天所有行程？")) {
-            itineraryData.splice(currentDayIdx, 1);
-            if(itineraryData.length === 0) addDay(); 
-            sortDays();
-            renderDateScroller();
-            switchDay(0);
-        }
-    }
-
-    function openDayEditModal() {
-        const data = itineraryData[currentDayIdx];
-        document.getElementById('d-date-input').value = data.fullDate;
-        document.getElementById('d-title-input').value = data.title;
-        document.getElementById('d-loc-input').value = data.heroCity;
-        document.getElementById('d-bg-input').value = data.bg;
-        
-        document.getElementById('dayEditModal').classList.add('active');
-    }
-
-    function saveDayEdit() {
-        const data = itineraryData[currentDayIdx];
-        data.fullDate = document.getElementById('d-date-input').value;
-        data.title = document.getElementById('d-title-input').value;
-        data.heroCity = document.getElementById('d-loc-input').value;
-        data.bg = document.getElementById('d-bg-input').value;
-        
-        closeDayEditModal();
-        sortDays();
-        renderDateScroller();
-        
-        // Find new index of current day after sort (using unique ref or fullDate)
-        const newIdx = itineraryData.findIndex(d => d.fullDate === data.fullDate);
-        switchDay(newIdx >= 0 ? newIdx : 0);
-    }
-
-    function closeDayEditModal() {
-        document.getElementById('dayEditModal').classList.remove('active');
     }
 
     function updateDateLabel(dateStr) {
@@ -758,16 +663,71 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
+        // Sort itineraryData by date first if needed, but assuming manual entry order for now or we sort globally
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        // Re-index days
+        itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
+
         el.innerHTML = itineraryData.map((d, i) => `
-            <div class="date-item ${i===0?'active':''}" onclick="switchDay(${i})">
+            <div class="date-item ${i===currentDayIdx?'active':''}" onclick="switchDay(${i})">
                 <span class="d-day">${d.week}</span>
                 <span class="d-date">${d.date}</span>
             </div>
-        `).join('') + `<div class="add-day-btn" onclick="addDay()">+</div>`;
+        `).join('') + `<div class="add-day-btn" onclick="openAddDayModal()">+</div>`;
+    }
+
+    function openAddDayModal() {
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+
+    function confirmAddDay() {
+        const input = document.getElementById('newDateInput').value;
+        if(!input) return alert("請選擇日期");
+        
+        const d = new Date(input);
+        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const week = weekDays[d.getDay()];
+        const dateStr = `${d.getMonth()+1}/${d.getDate()}`;
+
+        const newDay = {
+            day: itineraryData.length + 1,
+            dayCN: `第${itineraryData.length + 1}天`,
+            date: dateStr,
+            fullDate: input,
+            week: week,
+            title: "新行程",
+            heroCity: "地點",
+            loc: "Location",
+            hotel: "Hotel",
+            bg: "",
+            events: []
+        };
+        itineraryData.push(newDay);
+        // Sort
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        
+        document.getElementById('dateInputModal').classList.remove('active');
+        renderDateScroller();
+        switchDay(itineraryData.findIndex(x => x.fullDate === input));
+    }
+
+    function deleteDay() {
+        if(confirm("確定刪除當天所有行程？")) {
+            itineraryData.splice(currentDayIdx, 1);
+            if(itineraryData.length === 0) {
+                 // Add dummy if empty
+                 // For now reload or keep empty state handling
+            }
+            renderDateScroller();
+            switchDay(0);
+        }
     }
 
     function switchDay(idx) {
+        if(itineraryData.length === 0) return;
         if(idx >= itineraryData.length) idx = itineraryData.length - 1;
+        if(idx < 0) idx = 0;
+        
         currentDayIdx = idx;
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
@@ -820,8 +780,8 @@
 
             let displayDesc = evt.desc;
             if(evt.guide) displayDesc = evt.guide; 
-            if(evt.desc3_content) displayDesc = evt.desc3_content; // Priority to edited content
 
+            // Pass the array and index to identify the event for editing
             const eventContext = {
                  isBranch: data.hasBranch,
                  branchType: currentBranch,
@@ -853,11 +813,11 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
+        // 預設 00:00
         events.push({
-            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容",
-            desc1_title: "接駁位置", desc2_title: "坐駕介紹", desc3_title: "注意事項"
+            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容"
         });
-        switchDay(currentDayIdx);
+        switchDay(currentDayIdx); // Re-render triggers sort
     }
 
     function deleteEvent() {
@@ -960,14 +920,11 @@
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
-    function enableEditMode() {
-        const evt = window.currentEvent;
-        const container = document.getElementById('modalContent');
-        
-        let customFields = '';
-        
-        if(evt.type === 'food') {
-             customFields = `
+    // --- Dynamic Form Rendering ---
+    function renderEditFormFields(type, evt) {
+        let fields = '';
+        if(type === 'food') {
+             fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -982,29 +939,90 @@
                     <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
                 </div>
              `;
-        } else if (['transport', 'car', 'flight'].includes(evt.type)) {
-             customFields = `
+             // Default titles for Food
+             if(!evt.desc1_title) evt.desc1_title = "店名由來";
+             if(!evt.desc2_title) evt.desc2_title = "職人堅持";
+             if(!evt.desc3_title) evt.desc3_title = "美食介紹";
+
+        } else if (['transport', 'car', 'flight'].includes(type)) {
+             fields = `
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
-        } else if (evt.type === 'sightseeing') {
-             customFields = `
+             // Default titles
+             if(!evt.desc1_title) evt.desc1_title = "接駁位置";
+             if(!evt.desc2_title) evt.desc2_title = "坐駕介紹";
+             if(!evt.desc3_title) evt.desc3_title = "注意事項";
+
+        } else if (type === 'sightseeing') {
+             fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
              `;
+             // Default titles
+             if(!evt.desc1_title) evt.desc1_title = "停車攻略";
+             if(!evt.desc2_title) evt.desc2_title = "歷史地位";
+             if(!evt.desc3_title) evt.desc3_title = "注意事項";
         }
+
+        return `
+            ${fields}
+            <div class="edit-section-title">詳細資訊 (ABOUT)</div>
+            <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
+            
+            <div class="edit-row">
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${evt.desc1_title || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><textarea class="edit-textarea" id="e-d1-c" rows="2">${evt.desc1_content || ''}</textarea></div>
+            </div>
+            <div class="edit-row">
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${evt.desc2_title || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><textarea class="edit-textarea" id="e-d2-c" rows="2">${evt.desc2_content || ''}</textarea></div>
+            </div>
+            <div class="edit-row">
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${evt.desc3_title || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><textarea class="edit-textarea" id="e-d3-c" rows="2">${evt.desc3_content || ''}</textarea></div>
+            </div>
+        `;
+    }
+
+    function onTypeChange() {
+        const newType = document.getElementById('e-type').value;
+        const dynamicArea = document.getElementById('dynamic-fields');
+        // Retrieve current values to preserve if needed, but simplest is to just re-render with defaults/empty for new type
+        // Use current event as base but override titles based on new type logic inside render
+        const evt = { ...window.currentEvent }; // copy
+        // Clear specific fields to defaults when type changes to avoid confusion? 
+        // Or keep them. Let's reset titles to defaults for the new type.
+        evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; // Force default pick
+        dynamicArea.innerHTML = renderEditFormFields(newType, evt);
+    }
+
+    function enableEditMode() {
+        const evt = window.currentEvent;
+        const container = document.getElementById('modalContent');
+        
+        // Only show Hero edit fields if it's the first event of the day? Or maybe add a separate "Edit Day" button?
+        // Requirement said: "Edit Day Hero" features. Let's add Day Edit fields at the top of the form.
+        const dayData = itineraryData[currentDayIdx];
 
         container.innerHTML = `
             <div class="edit-form">
+                <div class="edit-section-title">當日資訊 (DAY INFO)</div>
+                <div class="edit-group"><div class="edit-label">日期標題</div><input class="edit-input" id="d-title" value="${dayData.title}"></div>
+                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="d-loc" value="${dayData.heroCity}"></div>
+                <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="d-hotel" value="${dayData.hotel}"></div>
+                <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="d-bg" value="${dayData.bg}"></div>
+
+                <div class="edit-section-title" style="margin-top:30px;">行程內容 (EVENT)</div>
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="onTypeChange(this.value)">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="food" ${evt.type==='food'?'selected':''}>Food</option>
                             <option value="transport" ${evt.type==='transport'?'selected':''}>Transport</option>
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>Sightseeing</option>
@@ -1014,22 +1032,8 @@
                     </div>
                 </div>
                 
-                ${customFields}
-
-                <div class="edit-section-title">詳細資訊 (ABOUT)</div>
-                <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
-                
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${evt.desc1_title || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><textarea class="edit-textarea" id="e-d1-c" rows="2">${evt.desc1_content || ''}</textarea></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${evt.desc2_title || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><textarea class="edit-textarea" id="e-d2-c" rows="2">${evt.desc2_content || ''}</textarea></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${evt.desc3_title || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><textarea class="edit-textarea" id="e-d3-c" rows="2">${evt.desc3_content || ''}</textarea></div>
+                <div id="dynamic-fields">
+                    ${renderEditFormFields(evt.type, evt)}
                 </div>
 
                 <div class="edit-section-title">連結 (LINKS)</div>
@@ -1044,41 +1048,20 @@
         `;
     }
 
-    function onTypeChange(newType) {
-        // Save temporary values
-        const title = document.getElementById('e-title').value;
-        const time = document.getElementById('e-time').value;
-        
-        // Update current event object temporarily to refresh form structure
-        window.currentEvent.type = newType;
-        window.currentEvent.title = title;
-        window.currentEvent.time = time;
-        
-        // Default titles logic
-        if (newType === 'food') {
-             window.currentEvent.desc1_title = "店名由來";
-             window.currentEvent.desc2_title = "職人堅持";
-             window.currentEvent.desc3_title = "美食介紹";
-        } else if (newType === 'sightseeing') {
-             window.currentEvent.desc1_title = "停車攻略";
-             window.currentEvent.desc2_title = "歷史地位";
-             window.currentEvent.desc3_title = "注意事項";
-        } else {
-             window.currentEvent.desc1_title = "接駁位置";
-             window.currentEvent.desc2_title = "坐駕介紹";
-             window.currentEvent.desc3_title = "注意事項";
-        }
-        
-        enableEditMode();
-    }
-
     function saveEdit() {
-        // Collect basic
+        // Save Day Data
+        const dayData = itineraryData[currentDayIdx];
+        dayData.title = document.getElementById('d-title').value;
+        dayData.heroCity = document.getElementById('d-loc').value;
+        dayData.hotel = document.getElementById('d-hotel').value;
+        dayData.bg = document.getElementById('d-bg').value;
+
+        // Save Event Data
         const newTitle = document.getElementById('e-title').value;
         const newTime = document.getElementById('e-time').value;
         const newType = document.getElementById('e-type').value;
 
-        // Collect Custom
+        // Custom fields might exist or not depending on type
         const ps_l1 = document.getElementById('e-ps-l1') ? document.getElementById('e-ps-l1').value : '';
         const ps_c1 = document.getElementById('e-ps-c1') ? document.getElementById('e-ps-c1').value : '';
         const ps_l2 = document.getElementById('e-ps-l2') ? document.getElementById('e-ps-l2').value : '';
@@ -1094,10 +1077,8 @@
         const lweb = document.getElementById('e-l-web').value;
         const lvlog = document.getElementById('e-l-vlog').value;
 
-        // Update Data
-        const data = itineraryData[currentDayIdx];
-        let events = data.events;
-        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
+        let events = dayData.events;
+        if(dayData.hasBranch) events = currentBranch === 'A' ? dayData.eventsA : dayData.eventsB;
         
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
@@ -1112,8 +1093,7 @@
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
         
-        // For list display compatibility
-        evt.guide = d3c; 
+        evt.guide = d3c; // Sync for list view
 
         closeDetailModal();
         switchDay(currentDayIdx); // Re-render and Re-sort
