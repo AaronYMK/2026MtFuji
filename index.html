@@ -45,7 +45,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal --- */
+        /* --- Modal (詳細資訊卡片) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -71,16 +71,17 @@
             position: absolute; top: 15px; right: 20px; font-size: 1.8rem; 
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
-
-        /* 編輯按鈕 (移至最下方，樣式調整) */
-        .edit-btn-bottom {
-            width: 100%; padding: 15px; background: #f1f5f9; color: var(--primary-blue);
-            border: none; border-radius: 12px; font-size: 1rem; font-weight: 700;
-            margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
+        
+        /* 編輯按鈕 (底部) */
+        .modal-edit-btn-bottom {
+            width: 100%; padding: 16px; border-radius: 12px; border: 2px dashed #bfdbfe; 
+            font-size: 1rem; cursor: pointer; color: var(--primary-blue); font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: #fff; margin-top: 20px;
         }
 
         /* 編輯模式表單 */
-        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 10px; padding-bottom: 40px; }
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; padding-bottom: 40px; }
         .edit-group { display: flex; flex-direction: column; gap: 5px; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .edit-input, .edit-textarea, .edit-select { 
@@ -180,7 +181,7 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup */
+        /* Center Popup (Big Card) - 淡藍色 */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; z-index: 3000; display: none;
@@ -244,7 +245,10 @@
         }
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
-        .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; }
+        
+        /* Day Vertical - 直排 */
+        .day-vertical { writing-mode: vertical-rl; text-orientation: mixed; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; }
+        
         .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: var(--shadow); }
         .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(30, 58, 138, 0.85) 0%, transparent 100%); color: white; }
         .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -252,10 +256,9 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete Day Button */
-        .delete-day-btn {
-            position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5;
-        }
+        /* Delete/Edit Day Buttons */
+        .day-action-btns { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
+        .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
@@ -387,12 +390,23 @@
 </div>
 
 <div id="dateInputModal" class="confirm-overlay">
-    <div class="confirm-box">
-        <div class="confirm-text" style="margin-bottom:10px;">請選擇日期</div>
-        <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px;">
-        <div class="confirm-btns">
+    <div class="confirm-box" style="text-align:left;">
+        <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
+        <div class="edit-group">
+            <div class="edit-label">日期</div>
+            <input type="date" id="newDateInput" class="edit-input">
+        </div>
+        
+        <div id="editDayExtraFields" style="display:none; margin-top:10px;">
+            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="day-edit-title"></div>
+            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="day-edit-loc"></div>
+            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="day-edit-hotel"></div>
+            <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="day-edit-bg"></div>
+        </div>
+
+        <div class="confirm-btns" style="margin-top:20px;">
             <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active')">取消</button>
-            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" onclick="confirmAddDay()">新增</button>
+            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="dateModalConfirmBtn">確定</button>
         </div>
     </div>
 </div>
@@ -410,7 +424,10 @@
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <i class="fas fa-trash-alt delete-day-btn" onclick="deleteDay()"></i>
+                <div class="day-action-btns">
+                    <div class="day-btn" onclick="openEditDayModal()"><i class="fas fa-edit"></i></div>
+                    <div class="day-btn" onclick="deleteDay()"><i class="fas fa-trash-alt"></i></div>
+                </div>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
@@ -563,6 +580,7 @@
                 { time: "22:30", type: "food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
             ]
         },
+        // ... (Other days remain same structure)
         {
             day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
             loc: "Kawaguchiko", hotel: "秀峰閣湖月",
@@ -661,7 +679,7 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        // Sort itineraryData by date first if needed, but assuming manual entry order for now or we sort globally
+        // Sort itineraryData by date
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
@@ -675,6 +693,15 @@
     }
 
     function openAddDayModal() {
+        document.getElementById('dateModalTitle').innerText = "新增日期";
+        document.getElementById('newDateInput').value = "";
+        
+        // Setup confirm button for Adding
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.onclick = confirmAddDay;
+        btn.innerText = "新增";
+        
+        document.getElementById('editDayExtraFields').style.display = 'none';
         document.getElementById('dateInputModal').classList.add('active');
     }
 
@@ -707,6 +734,55 @@
         document.getElementById('dateInputModal').classList.remove('active');
         renderDateScroller();
         switchDay(itineraryData.findIndex(x => x.fullDate === input));
+    }
+
+    function openEditDayModal() {
+        const dayData = itineraryData[currentDayIdx];
+        
+        document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
+        document.getElementById('newDateInput').value = dayData.fullDate;
+        
+        // Show extra fields
+        document.getElementById('editDayExtraFields').style.display = 'block';
+        document.getElementById('day-edit-title').value = dayData.title;
+        document.getElementById('day-edit-loc').value = dayData.heroCity;
+        document.getElementById('day-edit-hotel').value = dayData.hotel;
+        document.getElementById('day-edit-bg').value = dayData.bg;
+
+        // Setup confirm button for Editing
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.onclick = confirmEditDay;
+        btn.innerText = "儲存";
+
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+
+    function confirmEditDay() {
+        const input = document.getElementById('newDateInput').value;
+        if(!input) return alert("請選擇日期");
+
+        const d = new Date(input);
+        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        
+        const dayData = itineraryData[currentDayIdx];
+        dayData.fullDate = input;
+        dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
+        dayData.week = weekDays[d.getDay()];
+        
+        dayData.title = document.getElementById('day-edit-title').value;
+        dayData.heroCity = document.getElementById('day-edit-loc').value;
+        dayData.hotel = document.getElementById('day-edit-hotel').value;
+        dayData.bg = document.getElementById('day-edit-bg').value;
+
+        // Re-sort in case date changed
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        
+        document.getElementById('dateInputModal').classList.remove('active');
+        renderDateScroller();
+        
+        // Switch to the new index of this day
+        const newIdx = itineraryData.findIndex(x => x.fullDate === input);
+        switchDay(newIdx);
     }
 
     function deleteDay() {
@@ -868,8 +944,6 @@
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> JAPANTOKYO</div>`;
-        
-        // 編輯按鈕現在放在最下方，這裡先不放
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
@@ -914,7 +988,10 @@
             <a href="${evt.link_map || '#'}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
             <a href="${evt.link_web || '#'}" class="m-btn btn-web">官方網站</a>
             <a href="${evt.link_vlog || '#'}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>
-            <button class="edit-btn-bottom" onclick="enableEditMode()"><i class="fas fa-pen"></i> 編輯此卡片</button>
+        </div>
+        
+        <div class="modal-edit-btn-bottom" onclick="enableEditMode()">
+            <i class="fas fa-pen"></i> 編輯此行程
         </div>`;
 
         container.innerHTML = html;
@@ -925,6 +1002,10 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         if(type === 'food') {
+             if(!evt.desc1_title) evt.desc1_title = "店名由來";
+             if(!evt.desc2_title) evt.desc2_title = "職人堅持";
+             if(!evt.desc3_title) evt.desc3_title = "美食介紹";
+             
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-row">
@@ -940,34 +1021,30 @@
                     <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
                 </div>
              `;
-             // Default titles for Food
-             if(!evt.desc1_title) evt.desc1_title = "店名由來";
-             if(!evt.desc2_title) evt.desc2_title = "職人堅持";
-             if(!evt.desc3_title) evt.desc3_title = "美食介紹";
 
         } else if (['transport', 'car', 'flight'].includes(type)) {
+             if(!evt.desc1_title) evt.desc1_title = "接駁位置";
+             if(!evt.desc2_title) evt.desc2_title = "坐駕介紹";
+             if(!evt.desc3_title) evt.desc3_title = "注意事項";
+
              fields = `
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
-             // Default titles
-             if(!evt.desc1_title) evt.desc1_title = "接駁位置";
-             if(!evt.desc2_title) evt.desc2_title = "坐駕介紹";
-             if(!evt.desc3_title) evt.desc3_title = "注意事項";
 
         } else if (type === 'sightseeing') {
+             if(!evt.desc1_title) evt.desc1_title = "停車攻略";
+             if(!evt.desc2_title) evt.desc2_title = "歷史地位";
+             if(!evt.desc3_title) evt.desc3_title = "注意事項";
+
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
              `;
-             // Default titles
-             if(!evt.desc1_title) evt.desc1_title = "停車攻略";
-             if(!evt.desc2_title) evt.desc2_title = "歷史地位";
-             if(!evt.desc3_title) evt.desc3_title = "注意事項";
         }
 
         return `
@@ -993,12 +1070,9 @@
     function onTypeChange() {
         const newType = document.getElementById('e-type').value;
         const dynamicArea = document.getElementById('dynamic-fields');
-        // Retrieve current values to preserve if needed, but simplest is to just re-render with defaults/empty for new type
-        // Use current event as base but override titles based on new type logic inside render
-        const evt = { ...window.currentEvent }; // copy
-        // Clear specific fields to defaults when type changes to avoid confusion? 
-        // Or keep them. Let's reset titles to defaults for the new type.
-        evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; // Force default pick
+        const evt = { ...window.currentEvent }; 
+        // Reset titles to defaults based on new type logic inside render
+        evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
         dynamicArea.innerHTML = renderEditFormFields(newType, evt);
     }
 
@@ -1006,19 +1080,8 @@
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
         
-        // Only show Hero edit fields if it's the first event of the day? Or maybe add a separate "Edit Day" button?
-        // Requirement said: "Edit Day Hero" features. Let's add Day Edit fields at the top of the form.
-        const dayData = itineraryData[currentDayIdx];
-
         container.innerHTML = `
             <div class="edit-form">
-                <div class="edit-section-title">當日資訊 (DAY INFO)</div>
-                <div class="edit-group"><div class="edit-label">日期標題</div><input class="edit-input" id="d-title" value="${dayData.title}"></div>
-                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="d-loc" value="${dayData.heroCity}"></div>
-                <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="d-hotel" value="${dayData.hotel}"></div>
-                <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="d-bg" value="${dayData.bg}"></div>
-
-                <div class="edit-section-title" style="margin-top:30px;">行程內容 (EVENT)</div>
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
@@ -1050,13 +1113,6 @@
     }
 
     function saveEdit() {
-        // Save Day Data
-        const dayData = itineraryData[currentDayIdx];
-        dayData.title = document.getElementById('d-title').value;
-        dayData.heroCity = document.getElementById('d-loc').value;
-        dayData.hotel = document.getElementById('d-hotel').value;
-        dayData.bg = document.getElementById('d-bg').value;
-
         // Save Event Data
         const newTitle = document.getElementById('e-title').value;
         const newTime = document.getElementById('e-time').value;
@@ -1078,8 +1134,9 @@
         const lweb = document.getElementById('e-l-web').value;
         const lvlog = document.getElementById('e-l-vlog').value;
 
-        let events = dayData.events;
-        if(dayData.hasBranch) events = currentBranch === 'A' ? dayData.eventsA : dayData.eventsB;
+        const data = itineraryData[currentDayIdx];
+        let events = data.events;
+        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
