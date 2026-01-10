@@ -17,18 +17,14 @@
         :root {
             --bg-color: #eff6ff;       
             --card-bg: #f8fbff;        
-            
             --text-main: #1e3a8a;     
             --text-light: #64748b;
-            
             --primary-blue: #3b82f6;
             --light-blue: #dbeafe;
             --line-color: #bfdbfe;
-
             --col-transport: #ef4444; 
             --col-food: #2563eb;      
             --col-sight: #f97316;     
-
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
             --font-num: 'Lato', sans-serif;
@@ -37,220 +33,118 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding-bottom: 100px;
-        }
+        body { font-family: var(--font-sans); background-color: var(--bg-color); color: var(--text-main); margin: 0; padding-bottom: 100px; }
 
-        /* --- Modal (詳細資訊卡片) --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(30, 58, 138, 0.2); 
-            backdrop-filter: blur(4px);
-            z-index: 2000; display: none;
-            flex-direction: column; justify-content: flex-end; 
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        /* --- Modal --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 58, 138, 0.2); backdrop-filter: blur(4px); z-index: 2000; display: none; flex-direction: column; justify-content: flex-end; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .modal-overlay.active { display: flex; }
         @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
         
-        .modal-container {
-            width: 100%; height: 85%; 
-            background: #fff; 
-            border-radius: 20px 20px 0 0;
-            position: relative;
-            padding: 25px;
-            overflow-y: auto;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-        }
+        .modal-container { width: 100%; height: 85%; background: #fff; border-radius: 20px 20px 0 0; position: relative; padding: 25px; overflow-y: auto; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); }
+        .modal-close-x { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10; }
+        .modal-edit-btn { position: absolute; top: 15px; left: 20px; font-size: 1.2rem; color: var(--primary-blue); cursor: pointer; padding: 10px; z-index: 10; background: #eff6ff; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
 
-        .modal-close-x {
-            position: absolute; top: 15px; right: 20px; font-size: 1.8rem; 
-            color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
-        }
-        
-        /* 編輯按鈕 (左上角) */
-        .modal-edit-btn {
-            position: absolute; top: 15px; left: 20px; font-size: 1.2rem;
-            color: var(--primary-blue); cursor: pointer; padding: 10px; z-index: 10;
-            background: #eff6ff; border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* 編輯模式表單 */
-        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px; }
+        /* Edit Form */
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px;}
         .edit-group { display: flex; flex-direction: column; gap: 5px; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
-        .edit-input, .edit-textarea, .edit-select { 
-            padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
-            font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
-        }
+        .edit-input, .edit-textarea, .edit-select { padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%; }
         .edit-textarea { resize: vertical; }
         .edit-row { display: flex; gap: 10px; }
         .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
-        
         .btn-save { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
         .btn-cancel { background: #fff; border: 1px solid #bfdbfe; color: #64748b; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
         .btn-delete-event { background: #fee2e2; border: none; color: #ef4444; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; }
 
-        /* Modal Content Styles */
+        /* Card Styles */
         .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 10px; }
-        .m-tag { 
-            border: 1.5px solid; 
-            padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; 
-            letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
-            background: #fff;
-        }
+        .m-tag { border: 1.5px solid; padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; background: #fff; }
         .m-time-icon { color: #94a3b8; font-size: 0.9rem; }
         .m-time { font-family: var(--font-num); font-size: 1.3rem; font-weight: 700; color: #64748b; }
-        
-        .m-title { 
-            font-family: var(--font-serif); font-size: 2rem; font-weight: 800; 
-            line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; 
-        }
+        .m-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; }
         .m-addr { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; display: flex; align-items: center; gap: 6px;}
-
-        .m-sec-header {
-            font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
-            border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px;
-            font-weight: 700; display: flex; align-items: center; gap: 6px;
-        }
+        .m-sec-header { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
-        /* Food Recommendation */
+        /* Food */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
-        .food-rec-item {
-            display: flex; justify-content: space-between; align-items: center;
-            background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px;
-        }
+        .food-rec-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px; }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
-        .rec-name-jp:active { opacity: 0.7; }
-
-        /* Combined Transport Box */
-        .res-combined-box {
-            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
-            overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
-        }
-        .res-top {
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            background: #fff;
-        }
+        
+        /* Transport */
+        .res-combined-box { background: #fff; border: 1px solid #dbeafe; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05); }
+        .res-top { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
         .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; margin-top: 2px; font-family: var(--font-num); }
         .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
-        
         .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
-
-        .res-bottom {
-            padding: 15px 20px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center;
-        }
+        .res-bottom { padding: 15px 20px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
         .conf-title { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
         .conf-val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 1px; }
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
-        .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
-        /* Sightseeing Point Speak */
-        .ps-box {
-            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        /* Sightseeing */
+        .ps-box { background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
-        /* About Box */
-        .about-box { 
-            background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
-            display: flex; align-items: center; gap: 15px; 
-        }
+        /* Common */
+        .about-box { background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
         .ab-icon { font-size: 1.8rem; color: var(--primary-blue); }
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
-
-        /* Vertical Desc List */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
-        /* Buttons */
-        .m-btn {
-            width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
-            margin-bottom: 12px; transition: 0.2s; font-weight: 600;
-        }
+        .m-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-bottom: 12px; transition: 0.2s; font-weight: 600; }
         .btn-map { background: #334155; color: white; box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2); } 
         .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) - 淡藍色 */
-        .center-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80%; max-width: 320px; z-index: 3000; display: none;
-            border-radius: 20px; padding: 30px 20px; text-align: center;
-            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
-            background: #eff6ff; 
-            animation: zoomIn 0.2s ease-out;
-        }
+        /* Big Card */
+        .center-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 320px; z-index: 3000; display: none; border-radius: 20px; padding: 30px 20px; text-align: center; box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15); background: #eff6ff; animation: zoomIn 0.2s ease-out; }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
-        
         .cp-content { display: flex; flex-direction: column; align-items: center; }
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
-        .cp-close { 
-            position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
-            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
+        .cp-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* --- Custom Confirm Modal --- */
-        .confirm-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 4000; display: none;
-            justify-content: center; align-items: center;
-            backdrop-filter: blur(2px);
-        }
+        /* Confirm Modal */
+        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 4000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
         .confirm-overlay.active { display: flex; }
-        .confirm-box {
-            background: #eff6ff;
-            width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
+        .confirm-box { background: #eff6ff; width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
         .confirm-btns { display: flex; gap: 10px; justify-content: center; }
-        .confirm-btn { 
-            flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
-        }
+        .confirm-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; }
         .btn-yes { background: #ef4444; color: white; }
         .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
 
-        /* --- Header & Tabs --- */
+        /* Header */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
         .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
         .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
 
-        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(239, 246, 255, 0.95); border-bottom: 1px solid #dbeafe; }
+        /* Scroller */
+        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(239, 246, 255, 0.95); border-bottom: 1px solid #dbeafe; align-items: center;}
         .date-scroller::-webkit-scrollbar { display: none; }
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
+        .d-date { font-family: var(--font-serif); font-size: 1.4rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
+        
+        .add-day-btn { min-width: 45px; display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-size: 1.5rem; cursor: pointer; height: 100%; padding-bottom: 15px;}
 
-        /* Add Day Button */
-        .add-day-btn {
-            min-width: 45px; display: flex; align-items: center; justify-content: center; 
-            color: var(--primary-blue); font-size: 1.5rem; cursor: pointer;
-        }
-
-        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative;}
+        /* Hero */
+        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; }
         .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: var(--shadow); }
         .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(30, 58, 138, 0.85) 0%, transparent 100%); color: white; }
@@ -259,10 +153,10 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Edit & Delete Day Buttons */
-        .edit-day-btn { position: absolute; top: 15px; left: 15px; color: rgba(255,255,255,0.8); font-size: 1.1rem; cursor: pointer; z-index: 5; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
-        .delete-day-btn { position: absolute; top: 15px; right: 15px; color: rgba(255,255,255,0.8); font-size: 1.1rem; cursor: pointer; z-index: 5; background: rgba(239, 68, 68, 0.6); padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
+        .delete-day-btn { position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5; }
+        .edit-day-btn { position: absolute; top: 35px; left: 80px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5; }
 
+        /* Weather & Hotel */
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: #1e3a8a; }
@@ -273,50 +167,35 @@
         .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
-
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; }
         .hotel-line { width: 4px; height: 32px; background: #fca5a5; margin-right: 12px; border-radius: 4px; }
         .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
         .hotel-name { font-family: var(--font-serif); font-size: 1.1rem; color: #1e3a8a; font-weight: 600; }
 
-        .branch-toggle { margin: 10px 20px 20px; background: #dbeafe; padding: 4px; border-radius: 10px; display: flex; }
-        .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
-        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1); }
-
-        /* --- Timeline --- */
+        /* Timeline */
         .timeline-wrapper { padding: 10px 20px 30px 20px; position: relative; }
         .timeline-row { display: flex; position: relative; min-height: 100px; } 
         .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: #334155; font-weight: 600; padding-top: 0; }
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
         .timeline-row:last-child .t-line { display: none; }
-
         .t-dot { width: 10px; height: 10px; background: #eff6ff; border: 2px solid #cbd5e1; border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
-        
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.2); }
-        
         .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; position: relative; }
-        
         .t-bar { position: absolute; left: 0; top: 5px; bottom: 35px; width: 4px; border-radius: 4px; }
         .type-transport .t-bar, .type-car .t-bar, .type-bus .t-bar, .type-walk .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
         .type-food .t-bar { background-color: var(--col-food); }
         .type-sightseeing .t-bar { background-color: var(--col-sight); }
-
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: #1e3a8a; }
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
         .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
         .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* Add Event Button */
-        .add-event-btn {
-            width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px;
-            color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer;
-            margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px;
-        }
+        .add-event-btn { width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px; color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-        /* --- Wallet --- */
+        /* Wallet */
         .wallet-container { padding: 20px; }
         .balance-card { background: var(--card-bg); border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #e0f2fe; }
         .calc-box { display: flex; flex-direction: column; gap: 12px; }
@@ -328,33 +207,25 @@
         .date-picker-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #334155; font-size: 1rem; margin-bottom: 5px; cursor: pointer; padding: 8px 16px; border-radius: 20px; background: #eff6ff; border: 1px solid #dbeafe; transition: 0.2s; font-weight: 500; }
         .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
-
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
-        .input-std { 
-            padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; 
-            background: #fff; outline: none; width: 42%; height: 60px;
-        }
+        .input-std { padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; background: #fff; outline: none; width: 42%; height: 60px; }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px;
-            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
-        }
-        
+        .btn-add { background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .expense-list { margin-top: 20px; }
         .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #cbd5e1; }
         .exp-date { font-size: 0.75rem; color: var(--primary-blue); display: block; margin-bottom: 4px; font-family: var(--font-num); font-weight: 700; }
         .exp-name { font-size: 1rem; font-weight: 500; color: #334155; }
         .exp-price { font-weight: 700; color: #1e3a8a; font-family: var(--font-num); font-size: 1.1rem; }
         .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1.2rem; padding: 5px; }
+        .wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-export { flex: 1; background: #fff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
+        .btn-clear { flex: 1; background: #fee2e2; border: none; color: #ef4444; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
 
+        /* Info Section */
         .info-block { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; border: 1px solid #e0f2fe; }
         .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .action-btn { background: #fff; border: 1px solid #dbeafe; padding: 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; font-weight: 500; cursor: default; }
-
-        .wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-export { flex: 1; background: #fff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
-        .btn-clear { flex: 1; background: #fee2e2; border: none; color: #ef4444; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
 
         .bottom-nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 50px; padding: 12px 35px; display: flex; justify-content: space-between; box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.25); z-index: 1000; border: 1px solid rgba(255,255,255,0.8); }
         .nav-icon { font-size: 1.4rem; color: #94a3b8; padding: 5px; cursor: pointer; transition: 0.3s; }
@@ -365,6 +236,20 @@
     </style>
 </head>
 <body>
+
+<div id="dayEditModal" class="modal-overlay">
+    <div class="modal-container">
+        <i class="fas fa-times modal-close-x" onclick="closeDayEditModal()"></i>
+        <div class="edit-form">
+            <div class="edit-group"><div class="edit-label">日期</div><input type="date" class="edit-input" id="d-date"></div>
+            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="d-title"></div>
+            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="d-loc"></div>
+            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="d-hotel"></div>
+            <div class="edit-group"><div class="edit-label">Hero 圖片連結</div><input class="edit-input" id="d-bg"></div>
+            <button class="btn-save" onclick="saveDay()">儲存修改</button>
+        </div>
+    </div>
+</div>
 
 <div id="detailModal" class="modal-overlay">
     <div class="modal-container">
@@ -393,21 +278,6 @@
     </div>
 </div>
 
-<div id="dayEditModal" class="confirm-overlay">
-    <div class="confirm-box" style="text-align:left;">
-        <div style="font-weight:700; color:#1e3a8a; margin-bottom:15px; text-align:center;">編輯日期資訊</div>
-        <div class="edit-group"><div class="edit-label">日期</div><input type="text" id="de-date" class="edit-input" placeholder="26"></div>
-        <div class="edit-group" style="margin-top:10px;"><div class="edit-label">星期</div><input type="text" id="de-week" class="edit-input" placeholder="MON"></div>
-        <div class="edit-group" style="margin-top:10px;"><div class="edit-label">標題</div><input type="text" id="de-title" class="edit-input" placeholder="行程標題"></div>
-        <div class="edit-group" style="margin-top:10px;"><div class="edit-label">地點</div><input type="text" id="de-loc" class="edit-input" placeholder="地點"></div>
-         <div class="edit-group" style="margin-top:10px;"><div class="edit-label">圖片連結</div><input type="text" id="de-bg" class="edit-input" placeholder="URL"></div>
-        <div class="confirm-btns" style="margin-top:20px;">
-            <button class="confirm-btn btn-no" onclick="closeDayEdit()">取消</button>
-            <button class="confirm-btn btn-save" style="margin:0" onclick="saveDayEdit()">儲存</button>
-        </div>
-    </div>
-</div>
-
 <header>
     <span class="trip-tag">Winter Mt.Fuji</span>
     <div class="trip-title">
@@ -421,8 +291,8 @@
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <i class="fas fa-pen edit-day-btn" onclick="openDayEdit()"></i>
                 <i class="fas fa-trash-alt delete-day-btn" onclick="deleteDay()"></i>
+                <i class="fas fa-edit edit-day-btn" onclick="editDay()"></i>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
@@ -546,32 +416,84 @@
         sightseeing: 'var(--col-sight)'
     };
 
+    const CATEGORY_LABELS = {
+        food: { d1: "店名由來", d2: "職人堅持", d3: "美食介紹" },
+        sightseeing: { d1: "停車攻略", d2: "歷史地位", d3: "注意事項" },
+        car: { d1: "接駁位置", d2: "坐駕介紹", d3: "注意事項" },
+        flight: { d1: "接駁位置", d2: "坐駕介紹", d3: "注意事項" },
+        transport: { d1: "接駁位置", d2: "坐駕介紹", d3: "注意事項" },
+        default: { d1: "區塊1標題", d2: "區塊2標題", d3: "區塊3標題" }
+    };
+
     let itineraryData = [
         {
-            day: 1, dayCN: "第一天", date: "26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
+            day: 1, fullDate: "2026-01-26", title: "東京副都心－新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機", desc1_title: "接駁位置", desc2_title: "坐駕介紹", desc3_title: "注意事項" },
+                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機" },
+                { time: "07:30", type: "flight", iconType: "plane", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)" },
+                { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
                 { 
-                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", 
-                    desc: "炸牛排定食 (新宿南口店)", 
-                    ps_label_1: "牛かつ定食", ps_content_1: "炸牛排定食",
-                    desc1_title: "店名由來", desc2_title: "職人堅持", desc3_title: "美食介紹",
-                    guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名..."
-                }
+                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", desc: "炸牛排定食 (新宿南口店)",
+                    guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名，外酥內生...",
+                    pointSpeak: { jp: "牛かつ定食をください", sub: "請給我炸牛排定食" },
+                    mapUrl: "https://maps.app.goo.gl/example",
+                    ps_label_1: "品項A", ps_content_1: "Menu A",
+                    ps_label_2: "品項B", ps_content_2: "Menu B",
+                    ps_label_3: "品項C", ps_content_3: "Menu C",
+                    gps: "123-456-789",
+                    desc1_title: "店名由來", desc1_content: "內容...",
+                    desc2_title: "職人堅持", desc2_content: "內容...",
+                    desc3_title: "美食介紹", desc3_content: "內容...",
+                    link_map: "https://maps.app.goo.gl/example",
+                    link_web: "#", link_vlog: "#"
+                },
+                { time: "22:30", type: "food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
             ]
         },
         {
-            day: 2, dayCN: "第二天", date: "27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
-            loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
+            day: 2, fullDate: "2026-01-27", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
+            loc: "Kawaguchiko", hotel: "秀峰閣湖月",
+            bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
             events: [
-                { 
-                    time: "10:45", type: "sightseeing", iconType: "water", title: "忍野八海", 
-                    desc: "神之泉湧池",
-                    desc1_title: "停車攻略", desc2_title: "歷史地位", desc3_title: "注意事項",
-                    guide: "【世界遺產】忍野八海是富士山融雪..."
-                }
+                { time: "09:45", type: "car", iconType: "car", title: "Budget 租車", desc: "河口湖站前店取車" },
+                { time: "10:45", type: "sightseeing", iconType: "water", title: "忍野八海", desc: "神之泉湧池" },
+                { time: "12:00", type: "food", iconType: "utensils", title: "こし路 (Koshiji)", desc: "在地人食堂：牛肉燴飯" }
+            ]
+        },
+        {
+            day: 3, fullDate: "2026-01-28", title: "富士五湖－河口湖", heroCity: "河口湖",
+            loc: "Kawaguchiko", hotel: "秀峰閣湖月",
+            bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
+            hasBranch: true,
+            eventsA: [
+                { time: "10:45", type: "food", iconType: "utensils", title: "手打うどん 彩花", desc: "吉田烏龍麵" },
+                { time: "12:15", type: "sightseeing", iconType: "mountain", title: "天上山公園纜車", desc: "兔子神社 & 絕景鞦韆" },
+                { time: "14:30", type: "sightseeing", iconType: "torii-gate", title: "天空鳥居", desc: "河口湖遙拝所" }
+            ],
+            eventsB: [
+                { time: "11:00", type: "food", iconType: "utensils", title: "不動茶屋", desc: "餺飥麵 (東戀路店)" },
+                { time: "12:30", type: "sightseeing", iconType: "music", title: "音樂盒之森美術館", desc: "室內避雪備案" }
+            ]
+        },
+        {
+            day: 4, fullDate: "2026-01-29", title: "懷舊商店街－下吉田", heroCity: "吉田市",
+            loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
+            bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
+            events: [
+                { time: "12:00", type: "sightseeing", iconType: "camera", title: "新倉山淺間公園", desc: "五重塔與富士山" },
+                { time: "19:30", type: "food", iconType: "fire", title: "焼肉うしふじ", desc: "A5和牛燒肉" }
+            ]
+        },
+        {
+            day: 5, fullDate: "2026-01-30", title: "依依不捨－捨不得回家", heroCity: "東京都",
+            loc: "Shinjuku", hotel: "溫暖的家",
+            bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
+            events: [
+                { time: "08:45", type: "food", iconType: "utensils", title: "らぁ麺や 嶋", desc: "超人氣拉麵" },
+                { time: "15:08", type: "transport", iconType: "train", title: "NEX 37號", desc: "前往成田機場" },
+                { time: "19:30", type: "flight", iconType: "plane", title: "CI 109 回程", desc: "NRT ➝ TPE" }
             ]
         }
     ];
@@ -587,6 +509,29 @@
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
         setInterval(updateRate, 3600000);
+    }
+
+    // Helper: Formats 2026-01-26 to 1/26
+    function formatDate(dateStr) {
+        const d = new Date(dateStr);
+        return `${d.getMonth() + 1}/${d.getDate()}`;
+    }
+
+    // Helper: Gets Weekday (MON, TUE) from date string
+    function getWeekDay(dateStr) {
+        const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const d = new Date(dateStr);
+        return days[d.getDay()];
+    }
+
+    // Sort days by date
+    function sortDays() {
+        itineraryData.sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
+        // Update day number
+        itineraryData.forEach((d, i) => {
+            d.day = i + 1;
+            d.dayCN = `第${i+1}天`; // Simple fallback
+        });
     }
 
     function updateDateLabel(dateStr) {
@@ -627,84 +572,98 @@
     }
 
     function renderDateScroller() {
+        sortDays();
         const el = document.getElementById('dateScroller');
-        el.innerHTML = itineraryData.map((d, i) => `
-            <div class="date-item ${i===0?'active':''}" onclick="switchDay(${i})">
-                <span class="d-day">${d.week}</span>
-                <span class="d-date">${d.date}</span>
+        el.innerHTML = itineraryData.map((d, i) => {
+            const dateDisplay = formatDate(d.fullDate);
+            const weekDisplay = getWeekDay(d.fullDate);
+            return `
+            <div class="date-item ${i===currentDayIdx?'active':''}" onclick="switchDay(${i})">
+                <span class="d-day">${weekDisplay}</span>
+                <span class="d-date">${dateDisplay}</span>
             </div>
-        `).join('') + `<div class="add-day-btn" onclick="addDay()">+</div>`;
+        `}).join('') + `<div class="add-day-btn" onclick="addDay()">+</div>`;
     }
 
     function addDay() {
-        const nextDay = itineraryData.length + 1;
+        // Default to next day of last entry, or today
+        let nextDate = new Date();
+        if(itineraryData.length > 0) {
+            const last = new Date(itineraryData[itineraryData.length-1].fullDate);
+            nextDate.setDate(last.getDate() + 1);
+        }
+        const dateStr = nextDate.toISOString().split('T')[0];
+        
         const newDay = {
-            day: nextDay, dayCN: `第${nextDay}天`, date: "28", week: "NEW", title: "新行程", heroCity: "地點",
+            day: itineraryData.length + 1, dayCN: "新的一天", fullDate: dateStr, title: "新行程", heroCity: "地點",
             loc: "Location", hotel: "Hotel", bg: "", events: []
         };
         itineraryData.push(newDay);
         renderDateScroller();
         switchDay(itineraryData.length - 1);
     }
+    
+    // Edit Day Logic
+    function editDay() {
+        const data = itineraryData[currentDayIdx];
+        const container = document.getElementById('modalContent');
+        
+        // Open day edit modal
+        document.getElementById('dayEditModal').classList.add('active');
+        document.getElementById('d-date').value = data.fullDate;
+        document.getElementById('d-title').value = data.title;
+        document.getElementById('d-loc').value = data.heroCity;
+        document.getElementById('d-hotel').value = data.hotel;
+        document.getElementById('d-bg').value = data.bg;
+    }
+    
+    function closeDayEditModal() {
+        document.getElementById('dayEditModal').classList.remove('active');
+    }
+
+    function saveDay() {
+        const data = itineraryData[currentDayIdx];
+        data.fullDate = document.getElementById('d-date').value;
+        data.title = document.getElementById('d-title').value;
+        data.heroCity = document.getElementById('d-loc').value;
+        data.hotel = document.getElementById('d-hotel').value;
+        data.bg = document.getElementById('d-bg').value;
+        
+        closeDayEditModal();
+        renderDateScroller(); // Re-sort happens here
+        
+        // Find new index after sort
+        const newIdx = itineraryData.indexOf(data);
+        switchDay(newIdx); 
+    }
 
     function deleteDay() {
+        if(itineraryData.length <= 1) return alert("至少保留一天行程");
         if(confirm("確定刪除當天所有行程？")) {
             itineraryData.splice(currentDayIdx, 1);
-            if(itineraryData.length === 0) addDay(); 
-            // Re-index days
-            itineraryData.forEach((d, i) => {
-                d.day = i + 1;
-                d.dayCN = `第${i+1}天`;
-            });
             renderDateScroller();
             switchDay(0);
         }
     }
-    
-    function openDayEdit() {
-        const data = itineraryData[currentDayIdx];
-        document.getElementById('de-date').value = data.date;
-        document.getElementById('de-week').value = data.week;
-        document.getElementById('de-title').value = data.title;
-        document.getElementById('de-loc').value = data.heroCity;
-        document.getElementById('de-bg').value = data.bg;
-        document.getElementById('dayEditModal').classList.add('active');
-    }
-    
-    function closeDayEdit() { document.getElementById('dayEditModal').classList.remove('active'); }
-    
-    function saveDayEdit() {
-        const data = itineraryData[currentDayIdx];
-        data.date = document.getElementById('de-date').value;
-        data.week = document.getElementById('de-week').value;
-        data.title = document.getElementById('de-title').value;
-        data.heroCity = document.getElementById('de-loc').value;
-        data.bg = document.getElementById('de-bg').value;
-        
-        // Auto sort days by date
-        itineraryData.sort((a, b) => parseInt(a.date) - parseInt(b.date));
-        
-        // Re-assign day numbers
-        itineraryData.forEach((d, i) => {
-            d.day = i + 1;
-            d.dayCN = `第${i+1}天`;
-        });
-        
-        closeDayEdit();
-        renderDateScroller();
-        switchDay(itineraryData.indexOf(data));
-    }
 
     function switchDay(idx) {
-        if(idx < 0) idx = 0;
         if(idx >= itineraryData.length) idx = itineraryData.length - 1;
+        if(idx < 0) idx = 0;
         currentDayIdx = idx;
         const data = itineraryData[idx];
+        
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
         
+        // Update Hero
         document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
         document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
-        document.getElementById('dayVertical').innerText = data.dayCN;
+        
+        // Day Vertical Text mapping (optional)
+        const cnNum = ["一","二","三","四","五","六","七","八","九","十"];
+        let dayText = `第${data.day}天`;
+        // if(data.day <= 10) dayText = `第${cnNum[data.day-1]}天`;
+        
+        document.getElementById('dayVertical').innerText = dayText;
         document.getElementById('heroDay').innerText = `DAY ${data.day}`;
         document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`;
         document.getElementById('heroTitle').innerText = data.title;
@@ -730,7 +689,7 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
 
-        // Auto Sort
+        // Auto Sort by Time
         events.sort((a, b) => a.time.localeCompare(b.time));
 
         container.innerHTML = events.map((evt, idx) => {
@@ -747,8 +706,10 @@
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
 
-            let displayDesc = evt.guide || evt.desc || "";
+            let displayDesc = evt.desc;
+            if(evt.guide) displayDesc = evt.guide; 
 
+            // Pass the array and index to identify the event for editing
             const eventContext = {
                  isBranch: data.hasBranch,
                  branchType: currentBranch,
@@ -781,8 +742,7 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "food", iconType: "circle", desc: "請編輯內容",
-            desc1_title: "店名由來", desc2_title: "職人堅持", desc3_title: "美食介紹"
+            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容"
         });
         switchDay(currentDayIdx);
     }
@@ -829,6 +789,7 @@
         const color = COLORS[evt.type] || '#333';
         let html = '';
 
+        // Display Mode HTML
         html += `<div class="m-header">
                     <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
                     <i class="far fa-clock m-time-icon"></i>
@@ -840,124 +801,126 @@
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
             <div class="food-rec-list">
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || '...'}</span><span class="rec-name-jp">${evt.ps_content_1 || '...'}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || '...'}</span><span class="rec-name-jp">${evt.ps_content_2 || '...'}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || '...'}</span><span class="rec-name-jp">${evt.ps_content_3 || '...'}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || 'Menu A'}', '${evt.ps_label_1 || '品項 A'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || '品項 A'}</span><span class="rec-name-jp">${evt.ps_content_1 || 'Menu A'}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || 'Menu B'}', '${evt.ps_label_2 || '品項 B'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || '品項 B'}</span><span class="rec-name-jp">${evt.ps_content_2 || 'Menu B'}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || 'Menu C'}', '${evt.ps_label_3 || '品項 C'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || '品項 C'}</span><span class="rec-name-jp">${evt.ps_content_3 || 'Menu C'}</span></div>
+            </div>
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="desc-list">
+                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION <span class="res-tag-abc">${evt.ps_label_1 || 'ABC'}</span></div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div class="res-divider"></div>
-                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '...'}</div></div><i class="far fa-copy copy-icon"></i></div>
-                     </div>`;
+                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon"></i></div>
+                     </div>
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="desc-list">
+                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+            </div>`;
         } else if (evt.type === 'sightseeing') {
              html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 (POINT & SPEAK)</div>
-            <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || '...'}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || '...'}</a></div>`;
+            <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || '二之丸停車場'}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || '二之丸停車場'}</a></div>
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="desc-list">
+                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+            </div>`;
         }
 
-        html += `<div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '...'}</div></div></div>
-            <div class="desc-list">
-                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '標題1'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '標題2'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '標題3'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
-            </div>
-            <div style="margin-top:30px">
-                <a href="${evt.link_map || '#'}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
-                <a href="${evt.link_web || '#'}" class="m-btn btn-web">官方網站</a>
-                <a href="${evt.link_vlog || '#'}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>
-            </div>`;
+        html += `<div style="margin-top:30px">
+            <a href="${evt.link_map || '#'}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
+            <a href="${evt.link_web || '#'}" class="m-btn btn-web">官方網站</a>
+            <a href="${evt.link_vlog || '#'}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>
+        </div>`;
 
         container.innerHTML = html;
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
-    // --- Dynamic Form Logic ---
-    function updateEditFormLabels(type) {
-        let d1 = "標題1", d2 = "標題2", d3 = "標題3";
-        let customHTML = "";
-
-        if(type === 'food') {
-            d1 = "店名由來"; d2 = "職人堅持"; d3 = "美食介紹";
-            customHTML = `
-                <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1"></div></div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2"></div></div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3"></div></div>`;
-        } else if (['transport', 'car', 'flight'].includes(type)) {
-            d1 = "接駁位置"; d2 = "坐駕介紹"; d3 = "注意事項";
-             customHTML = `
-                <div class="edit-section-title">RESERVATION</div>
-                <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1"></div>
-                <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1"></div>
-                <div class="edit-group"><div class="edit-label">訂單代號</div><input class="edit-input" id="e-ps-l2"></div>`;
-        } else if (type === 'sightseeing') {
-            d1 = "停車攻略"; d2 = "歷史地位"; d3 = "注意事項";
-             customHTML = `
-                <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1"></div>
-                <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2"></div>
-                <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1"></div>`;
-        }
+    function updateEditLabels(type) {
+        const labels = {
+            food: ["店名由來", "職人堅持", "美食介紹"],
+            sightseeing: ["停車攻略", "歷史地位", "注意事項"],
+            car: ["接駁位置", "坐駕介紹", "注意事項"],
+            flight: ["接駁位置", "坐駕介紹", "注意事項"],
+            transport: ["接駁位置", "坐駕介紹", "注意事項"]
+        };
+        const defaults = ["區塊1標題", "區塊2標題", "區塊3標題"];
+        const current = labels[type] || defaults;
         
-        // Update DOM
-        const container = document.getElementById('custom-fields-container');
-        if(container) container.innerHTML = customHTML;
+        document.getElementById('lbl-d1').innerText = current[0];
+        document.getElementById('lbl-d2').innerText = current[1];
+        document.getElementById('lbl-d3').innerText = current[2];
         
-        // Fill Values if exist
-        const evt = window.currentEvent;
-        // Only fill if type matches current event type, else clear (or keep blank)
-        // Here we just re-fill from evt object. If type changed, evt data might be irrelevant but we keep it for user to clear/edit.
-        if(document.getElementById('e-ps-l1')) document.getElementById('e-ps-l1').value = evt.ps_label_1 || '';
-        if(document.getElementById('e-ps-c1')) document.getElementById('e-ps-c1').value = evt.ps_content_1 || '';
-        if(document.getElementById('e-ps-l2')) document.getElementById('e-ps-l2').value = evt.ps_label_2 || '';
-        if(document.getElementById('e-ps-c2')) document.getElementById('e-ps-c2').value = evt.ps_content_2 || '';
-        if(document.getElementById('e-ps-l3')) document.getElementById('e-ps-l3').value = evt.ps_label_3 || '';
-        if(document.getElementById('e-ps-c3')) document.getElementById('e-ps-c3').value = evt.ps_content_3 || '';
-
-        // Update Desc Titles inputs
-        if(document.getElementById('e-d1-t')) {
-             document.getElementById('e-d1-t').value = evt.desc1_title || d1;
-             document.getElementById('e-d2-t').value = evt.desc2_title || d2;
-             document.getElementById('e-d3-t').value = evt.desc3_title || d3;
-        }
+        // Update placeholder or value if empty? Let's just update label text as requested.
+        // Also update the input values if they are empty/default? No, user might edit them.
+        // Just updating the label visual.
+        document.getElementById('e-d1-t').value = current[0];
+        document.getElementById('e-d2-t').value = current[1];
+        document.getElementById('e-d3-t').value = current[2];
     }
 
     function enableEditMode() {
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
         
+        let customFields = '';
+        // Same logic as before but now we hook up onchange
+        
+        // Common structure
         container.innerHTML = `
             <div class="edit-form">
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="updateEditFormLabels(this.value)">
+                        <select class="edit-select" id="e-type" onchange="updateEditLabels(this.value)">
                             <option value="food" ${evt.type==='food'?'selected':''}>Food</option>
-                            <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>Sightseeing</option>
                             <option value="transport" ${evt.type==='transport'?'selected':''}>Transport</option>
+                            <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>Sightseeing</option>
                             <option value="car" ${evt.type==='car'?'selected':''}>Car</option>
                             <option value="flight" ${evt.type==='flight'?'selected':''}>Flight</option>
                         </select>
                     </div>
                 </div>
                 
-                <div id="custom-fields-container"></div>
+                <div class="edit-section-title">自訂欄位 (依類別)</div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">標籤1 / 中文</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">內容1 / 日文 / 連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                </div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">標籤2 / 訂單號</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">內容2 / 日文</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
+                </div>
+                 <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">標籤3</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">內容3</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
+                </div>
 
                 <div class="edit-section-title">詳細資訊 (ABOUT)</div>
                 <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
                 
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d1">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${evt.desc1_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><textarea class="edit-textarea" id="e-d1-c" rows="2">${evt.desc1_content || ''}</textarea></div>
                 </div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d2">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${evt.desc2_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><textarea class="edit-textarea" id="e-d2-c" rows="2">${evt.desc2_content || ''}</textarea></div>
                 </div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d3">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${evt.desc3_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><textarea class="edit-textarea" id="e-d3-c" rows="2">${evt.desc3_content || ''}</textarea></div>
                 </div>
 
@@ -971,8 +934,9 @@
                 <button class="btn-delete-event" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
-        // Trigger initial update
-        updateEditFormLabels(evt.type);
+        
+        // Trigger update labels based on current type
+        updateEditLabels(evt.type);
     }
 
     function saveEdit() {
@@ -982,12 +946,12 @@
         const newType = document.getElementById('e-type').value;
 
         // Collect Custom
-        const ps_l1 = document.getElementById('e-ps-l1') ? document.getElementById('e-ps-l1').value : '';
-        const ps_c1 = document.getElementById('e-ps-c1') ? document.getElementById('e-ps-c1').value : '';
-        const ps_l2 = document.getElementById('e-ps-l2') ? document.getElementById('e-ps-l2').value : '';
-        const ps_c2 = document.getElementById('e-ps-c2') ? document.getElementById('e-ps-c2').value : '';
-        const ps_l3 = document.getElementById('e-ps-l3') ? document.getElementById('e-ps-l3').value : '';
-        const ps_c3 = document.getElementById('e-ps-c3') ? document.getElementById('e-ps-c3').value : '';
+        const ps_l1 = document.getElementById('e-ps-l1').value;
+        const ps_c1 = document.getElementById('e-ps-c1').value;
+        const ps_l2 = document.getElementById('e-ps-l2').value;
+        const ps_c2 = document.getElementById('e-ps-c2').value;
+        const ps_l3 = document.getElementById('e-ps-l3').value;
+        const ps_c3 = document.getElementById('e-ps-c3').value;
 
         const gps = document.getElementById('e-gps').value;
         const d1t = document.getElementById('e-d1-t').value; const d1c = document.getElementById('e-d1-c').value;
@@ -1015,7 +979,7 @@
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
         
-        // Sync guide for timeline display
+        // For list display compatibility
         evt.guide = d3c; 
 
         closeDetailModal();
