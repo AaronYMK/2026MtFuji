@@ -45,7 +45,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal (詳細資訊卡片) --- */
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -81,7 +81,7 @@
         }
 
         /* 編輯模式表單樣式 */
-        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px;}
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px; }
         .edit-group { display: flex; flex-direction: column; gap: 5px; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
         .edit-input, .edit-textarea, .edit-select { 
@@ -96,136 +96,67 @@
         .btn-cancel { background: #fff; border: 1px solid #bfdbfe; color: #64748b; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
         .btn-delete-event { background: #fee2e2; border: none; color: #ef4444; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; }
 
-        /* Modal Content Styles */
         .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 10px; }
-        .m-tag { 
-            border: 1.5px solid; 
-            padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; 
-            letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
-            background: #fff;
-        }
+        .m-tag { border: 1.5px solid; padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; background: #fff; }
         .m-time-icon { color: #94a3b8; font-size: 0.9rem; }
         .m-time { font-family: var(--font-num); font-size: 1.3rem; font-weight: 700; color: #64748b; }
-        
-        .m-title { 
-            font-family: var(--font-serif); font-size: 2rem; font-weight: 800; 
-            line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; 
-        }
+        .m-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; }
         .m-addr { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; display: flex; align-items: center; gap: 6px;}
 
-        .m-sec-header {
-            font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
-            border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px;
-            font-weight: 700; display: flex; align-items: center; gap: 6px;
-        }
+        .m-sec-header { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
-        /* Food Recommendation */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
-        .food-rec-item {
-            display: flex; justify-content: space-between; align-items: center;
-            background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px;
-        }
+        .food-rec-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px; }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
-        .rec-name-jp:active { opacity: 0.7; }
-
-        /* Combined Transport Box */
-        .res-combined-box {
-            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
-            overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
-        }
-        .res-top {
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            background: #fff;
-        }
+        
+        .res-combined-box { background: #fff; border: 1px solid #dbeafe; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05); }
+        .res-top { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
         .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; margin-top: 2px; font-family: var(--font-num); }
         .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
-        
         .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
-
-        .res-bottom {
-            padding: 15px 20px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center;
-        }
+        .res-bottom { padding: 15px 20px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
         .conf-title { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
         .conf-val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 1px; }
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
-        .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
-        /* Sightseeing */
-        .ps-box {
-            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .ps-box { background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
-        /* About Box */
-        .about-box { 
-            background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
-            display: flex; align-items: center; gap: 15px; 
-        }
+        .about-box { background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
         .ab-icon { font-size: 1.8rem; color: var(--primary-blue); }
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Vertical Desc */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
-        /* Buttons */
-        .m-btn {
-            width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
-            margin-bottom: 12px; transition: 0.2s; font-weight: 600;
-        }
+        .m-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-bottom: 12px; transition: 0.2s; font-weight: 600; }
         .btn-map { background: #334155; color: white; box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2); } 
         .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) - 淡藍色 */
-        .center-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80%; max-width: 320px; z-index: 3000; display: none;
-            border-radius: 20px; padding: 30px 20px; text-align: center;
-            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
-            background: #eff6ff; 
-            animation: zoomIn 0.2s ease-out;
-        }
+        .center-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 320px; z-index: 3000; display: none; border-radius: 20px; padding: 30px 20px; text-align: center; box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15); background: #eff6ff; animation: zoomIn 0.2s ease-out; }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
-        
         .cp-content { display: flex; flex-direction: column; align-items: center; }
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
-        .cp-close { 
-            position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
-            width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
+        .cp-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* --- Custom Confirm Modal --- */
-        .confirm-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 4000; display: none;
-            justify-content: center; align-items: center;
-            backdrop-filter: blur(2px);
-        }
+        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 4000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
         .confirm-overlay.active { display: flex; }
-        .confirm-box {
-            background: #eff6ff;
-            width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
+        .confirm-box { background: #eff6ff; width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
         .confirm-btns { display: flex; gap: 10px; justify-content: center; }
-        .confirm-btn { 
-            flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
-        }
+        .confirm-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; }
         .btn-yes { background: #ef4444; color: white; }
         .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
 
@@ -243,14 +174,11 @@
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
+        
+        .add-day-btn { min-width: 45px; display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-size: 1.5rem; cursor: pointer; }
+        .delete-day-btn { position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5; }
 
-        /* Add Day Button */
-        .add-day-btn {
-            min-width: 45px; display: flex; align-items: center; justify-content: center; 
-            color: var(--primary-blue); font-size: 1.5rem; cursor: pointer;
-        }
-
-        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
+        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative;}
         .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; }
         .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: var(--shadow); }
         .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(30, 58, 138, 0.85) 0%, transparent 100%); color: white; }
@@ -259,11 +187,6 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete Day Button */
-        .delete-day-btn {
-            position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5;
-        }
-
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
         .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: #1e3a8a; }
@@ -284,40 +207,29 @@
         .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
         .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1); }
 
-        /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px 30px 20px; position: relative; }
         .timeline-row { display: flex; position: relative; min-height: 100px; } 
         .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: #334155; font-weight: 600; padding-top: 0; }
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
         .timeline-row:last-child .t-line { display: none; }
-
         .t-dot { width: 10px; height: 10px; background: #eff6ff; border: 2px solid #cbd5e1; border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
-        
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.2); }
-        
         .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; position: relative; }
-        
         .t-bar { position: absolute; left: 0; top: 5px; bottom: 35px; width: 4px; border-radius: 4px; }
         .type-transport .t-bar, .type-car .t-bar, .type-bus .t-bar, .type-walk .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
         .type-food .t-bar { background-color: var(--col-food); }
         .type-sightseeing .t-bar { background-color: var(--col-sight); }
-
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: #1e3a8a; }
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
         .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
         .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* Add Event Button */
-        .add-event-btn {
-            width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px;
-            color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer;
-            margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px;
-        }
+        .add-event-btn { width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px; color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-        /* --- Wallet --- */
+        /* Wallet */
         .wallet-container { padding: 20px; }
         .balance-card { background: var(--card-bg); border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #e0f2fe; }
         .calc-box { display: flex; flex-direction: column; gap: 12px; }
@@ -331,15 +243,9 @@
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
-        .input-std { 
-            padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; 
-            background: #fff; outline: none; width: 42%; height: 60px;
-        }
+        .input-std { padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; background: #fff; outline: none; width: 42%; height: 60px; }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        .btn-add { 
-            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px;
-            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
-        }
+        .btn-add { background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         
         .expense-list { margin-top: 20px; }
         .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #cbd5e1; }
@@ -775,7 +681,7 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "12:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容"
+            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容"
         });
         switchDay(currentDayIdx);
     }
@@ -880,51 +786,87 @@
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
+    function onEditTypeChange() {
+        const newType = document.getElementById('e-type').value;
+        const container = document.getElementById('custom-fields-container');
+        const evt = window.currentEvent; // Use current event data to pre-fill if type matches, or use defaults
+        
+        let customFields = '';
+        let d1t = '', d2t = '', d3t = '';
+
+        if(newType === 'food') {
+             d1t = '店名由來'; d2t = '職人堅持'; d3t = '美食介紹';
+             customFields = `
+                <div class="edit-section-title">POINT & SPEAK</div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.type==='food'? (evt.ps_label_1||'') : ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.type==='food'? (evt.ps_content_1||'') : ''}"></div>
+                </div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.type==='food'? (evt.ps_label_2||'') : ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.type==='food'? (evt.ps_content_2||'') : ''}"></div>
+                </div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.type==='food'? (evt.ps_label_3||'') : ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.type==='food'? (evt.ps_content_3||'') : ''}"></div>
+                </div>
+             `;
+        } else if (['transport', 'car', 'flight'].includes(newType)) {
+             d1t = '接駁位置'; d2t = '坐駕介紹'; d3t = '注意事項';
+             customFields = `
+                <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
+                <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${['transport','car','flight'].includes(evt.type)? (evt.ps_label_1||'') : ''}"></div>
+                <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${['transport','car','flight'].includes(evt.type)? (evt.ps_content_1||'') : ''}"></div>
+                <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${['transport','car','flight'].includes(evt.type)? (evt.ps_label_2||'') : ''}"></div>
+             `;
+        } else if (newType === 'sightseeing') {
+             d1t = '停車攻略'; d2t = '歷史地位'; d3t = '注意事項';
+             customFields = `
+                <div class="edit-section-title">POINT & SPEAK</div>
+                <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.type==='sightseeing'? (evt.ps_label_1||'') : ''}"></div>
+                <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.type==='sightseeing'? (evt.ps_label_2||'') : ''}"></div>
+                <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.type==='sightseeing'? (evt.ps_content_1||'') : ''}"></div>
+             `;
+        }
+
+        container.innerHTML = customFields;
+        
+        // Update Section Titles if they are currently default or empty
+        const t1 = document.getElementById('e-d1-t');
+        const t2 = document.getElementById('e-d2-t');
+        const t3 = document.getElementById('e-d3-t');
+        
+        // Logic: if current value matches old default of previous type, update it. 
+        // Simpler logic: just update them to new defaults, user can change back.
+        if(t1) t1.value = d1t;
+        if(t2) t2.value = d2t;
+        if(t3) t3.value = d3t;
+    }
+
     function enableEditMode() {
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
         
-        let customFields = '';
-        
-        if(evt.type === 'food') {
-             customFields = `
-                <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
-                </div>
-             `;
-        } else if (['transport', 'car', 'flight'].includes(evt.type)) {
-             customFields = `
-                <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
-                <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-             `;
-        } else if (evt.type === 'sightseeing') {
-             customFields = `
-                <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-             `;
-        }
+        // Generate Hero Edit Fields
+        const dayData = itineraryData[currentDayIdx];
 
         container.innerHTML = `
             <div class="edit-form">
+                <div class="edit-section-title">日期與 Hero 設定</div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日期 (如 26)</div><input class="edit-input" id="e-day-date" value="${dayData.date}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">星期 (如 MON)</div><input class="edit-input" id="e-day-week" value="${dayData.week}"></div>
+                </div>
+                <div class="edit-group"><div class="edit-label">當日標題</div><input class="edit-input" id="e-day-title" value="${dayData.title}"></div>
+                <div class="edit-group"><div class="edit-label">地點 (Hero City)</div><input class="edit-input" id="e-day-city" value="${dayData.heroCity}"></div>
+                <div class="edit-group"><div class="edit-label">Hero 圖片連結</div><input class="edit-input" id="e-day-bg" value="${dayData.bg}"></div>
+
+                <div class="edit-section-title">行程內容編輯</div>
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type">
+                        <select class="edit-select" id="e-type" onchange="onEditTypeChange()">
                             <option value="food" ${evt.type==='food'?'selected':''}>Food</option>
                             <option value="transport" ${evt.type==='transport'?'selected':''}>Transport</option>
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>Sightseeing</option>
@@ -934,7 +876,7 @@
                     </div>
                 </div>
                 
-                ${customFields}
+                <div id="custom-fields-container"></div>
 
                 <div class="edit-section-title">詳細資訊 (ABOUT)</div>
                 <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
@@ -962,10 +904,20 @@
                 <button class="btn-delete-event" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
+        
+        onEditTypeChange(); // Trigger initial render of custom fields based on current type
     }
 
     function saveEdit() {
-        // Collect basic
+        // Save Day Info
+        const dayData = itineraryData[currentDayIdx];
+        dayData.date = document.getElementById('e-day-date').value;
+        dayData.week = document.getElementById('e-day-week').value;
+        dayData.title = document.getElementById('e-day-title').value;
+        dayData.heroCity = document.getElementById('e-day-city').value;
+        dayData.bg = document.getElementById('e-day-bg').value;
+
+        // Save Event Info
         const newTitle = document.getElementById('e-title').value;
         const newTime = document.getElementById('e-time').value;
         const newType = document.getElementById('e-type').value;
@@ -987,9 +939,8 @@
         const lvlog = document.getElementById('e-l-vlog').value;
 
         // Update Data
-        const data = itineraryData[currentDayIdx];
-        let events = data.events;
-        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
+        let events = dayData.events;
+        if(dayData.hasBranch) events = currentBranch === 'A' ? dayData.eventsA : dayData.eventsB;
         
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
@@ -1007,8 +958,11 @@
         // For list display compatibility
         evt.guide = d3c; 
 
+        // Auto Sort Days if needed (simple sort by date string might be tricky without standard format, but day index is reliable)
+        // Here we just re-render current day
+        renderDateScroller(); // Update date scroller text
         closeDetailModal();
-        switchDay(currentDayIdx); // Re-render and Re-sort
+        switchDay(currentDayIdx); // Re-render and Re-sort events
     }
 
     function closeDetailModal() { document.querySelector('.modal-overlay').classList.remove('active'); }
