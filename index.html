@@ -45,7 +45,7 @@
             padding-bottom: 100px;
         }
 
-        /* --- Modal (詳細資訊卡片) --- */
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(30, 58, 138, 0.2); 
@@ -120,6 +120,7 @@
         }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
+        /* Food Recommendation */
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
         .food-rec-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -129,6 +130,7 @@
         .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
         .rec-name-jp:active { opacity: 0.7; }
 
+        /* Combined Transport Box */
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -151,6 +153,7 @@
         .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
 
+        /* Sightseeing */
         .ps-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
             display: flex; justify-content: space-between; align-items: center;
@@ -158,6 +161,7 @@
         .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
         .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
 
+        /* About Box */
         .about-box { 
             background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
             display: flex; align-items: center; gap: 15px; 
@@ -166,11 +170,13 @@
         .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
         .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
 
+        /* Vertical Desc */
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
+        /* Buttons */
         .m-btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
@@ -181,7 +187,7 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) */
+        /* Center Popup (Big Card) - 淡藍色 */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; z-index: 3000; display: none;
@@ -194,6 +200,7 @@
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
+        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
@@ -202,7 +209,7 @@
             width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
-        /* Custom Confirm Modal */
+        /* --- Custom Confirm Modal --- */
         .confirm-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); z-index: 4000; display: none;
@@ -211,26 +218,17 @@
         }
         .confirm-overlay.active { display: flex; }
         .confirm-box {
-            background: #eff6ff; width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
+            background: #eff6ff;
+            width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
         .confirm-btns { display: flex; gap: 10px; justify-content: center; }
-        .confirm-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; }
+        .confirm-btn { 
+            flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
+        }
         .btn-yes { background: #ef4444; color: white; }
         .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
-
-        /* Add Day Overlay */
-        .date-picker-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 3000; display: none;
-            justify-content: center; align-items: center;
-        }
-        .date-picker-modal.active { display: flex; }
-        .date-picker-content {
-            background: #fff; padding: 20px; border-radius: 16px; width: 85%; max-width: 320px;
-            display: flex; flex-direction: column; gap: 15px;
-        }
 
         /* --- Header & Tabs --- */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
@@ -246,7 +244,12 @@
         .d-date { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
-        .add-day-btn { min-width: 45px; display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-size: 1.5rem; cursor: pointer; }
+
+        /* Add Day Button */
+        .add-day-btn {
+            min-width: 45px; display: flex; align-items: center; justify-content: center; 
+            color: var(--primary-blue); font-size: 1.5rem; cursor: pointer;
+        }
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         .day-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; }
@@ -257,8 +260,10 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        .delete-day-btn { position: absolute; top: 35px; right: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5; }
-        .edit-day-btn { position: absolute; top: 35px; left: 35px; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; z-index: 5; }
+        /* Edit & Delete Day Buttons */
+        .hero-btn-group { position: absolute; top: 20px; right: 20px; z-index: 5; display: flex; gap: 10px; }
+        .hero-btn { color: rgba(255,255,255,0.8); font-size: 1.1rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: 0.2s; }
+        .hero-btn:hover { background: rgba(255,255,255,0.9); color: var(--primary-blue); }
 
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
@@ -287,10 +292,14 @@
         .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
         .timeline-row:last-child .t-line { display: none; }
+
         .t-dot { width: 10px; height: 10px; background: #eff6ff; border: 2px solid #cbd5e1; border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
+        
         .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
         .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.2); }
+        
         .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; position: relative; }
+        
         .t-bar { position: absolute; left: 0; top: 5px; bottom: 35px; width: 4px; border-radius: 4px; }
         .type-transport .t-bar, .type-car .t-bar, .type-bus .t-bar, .type-walk .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
         .type-food .t-bar { background-color: var(--col-food); }
@@ -302,7 +311,12 @@
         .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
         .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        .add-event-btn { width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px; color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        /* Add Event Button */
+        .add-event-btn {
+            width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px;
+            color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer;
+            margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px;
+        }
 
         /* --- Wallet --- */
         .wallet-container { padding: 20px; }
@@ -318,9 +332,15 @@
         .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
 
         .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
-        .input-std { padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; background: #fff; outline: none; width: 42%; height: 60px; }
+        .input-std { 
+            padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; 
+            background: #fff; outline: none; width: 42%; height: 60px;
+        }
         .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        .btn-add { background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px; border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .btn-add { 
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px;
+            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+        }
         
         .expense-list { margin-top: 20px; }
         .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #cbd5e1; }
@@ -348,6 +368,34 @@
 </head>
 <body>
 
+<div id="dayEditModal" class="modal-overlay" style="justify-content: center; align-items: center;">
+    <div style="background: white; width: 85%; max-width: 350px; border-radius: 20px; padding: 25px; box-shadow: 0 5px 25px rgba(0,0,0,0.15);">
+        <h3 style="margin-top:0; color:#1e3a8a;">編輯日期資訊</h3>
+        <div class="edit-form" style="padding:0; gap:10px;">
+             <div class="edit-group">
+                <div class="edit-label">日期 (YYYY-MM-DD)</div>
+                <input type="date" class="edit-input" id="d-date-input">
+            </div>
+             <div class="edit-group">
+                <div class="edit-label">標題</div>
+                <input class="edit-input" id="d-title-input">
+            </div>
+             <div class="edit-group">
+                <div class="edit-label">地點</div>
+                <input class="edit-input" id="d-loc-input">
+            </div>
+             <div class="edit-group">
+                <div class="edit-label">背景圖片連結</div>
+                <input class="edit-input" id="d-bg-input">
+            </div>
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn-cancel" onclick="closeDayEditModal()" style="flex:1">取消</button>
+                <button class="btn-save" onclick="saveDayEdit()" style="flex:1; margin:0;">儲存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="detailModal" class="modal-overlay">
     <div class="modal-container">
         <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
@@ -364,31 +412,6 @@
         <div id="cpJp" class="cp-jp"></div>
     </div>
 </div>
-
-<div id="addDayModal" class="modal-overlay">
-    <div class="confirm-box">
-        <div class="confirm-text" style="text-align:left;">選擇日期</div>
-        <input type="date" id="newDayDate" class="edit-input" style="margin-bottom:15px;">
-        <div class="confirm-btns">
-            <button class="confirm-btn btn-no" onclick="document.getElementById('addDayModal').classList.remove('active')">取消</button>
-            <button class="confirm-btn btn-yes" style="background:var(--primary-blue)" onclick="confirmAddDay()">新增</button>
-        </div>
-    </div>
-</div>
-
-<div id="editDayModal" class="modal-overlay">
-    <div class="modal-container" style="height:auto; border-radius:16px; align-self:center;">
-        <div class="edit-form" style="padding-top:0;">
-             <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="ed-title"></div>
-             <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="ed-loc"></div>
-             <div class="edit-group"><div class="edit-label">Hero 圖片連結</div><input class="edit-input" id="ed-bg"></div>
-             <div class="edit-group"><div class="edit-label">日期</div><input type="date" class="edit-input" id="ed-date"></div>
-             <button class="btn-save" onclick="saveDayEdit()">儲存</button>
-             <button class="btn-cancel" onclick="document.getElementById('editDayModal').classList.remove('active')">取消</button>
-        </div>
-    </div>
-</div>
-
 
 <div id="confirmModal" class="confirm-overlay">
     <div class="confirm-box">
@@ -413,8 +436,10 @@
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <i class="fas fa-edit edit-day-btn" onclick="openEditDayModal()"></i>
-                <i class="fas fa-trash-alt delete-day-btn" onclick="deleteDay()"></i>
+                <div class="hero-btn-group">
+                    <div class="hero-btn" onclick="openDayEditModal()"><i class="fas fa-edit"></i></div>
+                    <div class="hero-btn" onclick="deleteDay()"><i class="fas fa-trash-alt"></i></div>
+                </div>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
@@ -538,28 +563,80 @@
         sightseeing: 'var(--col-sight)'
     };
 
+    // Updated Data Structure with full date for sorting and calculation
     let itineraryData = [
         {
-            day: 1, dayCN: "第1天", date: "2026-01-26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
+            fullDate: "2026-01-26", title: "東京副都心－新宿", heroCity: "東京都",
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機" },
+                { time: "06:30", title: "出發", type: "car", iconType: "car", desc: "UGO 送機" },
+                { time: "07:30", type: "flight", iconType: "plane", title: "TPE 桃園機場第二航廈", desc: "班次：中華航空 CI 100 / 飛行時間：0930 ～ 1330 (4hr)" },
+                { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
                 { 
-                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", 
+                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村",
+                    pointSpeak: { jp: "牛かつ定食をください", sub: "請給我炸牛排定食" },
+                    mapUrl: "https://maps.app.goo.gl/example",
+                    // Initial data fields
                     ps_label_1: "品項A", ps_content_1: "Menu A",
-                    desc1_title: "店名由來", desc1_content: "內容...",
-                    gps: "123-456-789"
-                }
+                    ps_label_2: "品項B", ps_content_2: "Menu B",
+                    ps_label_3: "品項C", ps_content_3: "Menu C",
+                    gps: "123-456-789",
+                    desc1_title: "店名由來", desc1_content: "【排隊名店】這家炸牛排以「只有炸60秒」聞名...",
+                    desc2_title: "職人堅持", desc2_content: "外酥內生。請將牛排放在眼前的石盤上炙燒...",
+                    desc3_title: "美食介紹", desc3_content: "口感外酥內嫩，白飯還可以免費續加！"
+                },
+                { time: "22:30", type: "food", iconType: "bowl-rice", title: "一蘭拉麵", desc: "新宿中央東口店", pointSpeak: { jp: "ラーメン", sub: "拉麵" } }
+            ]
+        },
+        {
+            fullDate: "2026-01-27", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
+            loc: "Kawaguchiko", hotel: "秀峰閣湖月",
+            bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800",
+            events: [
+                { time: "09:45", type: "car", iconType: "car", title: "Budget 租車", desc: "河口湖站前店取車" },
+                { time: "10:45", type: "sightseeing", iconType: "water", title: "忍野八海", desc: "神之泉湧池" },
+                { time: "12:00", type: "food", iconType: "utensils", title: "こし路 (Koshiji)", desc: "在地人食堂：牛肉燴飯" }
+            ]
+        },
+        {
+            fullDate: "2026-01-28", title: "富士五湖－河口湖", heroCity: "河口湖",
+            loc: "Kawaguchiko", hotel: "秀峰閣湖月",
+            bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800",
+            hasBranch: true,
+            eventsA: [
+                { time: "10:45", type: "food", iconType: "utensils", title: "手打うどん 彩花", desc: "吉田烏龍麵" },
+                { time: "12:15", type: "sightseeing", iconType: "mountain", title: "天上山公園纜車", desc: "兔子神社 & 絕景鞦韆" },
+                { time: "14:30", type: "sightseeing", iconType: "torii-gate", title: "天空鳥居", desc: "河口湖遙拝所" }
+            ],
+            eventsB: [
+                { time: "11:00", type: "food", iconType: "utensils", title: "不動茶屋", desc: "餺飥麵 (東戀路店)" },
+                { time: "12:30", type: "sightseeing", iconType: "music", title: "音樂盒之森美術館", desc: "室內避雪備案" }
+            ]
+        },
+        {
+            fullDate: "2026-01-29", title: "懷舊商店街－下吉田", heroCity: "吉田市",
+            loc: "Shimoyoshida", hotel: "The Knot Shinjuku",
+            bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800",
+            events: [
+                { time: "12:00", type: "sightseeing", iconType: "camera", title: "新倉山淺間公園", desc: "五重塔與富士山" },
+                { time: "19:30", type: "food", iconType: "fire", title: "焼肉うしふじ", desc: "A5和牛燒肉" }
+            ]
+        },
+        {
+            fullDate: "2026-01-30", title: "依依不捨－捨不得回家", heroCity: "東京都",
+            loc: "Shinjuku", hotel: "溫暖的家",
+            bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
+            events: [
+                { time: "08:45", type: "food", iconType: "utensils", title: "らぁ麺や 嶋", desc: "超人氣拉麵" },
+                { time: "15:08", type: "transport", iconType: "train", title: "NEX 37號", desc: "前往成田機場" },
+                { time: "19:30", type: "flight", iconType: "plane", title: "CI 109 回程", desc: "NRT ➝ TPE" }
             ]
         }
     ];
 
     function init() {
-        // Initial Sort
-        itineraryData.sort((a,b) => new Date(a.date) - new Date(b.date));
-        recalcDays();
-        
+        sortDays();
         renderDateScroller();
         switchDay(0);
         const today = new Date().toISOString().split('T')[0];
@@ -571,15 +648,75 @@
         updateRate();
         setInterval(updateRate, 3600000);
     }
-    
-    function recalcDays() {
+
+    function sortDays() {
+        itineraryData.sort((a, b) => new Date(a.fullDate) - new Date(b.fullDate));
+        // Re-index days
         itineraryData.forEach((d, i) => {
             d.day = i + 1;
             d.dayCN = `第${i+1}天`;
-            const dateObj = new Date(d.date);
+            const dateObj = new Date(d.fullDate);
+            const m = dateObj.getMonth() + 1;
+            const dt = dateObj.getDate();
             const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+            d.date = `${m}/${dt}`;
             d.week = days[dateObj.getDay()];
         });
+    }
+
+    function addDay() {
+        const lastDate = itineraryData.length > 0 ? new Date(itineraryData[itineraryData.length-1].fullDate) : new Date();
+        lastDate.setDate(lastDate.getDate() + 1);
+        const dateStr = lastDate.toISOString().split('T')[0];
+        
+        const newDay = {
+            fullDate: dateStr, title: "新行程", heroCity: "地點",
+            loc: "Location", hotel: "Hotel", bg: "", events: []
+        };
+        itineraryData.push(newDay);
+        sortDays();
+        renderDateScroller();
+        switchDay(itineraryData.length - 1);
+    }
+
+    function deleteDay() {
+        if(confirm("確定刪除當天所有行程？")) {
+            itineraryData.splice(currentDayIdx, 1);
+            if(itineraryData.length === 0) addDay(); 
+            sortDays();
+            renderDateScroller();
+            switchDay(0);
+        }
+    }
+
+    function openDayEditModal() {
+        const data = itineraryData[currentDayIdx];
+        document.getElementById('d-date-input').value = data.fullDate;
+        document.getElementById('d-title-input').value = data.title;
+        document.getElementById('d-loc-input').value = data.heroCity;
+        document.getElementById('d-bg-input').value = data.bg;
+        
+        document.getElementById('dayEditModal').classList.add('active');
+    }
+
+    function saveDayEdit() {
+        const data = itineraryData[currentDayIdx];
+        data.fullDate = document.getElementById('d-date-input').value;
+        data.title = document.getElementById('d-title-input').value;
+        data.heroCity = document.getElementById('d-loc-input').value;
+        data.bg = document.getElementById('d-bg-input').value;
+        
+        closeDayEditModal();
+        sortDays();
+        renderDateScroller();
+        
+        // Find new index of current day after sort (using unique ref or fullDate)
+        const newIdx = itineraryData.findIndex(d => d.fullDate === data.fullDate);
+        switchDay(newIdx >= 0 ? newIdx : 0);
+    }
+
+    function closeDayEditModal() {
+        document.getElementById('dayEditModal').classList.remove('active');
     }
 
     function updateDateLabel(dateStr) {
@@ -621,88 +758,16 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        el.innerHTML = itineraryData.map((d, i) => {
-            const dateObj = new Date(d.date);
-            const dateDisplay = `${dateObj.getMonth()+1}/${dateObj.getDate()}`;
-            return `
+        el.innerHTML = itineraryData.map((d, i) => `
             <div class="date-item ${i===0?'active':''}" onclick="switchDay(${i})">
                 <span class="d-day">${d.week}</span>
-                <span class="d-date">${dateDisplay}</span>
-            </div>`;
-        }).join('') + `<div class="add-day-btn" onclick="openAddDayModal()">+</div>`;
-    }
-    
-    function openAddDayModal() {
-        document.getElementById('addDayModal').classList.add('active');
-    }
-    
-    function confirmAddDay() {
-        const dateVal = document.getElementById('newDayDate').value;
-        if(!dateVal) return alert("請選擇日期");
-        
-        const newDay = {
-            day: 0, dayCN: "", date: dateVal, week: "", title: "新行程", heroCity: "地點",
-            loc: "Location", hotel: "Hotel", bg: "", events: []
-        };
-        itineraryData.push(newDay);
-        itineraryData.sort((a,b) => new Date(a.date) - new Date(b.date));
-        recalcDays();
-        
-        renderDateScroller();
-        document.getElementById('addDayModal').classList.remove('active');
-        // Switch to the newly added day
-        const idx = itineraryData.findIndex(d => d.date === dateVal);
-        switchDay(idx);
-    }
-
-    function deleteDay() {
-        if(confirm("確定刪除當天所有行程？")) {
-            itineraryData.splice(currentDayIdx, 1);
-            if(itineraryData.length === 0) {
-                 // Add a default day if empty
-                 itineraryData.push({
-                    day: 1, dayCN: "第1天", date: "2026-01-01", week: "THU", title: "新行程", heroCity: "地點", loc:"", hotel:"", bg:"", events:[]
-                 });
-            }
-            recalcDays();
-            renderDateScroller();
-            switchDay(0);
-        }
-    }
-    
-    function openEditDayModal() {
-        const d = itineraryData[currentDayIdx];
-        document.getElementById('ed-title').value = d.title;
-        document.getElementById('ed-loc').value = d.heroCity;
-        document.getElementById('ed-bg').value = d.bg;
-        document.getElementById('ed-date').value = d.date;
-        document.getElementById('editDayModal').classList.add('active');
-    }
-    
-    function saveDayEdit() {
-        const d = itineraryData[currentDayIdx];
-        d.title = document.getElementById('ed-title').value;
-        d.heroCity = document.getElementById('ed-loc').value;
-        d.bg = document.getElementById('ed-bg').value;
-        const newDate = document.getElementById('ed-date').value;
-        
-        if(newDate && newDate !== d.date) {
-            d.date = newDate;
-            itineraryData.sort((a,b) => new Date(a.date) - new Date(b.date));
-            recalcDays();
-            renderDateScroller();
-            // Find new index
-            const newIdx = itineraryData.findIndex(x => x === d);
-            currentDayIdx = newIdx;
-        }
-        
-        document.getElementById('editDayModal').classList.remove('active');
-        switchDay(currentDayIdx);
+                <span class="d-date">${d.date}</span>
+            </div>
+        `).join('') + `<div class="add-day-btn" onclick="addDay()">+</div>`;
     }
 
     function switchDay(idx) {
         if(idx >= itineraryData.length) idx = itineraryData.length - 1;
-        if(idx < 0) idx = 0;
         currentDayIdx = idx;
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
@@ -714,10 +779,8 @@
         document.getElementById('heroDay').innerText = `DAY ${data.day}`;
         document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`;
         document.getElementById('heroTitle').innerText = data.title;
-        
-        // Additional info is optional in hero but kept in data
-        // document.getElementById('wLoc').innerText = data.loc;
-        // document.getElementById('hotelName').innerText = data.hotel;
+        document.getElementById('wLoc').innerText = data.loc;
+        document.getElementById('hotelName').innerText = data.hotel;
         
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
         
@@ -757,8 +820,8 @@
 
             let displayDesc = evt.desc;
             if(evt.guide) displayDesc = evt.guide; 
+            if(evt.desc3_content) displayDesc = evt.desc3_content; // Priority to edited content
 
-            // Pass the array and index to identify the event for editing
             const eventContext = {
                  isBranch: data.hasBranch,
                  branchType: currentBranch,
@@ -791,7 +854,8 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容"
+            time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容",
+            desc1_title: "接駁位置", desc2_title: "坐駕介紹", desc3_title: "注意事項"
         });
         switchDay(currentDayIdx);
     }
@@ -863,8 +927,7 @@
             </div>`;
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
             html += `<div class="res-combined-box">
-                        <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
-                        <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
+                        <div class="res-top"><div class="res-label">RESERVATION <span class="res-tag-abc">${evt.ps_label_1 || 'ABC'}</span></div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon"></i></div>
                      </div>
@@ -897,19 +960,14 @@
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
-    // Auto Switch Fields based on Category
-    function updateEditFields(type) {
-        const container = document.getElementById('custom-fields-container');
-        let html = '';
+    function enableEditMode() {
+        const evt = window.currentEvent;
+        const container = document.getElementById('modalContent');
         
-        // Defaults for input labels
-        let l1='標題1', l2='標題2', l3='標題3';
-        let t1='區塊1', t2='區塊2', t3='區塊3';
+        let customFields = '';
         
-        const evt = window.currentEvent; // Use current event data to populate values if available
-
-        if(type === 'food') {
-             html = `
+        if(evt.type === 'food') {
+             customFields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -924,49 +982,29 @@
                     <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
                 </div>
              `;
-             t1 = "店名由來"; t2 = "職人堅持"; t3 = "美食介紹";
-        } else if (['transport', 'car', 'flight'].includes(type)) {
-             html = `
+        } else if (['transport', 'car', 'flight'].includes(evt.type)) {
+             customFields = `
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
-             t1 = "接駁位置"; t2 = "坐駕介紹"; t3 = "注意事項";
-        } else if (type === 'sightseeing') {
-             html = `
+        } else if (evt.type === 'sightseeing') {
+             customFields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
              `;
-             t1 = "停車攻略"; t2 = "歷史地位"; t3 = "注意事項";
         }
 
-        container.innerHTML = html;
-        
-        // Update Description Labels
-        document.getElementById('lbl-d1').innerText = t1;
-        document.getElementById('lbl-d2').innerText = t2;
-        document.getElementById('lbl-d3').innerText = t3;
-        
-        // Pre-fill titles if empty (or reset to default based on logic, here we keep existing or default)
-        if(!document.getElementById('e-d1-t').value) document.getElementById('e-d1-t').value = t1;
-        if(!document.getElementById('e-d2-t').value) document.getElementById('e-d2-t').value = t2;
-        if(!document.getElementById('e-d3-t').value) document.getElementById('e-d3-t').value = t3;
-    }
-
-    function enableEditMode() {
-        const evt = window.currentEvent;
-        const container = document.getElementById('modalContent');
-        
         container.innerHTML = `
             <div class="edit-form">
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="updateEditFields(this.value)">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange(this.value)">
                             <option value="food" ${evt.type==='food'?'selected':''}>Food</option>
                             <option value="transport" ${evt.type==='transport'?'selected':''}>Transport</option>
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>Sightseeing</option>
@@ -976,21 +1014,21 @@
                     </div>
                 </div>
                 
-                <div id="custom-fields-container"></div>
+                ${customFields}
 
                 <div class="edit-section-title">詳細資訊 (ABOUT)</div>
                 <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
                 
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d1">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${evt.desc1_title || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${evt.desc1_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><textarea class="edit-textarea" id="e-d1-c" rows="2">${evt.desc1_content || ''}</textarea></div>
                 </div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d2">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${evt.desc2_title || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${evt.desc2_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><textarea class="edit-textarea" id="e-d2-c" rows="2">${evt.desc2_content || ''}</textarea></div>
                 </div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label" id="lbl-d3">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${evt.desc3_title || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${evt.desc3_title || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><textarea class="edit-textarea" id="e-d3-c" rows="2">${evt.desc3_content || ''}</textarea></div>
                 </div>
 
@@ -1004,9 +1042,34 @@
                 <button class="btn-delete-event" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
+    }
+
+    function onTypeChange(newType) {
+        // Save temporary values
+        const title = document.getElementById('e-title').value;
+        const time = document.getElementById('e-time').value;
         
-        // Initialize fields based on current type
-        updateEditFields(evt.type);
+        // Update current event object temporarily to refresh form structure
+        window.currentEvent.type = newType;
+        window.currentEvent.title = title;
+        window.currentEvent.time = time;
+        
+        // Default titles logic
+        if (newType === 'food') {
+             window.currentEvent.desc1_title = "店名由來";
+             window.currentEvent.desc2_title = "職人堅持";
+             window.currentEvent.desc3_title = "美食介紹";
+        } else if (newType === 'sightseeing') {
+             window.currentEvent.desc1_title = "停車攻略";
+             window.currentEvent.desc2_title = "歷史地位";
+             window.currentEvent.desc3_title = "注意事項";
+        } else {
+             window.currentEvent.desc1_title = "接駁位置";
+             window.currentEvent.desc2_title = "坐駕介紹";
+             window.currentEvent.desc3_title = "注意事項";
+        }
+        
+        enableEditMode();
     }
 
     function saveEdit() {
@@ -1049,7 +1112,7 @@
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
         
-        // For list display compatibility (using last desc block)
+        // For list display compatibility
         evt.guide = d3c; 
 
         closeDetailModal();
