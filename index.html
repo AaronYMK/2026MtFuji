@@ -71,17 +71,16 @@
             position: absolute; top: 15px; right: 20px; font-size: 1.8rem; 
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
-        
-        /* 編輯按鈕 */
-        .modal-edit-btn {
-            position: absolute; top: 15px; left: 20px; font-size: 1.2rem;
-            color: var(--primary-blue); cursor: pointer; padding: 10px; z-index: 10;
-            background: #eff6ff; border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
+
+        /* 編輯按鈕 (移至最下方，樣式調整) */
+        .edit-btn-bottom {
+            width: 100%; padding: 15px; background: #f1f5f9; color: var(--primary-blue);
+            border: none; border-radius: 12px; font-size: 1rem; font-weight: 700;
+            margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* 編輯模式樣式 */
-        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 40px; padding-bottom: 40px; }
+        /* 編輯模式表單 */
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 10px; padding-bottom: 40px; }
         .edit-group { display: flex; flex-direction: column; gap: 5px; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .edit-input, .edit-textarea, .edit-select { 
@@ -364,7 +363,6 @@
 <div id="detailModal" class="modal-overlay">
     <div class="modal-container">
         <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
-        <i class="fas fa-pen modal-edit-btn" onclick="enableEditMode()"></i>
         <div id="modalContent"></div>
     </div>
 </div>
@@ -870,6 +868,8 @@
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> JAPANTOKYO</div>`;
+        
+        // 編輯按鈕現在放在最下方，這裡先不放
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
@@ -914,6 +914,7 @@
             <a href="${evt.link_map || '#'}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
             <a href="${evt.link_web || '#'}" class="m-btn btn-web">官方網站</a>
             <a href="${evt.link_vlog || '#'}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>
+            <button class="edit-btn-bottom" onclick="enableEditMode()"><i class="fas fa-pen"></i> 編輯此卡片</button>
         </div>`;
 
         container.innerHTML = html;
