@@ -72,12 +72,13 @@
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
         
-        /* 編輯按鈕 (左上角) */
+        /* 編輯按鈕 (左上角) - 雖然這功能被下方按鈕取代，但保留樣式以防萬一 */
         .modal-edit-btn {
             position: absolute; top: 15px; left: 20px; font-size: 1.2rem;
             color: var(--primary-blue); cursor: pointer; padding: 10px; z-index: 10;
             background: #eff6ff; border-radius: 50%; width: 40px; height: 40px;
             display: flex; align-items: center; justify-content: center;
+            display: none; /* 隱藏左上角，改用下方按鈕 */
         }
         
         /* 編輯按鈕 (底部) */
@@ -96,8 +97,14 @@
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
         }
-        .edit-textarea { resize: vertical; min-height: 80px; } /* 固定高度 */
-        .edit-row { display: flex; gap: 10px; }
+        /* 讓輸入框看起來像按鈕，暗示點擊編輯 */
+        .edit-textarea-trigger {
+            padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
+            font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
+            min-height: 50px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .edit-textarea { resize: vertical; }
+        .edit-row { display: flex; gap: 10px; align-items: flex-start;}
         .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
         
         .btn-save { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
@@ -125,7 +132,9 @@
             font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
             border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px;
             font-weight: 700; display: flex; align-items: center; gap: 6px;
+            cursor: pointer; /* Clickable title */
         }
+        .m-sec-header:active { opacity: 0.7; }
         .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
 
         .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
@@ -146,7 +155,7 @@
             background: #fff;
         }
         .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
-        .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; margin-top: 2px; font-family: var(--font-num); }
+        .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; font-family: var(--font-num); margin-top: 4px; }
         .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
         
         .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
@@ -176,7 +185,7 @@
 
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; }
-        .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
+        .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; cursor: pointer; }
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; }
 
         .m-btn {
@@ -195,23 +204,22 @@
             width: 80%; max-width: 320px; z-index: 3000; display: none;
             border-radius: 20px; padding: 30px 20px; text-align: center;
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
-            background: #eff6ff; /* 淡藍色背景 */
+            background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
-        .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
+        .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; display: none; /* Hide Chinese on Big Card */ }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
         .cp-close { 
             position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
             width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
-        /* --- Custom Confirm Modal (淡藍色) --- */
+        /* --- Custom Confirm Modal --- */
         .confirm-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); z-index: 4000; display: none;
@@ -220,11 +228,11 @@
         }
         .confirm-overlay.active { display: flex; }
         .confirm-box {
-            background: #eff6ff; /* 淡藍色背景 */
+            background: #eff6ff;
             width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
-        .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
+        .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; white-space: pre-wrap; }
         .confirm-btns { display: flex; gap: 10px; justify-content: center; }
         .confirm-btn { 
             flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
@@ -270,7 +278,7 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Day Action Buttons (Edit & Delete) */
+        /* Delete/Edit Day Buttons */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -423,7 +431,7 @@
 <div id="dateInputModal" class="confirm-overlay">
     <div class="confirm-box" style="text-align:left;">
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
-        <div class="edit-group">
+        <div class="edit-group" id="dateInputGroup">
             <div class="edit-label">日期</div>
             <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px;">
         </div>
@@ -470,7 +478,7 @@
     <div class="weather-container">
         <div class="weather-header">
             <div>
-                <div class="weather-loc" id="wLoc">Tokyo</div>
+                <div class="weather-loc" id="wLoc">Loading...</div>
                 <div class="weather-sub">未來 24 小時預報</div>
             </div>
             <i class="fas fa-sun" style="font-size:1.8rem; color:var(--primary-blue)"></i>
@@ -596,9 +604,9 @@
             loc: "Shinjuku", hotel: "Yksi Stay Shinjuku",
             bg: "https://tabiaruko.com/wp-content/uploads/2024/09/30809066_m-1.jpg",
             events: [
-                { time: "06:30", title: "出發", iconType: "car", type: "car", desc: "UGO 送機", gps:"000-000-000", desc1_title:"接駁位置", desc1_content:"家裡樓下", desc2_title:"坐駕介紹", desc2_content:"Camry", desc3_title:"注意事項", desc3_content:"準時出發" },
+                { time: "06:30", title: "出發", location: "JAPANTOKYO", iconType: "car", type: "car", desc: "UGO 送機", gps:"000-000-000", desc1_title:"接駁位置", desc1_content:"家裡樓下", desc2_title:"坐駕介紹", desc2_content:"Camry", desc3_title:"注意事項", desc3_content:"準時出發" },
                 { 
-                    time: "07:30", type: "flight", iconType: "plane", title: "Taiwan Taoyuan", 
+                    time: "07:30", type: "flight", iconType: "plane", title: "Taiwan Taoyuan", location: "Taiwan Taoyuan",
                     desc: "班次：中華航空 CI 100", 
                     ps_label_1: "中華航空 (T2) CI 100 09：30 ～ 13：30", ps_content_1: "https://www.china-airlines.com/tw/zh",
                     ps_label_2: "5IPVMR", 
@@ -610,9 +618,9 @@
                     link_web: "https://www.taoyuan-airport.com/flight_depart",
                     link_vlog: ""
                 },
-                { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
+                { time: "15:14", type: "transport", iconType: "train", title: "NEX 成田特快", location: "JAPANTOKYO", desc: "成田機場 ➝ 新宿站 (約80分鐘)" },
                 { 
-                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", desc: "炸牛排定食 (新宿南口店)",
+                    time: "18:00", type: "food", iconType: "utensils", title: "牛かつもと村", location: "JAPANTOKYO", desc: "炸牛排定食 (新宿南口店)",
                     guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名...",
                     ps_label_1: "牛かつ定食", ps_content_1: "牛かつ定食をください",
                     gps: "03-3356-1129", desc1_title:"店名由來", desc1_content:"...", desc2_title:"職人堅持", desc2_content:"...", desc3_title:"美食介紹", desc3_content:"...",
@@ -642,6 +650,16 @@
             } catch(e) { console.error("Data load error", e); }
         }
         
+        // 1. Weather Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                // Mock: If location found, show "Current Location"
+                document.getElementById('wLoc').innerText = "Current Loc";
+            }, error => {
+                document.getElementById('wLoc').innerText = "Tokyo"; // Default
+            });
+        }
+
         renderDateScroller();
         switchDay(0);
         const today = new Date().toISOString().split('T')[0];
@@ -656,7 +674,7 @@
 
     function updateDateLabel(dateStr) {
         const d = new Date(dateStr);
-        const label = `${d.getMonth() + 1}月${d.getDate()}日`;
+        const label = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
         document.getElementById('displayDateLabel').innerText = label;
     }
 
@@ -693,9 +711,7 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        // Sort itineraryData by date first if needed, but assuming manual entry order for now or we sort globally
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
-        // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
 
         el.innerHTML = itineraryData.map((d, i) => `
@@ -710,7 +726,10 @@
         document.getElementById('dateModalTitle').innerText = "新增日期";
         document.getElementById('newDateInput').value = "";
         
-        // Setup confirm button for Adding
+        // 2. Date Input Width 0.8x for Add
+        document.getElementById('dateInputGroup').style.width = "80%";
+        document.getElementById('dateInputGroup').style.margin = "0 auto";
+
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.onclick = confirmAddDay;
         btn.innerText = "新增";
@@ -742,7 +761,6 @@
             events: []
         };
         itineraryData.push(newDay);
-        // Sort
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         
         saveItineraryToLocal();
@@ -757,14 +775,16 @@
         document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
-        // Show extra fields
+        // 4. Date Input Full Width for Edit
+        document.getElementById('dateInputGroup').style.width = "100%";
+        document.getElementById('dateInputGroup').style.margin = "0";
+
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
         document.getElementById('day-edit-loc').value = dayData.heroCity;
         document.getElementById('day-edit-hotel').value = dayData.hotel;
         document.getElementById('day-edit-bg').value = dayData.bg;
 
-        // Setup confirm button for Editing
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.onclick = confirmEditDay;
         btn.innerText = "儲存";
@@ -800,6 +820,7 @@
     }
 
     function deleteDay() {
+        // 1. Blue BG Confirm Modal
         document.getElementById('confirmText').innerText = "確定刪除當天所有行程？";
         document.getElementById('confirmModal').classList.add('active');
         document.getElementById('confirmYesBtn').onclick = function() { 
@@ -821,7 +842,6 @@
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
         
-        // Update Hero
         document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
         document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
         document.getElementById('dayVertical').innerText = data.dayCN;
@@ -850,7 +870,6 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
 
-        // Auto Sort by Time
         events.sort((a, b) => a.time.localeCompare(b.time));
 
         container.innerHTML = events.map((evt, idx) => {
@@ -901,10 +920,9 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
-        // 預設 00:00
+        // 5. Default time 00:00
         events.push({
             time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容",
-            // default fields for safety
             ps_label_1: "", ps_content_1: "", 
             desc1_title: "接駁位置", desc1_content: "",
             desc2_title: "坐駕介紹", desc2_content: "",
@@ -915,6 +933,7 @@
     }
 
     function deleteEvent() {
+        // 13. Blue BG Confirm Modal for event deletion
         document.getElementById('confirmText').innerText = "確定刪除此行程？";
         document.getElementById('confirmModal').classList.add('active');
         document.getElementById('confirmYesBtn').onclick = function() {
@@ -965,35 +984,38 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> JAPANTOKYO</div>`;
+        // 2. Dynamic Location in Display
+        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || 'JAPANTOKYO'}</div>`;
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
             <div class="food-rec-list">
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || ''}</span><span class="rec-name-jp">${evt.ps_content_1 || ''}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || ''}</span><span class="rec-name-jp">${evt.ps_content_2 || ''}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || ''}</span><span class="rec-name-jp">${evt.ps_content_3 || ''}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || ''}</span><span class="rec-name-jp">${evt.ps_content_1 || ''}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || ''}</span><span class="rec-name-jp">${evt.ps_content_2 || ''}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || ''}</span><span class="rec-name-jp">${evt.ps_content_3 || ''}</span></div>
             </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || '...'}')">${evt.desc1_title || '店名由來'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')">${evt.desc2_title || '職人堅持'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || '...'}')">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
+            // 3. ABC below Reservation
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
-                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon"></i></div>
+                        <div class="res-top" style="padding-top:15px; padding-bottom:0;"><div class="res-label" style="color:#1e3a8a;">CONFIRMATION</div></div>
+                        <div class="res-bottom"><div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2}')"></i></div>
                      </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
             <div class="desc-list">
-                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || '...'}')">${evt.desc1_title || '接駁位置'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || '...'}')">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (evt.type === 'sightseeing') {
              html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 (POINT & SPEAK)</div>
@@ -1001,21 +1023,19 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item"><div class="desc-title" onclick="openTextDisplay('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${evt.desc3_content || '...'}</div></div>
             </div>`;
         }
 
-        if(evt.link_map || evt.link_web || evt.link_vlog) {
-             html += `<div style="margin-top:30px">
-                ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>` : ''}
-                ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
-                ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>` : ''}
-             </div>`;
-        }
-
-        html += `<div class="modal-edit-btn-bottom" onclick="enableEditMode()">
+        html += `<div style="margin-top:30px">
+            <a href="${evt.link_map || '#'}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps 導航</a>
+            <a href="${evt.link_web || '#'}" class="m-btn btn-web">官方網站</a>
+            <a href="${evt.link_vlog || '#'}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> SEARCH VLOGS</a>
+        </div>
+        
+        <div class="modal-edit-btn-bottom" onclick="enableEditMode()">
             <i class="fas fa-pen"></i> 編輯此行程
         </div>`;
 
@@ -1057,12 +1077,18 @@
              if(!t2) t2 = "坐駕介紹";
              if(!t3) t3 = "注意事項";
 
+             // 5. Separate Res/Conf
              fields = `
-                <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
+                <div class="edit-section-title">RESERVATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">CONFIRMATION</div></div>
-                <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                <div class="edit-section-title">CONFIRMATION</div>
+                <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div>
+                    <div style="display:flex; gap:10px;">
+                        <input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}">
+                        <button class="edit-input" style="width:auto;" onclick="copyToClipboard(document.getElementById('e-ps-l2').value)"><i class="far fa-copy"></i></button>
+                    </div>
+                </div>
              `;
 
         } else if (type === 'sightseeing') {
@@ -1085,15 +1111,15 @@
             
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-textarea" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-textarea-trigger" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><div class="edit-textarea" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><div class="edit-textarea-trigger" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><div class="edit-textarea" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><div class="edit-textarea-trigger" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
     }
@@ -1113,6 +1139,19 @@
     function closeTextEdit() {
         document.getElementById('textEditModal').classList.remove('active');
     }
+    
+    // 11. Read More display modal
+    function openTextDisplay(title, content) {
+        document.getElementById('textEditTitle').innerText = title; // Reuse styled modal title
+        document.getElementById('textEditArea').value = content; 
+        document.getElementById('textEditArea').readOnly = true;
+        // Hide confirm button, change cancel to close
+        document.getElementById('textEditConfirmBtn').style.display = 'none';
+        const cancelBtn = document.querySelector('#textEditModal .btn-no');
+        cancelBtn.innerText = '關閉';
+        cancelBtn.onclick = closeTextEdit;
+        document.getElementById('textEditModal').classList.add('active');
+    }
 
     function onTypeChange() {
         const newType = document.getElementById('e-type').value;
@@ -1125,10 +1164,20 @@
     function enableEditMode() {
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
+        const dayData = itineraryData[currentDayIdx];
+
+        // 8. Day Info removed from Add Event flow (which uses this function but passes dummy evt), 
+        // but requirement says remove day info from Edit Event? 
+        // Req 8: "Day Info" NOT appear in Add Event, ONLY in Edit Day.
+        // My previous logic had Day Info in Edit Event. I will remove Day Info here.
+        // 5. Add Location field
         
         container.innerHTML = `
             <div class="edit-form">
+                <div class="edit-section-title">行程內容 (EVENT)</div>
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
+                <div class="edit-group"><div class="edit-label">地點 (Location)</div><input class="edit-input" id="e-location" value="${evt.location || ''}"></div>
+                
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
@@ -1160,6 +1209,7 @@
 
     function saveEdit() {
         const newTitle = document.getElementById('e-title').value;
+        const newLoc = document.getElementById('e-location').value;
         const newTime = document.getElementById('e-time').value;
         const newType = document.getElementById('e-type').value;
 
@@ -1185,7 +1235,7 @@
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
 
-        evt.title = newTitle; evt.time = newTime; evt.type = newType;
+        evt.title = newTitle; evt.location = newLoc; evt.time = newTime; evt.type = newType;
         evt.ps_label_1 = ps_l1; evt.ps_content_1 = ps_c1;
         evt.ps_label_2 = ps_l2; evt.ps_content_2 = ps_c2;
         evt.ps_label_3 = ps_l3; evt.ps_content_3 = ps_c3;
@@ -1205,8 +1255,9 @@
 
     // --- Center Popup Logic (Food Big Card) ---
     function openCenterPopup(cn, jp, theme) {
+        // 10. Only JP
         document.getElementById('cpJp').innerText = jp;
-        document.getElementById('cpSub').innerText = cn;
+        document.getElementById('cpSub').innerText = ""; // Hide CN
         
         const modal = document.getElementById('centerPopup');
         if(theme === 'blue') {
@@ -1362,7 +1413,7 @@
             return `
             <div class="exp-item">
                 <div style="flex:1; display:flex; align-items:center; gap:10px;">
-                    <span class="exp-date">${dateDisplay}</span>
+                    <span class="exp-date" style="margin-bottom:0; margin-right:5px;">${dateDisplay}</span>
                     <span class="exp-name">${item.name}</span>
                 </div>
                 <div class="exp-price">¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})</div>
