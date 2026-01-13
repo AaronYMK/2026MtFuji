@@ -72,6 +72,14 @@
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
         
+        /* 編輯按鈕 (左上角) */
+        .modal-edit-btn {
+            position: absolute; top: 15px; left: 20px; font-size: 1.2rem;
+            color: var(--primary-blue); cursor: pointer; padding: 10px; z-index: 10;
+            background: #eff6ff; border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
         /* 編輯按鈕 (底部) */
         .modal-edit-btn-bottom {
             width: 100%; padding: 16px; border-radius: 12px; border: 2px dashed #bfdbfe; 
@@ -88,7 +96,7 @@
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
         }
-        .edit-textarea { resize: vertical; }
+        .edit-textarea { resize: vertical; min-height: 80px; } /* 固定高度 */
         .edit-row { display: flex; gap: 10px; }
         .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
         
@@ -203,7 +211,7 @@
             width: 30px; height: 30px; border-radius: 50%; border:none; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
 
-        /* --- Custom Confirm Modal (取代原生 confirm) --- */
+        /* --- Custom Confirm Modal (淡藍色) --- */
         .confirm-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.3); z-index: 4000; display: none;
@@ -262,8 +270,8 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete/Edit Day Buttons */
-        .day-action-btns { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
+        /* Day Action Buttons (Edit & Delete) */
+        .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
@@ -355,7 +363,6 @@
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .action-btn { background: #fff; border: 1px solid #dbeafe; padding: 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; font-weight: 500; cursor: default; }
 
-        /* 記帳功能按鈕群 (匯出/刪除) */
         .wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
         .btn-export { flex: 1; background: #fff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
         .btn-clear { flex: 1; background: #fee2e2; border: none; color: #ef4444; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
@@ -392,9 +399,20 @@
     </div>
 </div>
 
+<div id="textEditModal" class="confirm-overlay">
+    <div class="confirm-box" style="text-align:left;">
+        <div class="confirm-text" id="textEditTitle">編輯內容</div>
+        <textarea class="edit-textarea" id="textEditArea" rows="5"></textarea>
+        <div class="confirm-btns" style="margin-top:15px;">
+            <button class="confirm-btn btn-no" onclick="closeTextEdit()">取消</button>
+            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="textEditConfirmBtn">確定</button>
+        </div>
+    </div>
+</div>
+
 <div id="confirmModal" class="confirm-overlay">
     <div class="confirm-box">
-        <div class="confirm-text">確定要清除紀錄嗎？</div>
+        <div class="confirm-text" id="confirmText">確定要清除紀錄嗎？</div>
         <div class="confirm-btns">
             <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
             <button class="confirm-btn btn-yes" id="confirmYesBtn">確定</button>
@@ -504,12 +522,10 @@
                 </div>
             </div>
             <div class="expense-list" id="expenseList"></div>
-            
             <div class="wallet-actions">
                 <button class="btn-export" onclick="exportExpenses()">匯出紀錄 (TXT)</button>
                 <button class="btn-clear" onclick="askClearAll()">清除所有紀錄</button>
             </div>
-            
             <div class="sync-block">
                 <div class="sync-title">資料同步 (給同伴用)</div>
                 <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i> 匯出備份檔 (JSON)</button>
@@ -561,6 +577,7 @@
     let isJpyTop = true; 
     let currentDayIdx = 0;
     let currentEvent = null;
+    let currentTextEditTargetId = null;
 
     const COLORS = {
         food: 'var(--col-food)',
@@ -676,7 +693,7 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        // Sort itineraryData by date
+        // Sort itineraryData by date first if needed, but assuming manual entry order for now or we sort globally
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
@@ -693,6 +710,7 @@
         document.getElementById('dateModalTitle').innerText = "新增日期";
         document.getElementById('newDateInput').value = "";
         
+        // Setup confirm button for Adding
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.onclick = confirmAddDay;
         btn.innerText = "新增";
@@ -724,6 +742,7 @@
             events: []
         };
         itineraryData.push(newDay);
+        // Sort
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         
         saveItineraryToLocal();
@@ -738,12 +757,14 @@
         document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
+        // Show extra fields
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
         document.getElementById('day-edit-loc').value = dayData.heroCity;
         document.getElementById('day-edit-hotel').value = dayData.hotel;
         document.getElementById('day-edit-bg').value = dayData.bg;
 
+        // Setup confirm button for Editing
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.onclick = confirmEditDay;
         btn.innerText = "儲存";
@@ -779,15 +800,16 @@
     }
 
     function deleteDay() {
-        if(confirm("確定刪除當天所有行程？")) {
-            itineraryData.splice(currentDayIdx, 1);
-            if(itineraryData.length === 0) {
-                 // Add dummy if empty or handle empty state
-            }
-            saveItineraryToLocal();
-            renderDateScroller();
-            switchDay(0);
-        }
+        document.getElementById('confirmText').innerText = "確定刪除當天所有行程？";
+        document.getElementById('confirmModal').classList.add('active');
+        document.getElementById('confirmYesBtn').onclick = function() { 
+             itineraryData.splice(currentDayIdx, 1);
+             if(itineraryData.length === 0) {}
+             saveItineraryToLocal();
+             renderDateScroller();
+             switchDay(0);
+             closeConfirm();
+        };
     }
 
     function switchDay(idx) {
@@ -799,6 +821,7 @@
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
         
+        // Update Hero
         document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
         document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
         document.getElementById('dayVertical').innerText = data.dayCN;
@@ -883,28 +906,29 @@
             time: "00:00", title: "新行程", type: "transport", iconType: "car", desc: "請編輯內容",
             // default fields for safety
             ps_label_1: "", ps_content_1: "", 
-            desc1_title: "區塊1", desc1_content: "",
-            desc2_title: "區塊2", desc2_content: "",
-            desc3_title: "區塊3", desc3_content: ""
+            desc1_title: "接駁位置", desc1_content: "",
+            desc2_title: "坐駕介紹", desc2_content: "",
+            desc3_title: "注意事項", desc3_content: ""
         });
         saveItineraryToLocal();
         switchDay(currentDayIdx); 
     }
 
     function deleteEvent() {
-        if(!currentEvent || !confirm("確定刪除此行程？")) return;
-        
-        const data = itineraryData[currentDayIdx];
-        let events = data.events;
-        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
-        
-        if(window.currentEventContext) {
-             events.splice(window.currentEventContext.idx, 1);
-        }
-        
-        saveItineraryToLocal();
-        closeDetailModal();
-        switchDay(currentDayIdx);
+        document.getElementById('confirmText').innerText = "確定刪除此行程？";
+        document.getElementById('confirmModal').classList.add('active');
+        document.getElementById('confirmYesBtn').onclick = function() {
+            const data = itineraryData[currentDayIdx];
+            let events = data.events;
+            if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
+            if(window.currentEventContext) {
+                 events.splice(window.currentEventContext.idx, 1);
+            }
+            saveItineraryToLocal();
+            closeDetailModal();
+            closeConfirm();
+            switchDay(currentDayIdx);
+        };
     }
 
     function updateTimeHighlight() {
@@ -946,9 +970,9 @@
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
             <div class="food-rec-list">
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || 'Menu A'}', '${evt.ps_label_1 || '品項 A'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || '品項 A'}</span><span class="rec-name-jp">${evt.ps_content_1 || 'Menu A'}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || 'Menu B'}', '${evt.ps_label_2 || '品項 B'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || '品項 B'}</span><span class="rec-name-jp">${evt.ps_content_2 || 'Menu B'}</span></div>
-                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || 'Menu C'}', '${evt.ps_label_3 || '品項 C'}', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || '品項 C'}</span><span class="rec-name-jp">${evt.ps_content_3 || 'Menu C'}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_1 || ''}</span><span class="rec-name-jp">${evt.ps_content_1 || ''}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_2 || ''}</span><span class="rec-name-jp">${evt.ps_content_2 || ''}</span></div>
+                <div class="food-rec-item" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')"><span class="rec-name-cn">${evt.ps_label_3 || ''}</span><span class="rec-name-jp">${evt.ps_content_3 || ''}</span></div>
             </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
@@ -959,7 +983,8 @@
             </div>`;
         } else if (['transport', 'car', 'flight'].includes(evt.type)) {
             html += `<div class="res-combined-box">
-                        <div class="res-top"><div class="res-label">RESERVATION <span class="res-tag-abc">${evt.ps_label_1 || 'ABC'}</span></div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                        <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                        <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon"></i></div>
                      </div>
@@ -1002,7 +1027,6 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         
-        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
@@ -1037,6 +1061,7 @@
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                <div class="edit-group"><div class="edit-label">CONFIRMATION</div></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
 
@@ -1060,24 +1085,39 @@
             
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><textarea class="edit-textarea" id="e-d1-c" rows="2">${evt.desc1_content || ''}</textarea></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-textarea" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><textarea class="edit-textarea" id="e-d2-c" rows="2">${evt.desc2_content || ''}</textarea></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><div class="edit-textarea" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><textarea class="edit-textarea" id="e-d3-c" rows="2">${evt.desc3_content || ''}</textarea></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><div class="edit-textarea" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
+    }
+
+    function openTextEdit(targetId) {
+        currentTextEditTargetId = targetId;
+        document.getElementById('textEditArea').value = document.getElementById(targetId).value;
+        document.getElementById('textEditModal').classList.add('active');
+        document.getElementById('textEditConfirmBtn').onclick = function() {
+            const val = document.getElementById('textEditArea').value;
+            document.getElementById(currentTextEditTargetId).value = val;
+            // update display div
+            document.getElementById(currentTextEditTargetId).previousElementSibling.innerText = val || '點擊編輯...';
+            closeTextEdit();
+        };
+    }
+    function closeTextEdit() {
+        document.getElementById('textEditModal').classList.remove('active');
     }
 
     function onTypeChange() {
         const newType = document.getElementById('e-type').value;
         const dynamicArea = document.getElementById('dynamic-fields');
         const evt = { ...window.currentEvent }; 
-        // Reset titles to defaults based on new type logic inside render
         evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
         dynamicArea.innerHTML = renderEditFormFields(newType, evt);
     }
@@ -1085,17 +1125,9 @@
     function enableEditMode() {
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
-        const dayData = itineraryData[currentDayIdx];
-
+        
         container.innerHTML = `
             <div class="edit-form">
-                <div class="edit-section-title">當日資訊 (DAY INFO)</div>
-                <div class="edit-group"><div class="edit-label">日期標題</div><input class="edit-input" id="d-title" value="${dayData.title}"></div>
-                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="d-loc" value="${dayData.heroCity}"></div>
-                <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="d-hotel" value="${dayData.hotel}"></div>
-                <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="d-bg" value="${dayData.bg}"></div>
-
-                <div class="edit-section-title" style="margin-top:30px;">行程內容 (EVENT)</div>
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
@@ -1127,19 +1159,10 @@
     }
 
     function saveEdit() {
-        // Save Day Data
-        const dayData = itineraryData[currentDayIdx];
-        dayData.title = document.getElementById('d-title').value;
-        dayData.heroCity = document.getElementById('d-loc').value;
-        dayData.hotel = document.getElementById('d-hotel').value;
-        dayData.bg = document.getElementById('d-bg').value;
-
-        // Save Event Data
         const newTitle = document.getElementById('e-title').value;
         const newTime = document.getElementById('e-time').value;
         const newType = document.getElementById('e-type').value;
 
-        // Custom fields might exist or not depending on type
         const ps_l1 = document.getElementById('e-ps-l1') ? document.getElementById('e-ps-l1').value : '';
         const ps_c1 = document.getElementById('e-ps-c1') ? document.getElementById('e-ps-c1').value : '';
         const ps_l2 = document.getElementById('e-ps-l2') ? document.getElementById('e-ps-l2').value : '';
@@ -1155,8 +1178,9 @@
         const lweb = document.getElementById('e-l-web').value;
         const lvlog = document.getElementById('e-l-vlog').value;
 
-        let events = dayData.events;
-        if(dayData.hasBranch) events = currentBranch === 'A' ? dayData.eventsA : dayData.eventsB;
+        const data = itineraryData[currentDayIdx];
+        let events = data.events;
+        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
@@ -1170,12 +1194,11 @@
         evt.desc2_title = d2t; evt.desc2_content = d2c;
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
-        
-        evt.guide = d3c; // Sync for list view
+        evt.guide = d3c; 
 
         saveItineraryToLocal();
         closeDetailModal();
-        switchDay(currentDayIdx); // Re-render and Re-sort
+        switchDay(currentDayIdx); 
     }
 
     function closeDetailModal() { document.querySelector('.modal-overlay').classList.remove('active'); }
@@ -1202,7 +1225,7 @@
 
     function delExpense(id) {
         pendingDeleteId = id; 
-        document.querySelector('.confirm-text').innerText = "確定要刪除這筆紀錄嗎？";
+        document.getElementById('confirmText').innerText = "確定要刪除這筆紀錄嗎？";
         document.getElementById('confirmModal').classList.add('active');
         document.getElementById('confirmYesBtn').onclick = function() { performDeleteSingle(); };
     }
@@ -1216,7 +1239,7 @@
     }
 
     function askClearAll() {
-        document.querySelector('.confirm-text').innerText = "確定要清除所有紀錄嗎？";
+        document.getElementById('confirmText').innerText = "確定要清除所有紀錄嗎？";
         document.getElementById('confirmModal').classList.add('active');
         document.getElementById('confirmYesBtn').onclick = function() { performClearAll(); };
     }
@@ -1262,15 +1285,12 @@
     // --- Backup & Restore (JSON) ---
     function exportBackup() {
         const expenseData = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
-        // itineraryData is already in memory
-        
         const backupData = {
             version: "1.0",
             timestamp: new Date().toISOString(),
             itinerary: itineraryData,
             expenses: expenseData
         };
-        
         const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json;charset=utf-8" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -1281,7 +1301,6 @@
     function importBackup(input) {
         const file = input.files[0];
         if(!file) return;
-        
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
@@ -1342,7 +1361,7 @@
             const dateDisplay = `${dObj.getFullYear()}年${dObj.getMonth()+1}月${dObj.getDate()}日`;
             return `
             <div class="exp-item">
-                <div style="flex:1">
+                <div style="flex:1; display:flex; align-items:center; gap:10px;">
                     <span class="exp-date">${dateDisplay}</span>
                     <span class="exp-name">${item.name}</span>
                 </div>
