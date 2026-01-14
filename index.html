@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 2026 冬季。河口湖2 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -15,10 +15,10 @@
     
     <style>
         :root {
-            --bg-color: #eff6ff;       
-            --card-bg: #f8fbff;        
+            --bg-color: #eff6ff;        
+            --card-bg: #f8fbff;         
             
-            --text-main: #1e3a8a;     
+            --text-main: #1e3a8a;      
             --text-light: #64748b;
             
             --primary-blue: #3b82f6;
@@ -26,9 +26,9 @@
             --line-color: #bfdbfe;
 
             --col-transport: #ef4444; 
-            --col-food: #2563eb;      
-            --col-sight: #f97316;     
-            --col-stay: #eab308;      /* 新增類別：住宿 淡黃色 */
+            --col-food: #2563eb;       
+            --col-sight: #f97316;      
+            --col-stay: #eab308;       
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -83,32 +83,27 @@
 
         /* 編輯模式表單 */
         .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; padding-bottom: 40px; }
+        /* 修正(6): 強制均分寬度，避免文字撐開 */
         .edit-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         
-        .edit-input, .edit-select { 
-            padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
+        /* 修正(5): 調整欄位高度與Padding，使其為原來的0.8倍 (原padding 12px -> 8px, 原高度依賴文字撐開 -> 設為固定約34px) */
+        .edit-input, .edit-textarea, .edit-select { 
+            padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
-            box-sizing: border-box; height: 45px; 
+            height: 34px; /* 固定高度 */
         }
         
-        /* (2) 編輯當日資訊：日期欄位等高 */
-        .edit-input-date-full {
-             width: 100%; height: 45px;
-        }
-
-        /* (6) 固定高度的標題與內容 */
-        .edit-input-fixed, .edit-content-box {
-            height: 45px !important;
-            padding: 10px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
+        /* 模擬 Textarea 的 Div */
+        .edit-content-box {
+            padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            box-sizing: border-box; width: 100%;
+            height: 34px; /* 修正(5) */
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
         }
 
-        .edit-textarea-popup { resize: vertical; min-height: 150px; width: 100%; padding: 15px; font-size: 1.1rem; border: 1px solid #bfdbfe; border-radius: 8px; background: #f8fbff; color:#1e3a8a; outline:none; } 
-        
+        .edit-textarea { resize: vertical; min-height: 150px; height: auto; } 
         .edit-row { display: flex; gap: 10px; align-items: center; }
         .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
         
@@ -146,9 +141,9 @@
             background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px;
         }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
-        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe;}
-        .rec-name-jp:active { opacity: 0.7; }
-
+        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; text-decoration: underline; text-decoration-color: #bfdbfe;}
+        /* 修正(8): 只有點擊觸發的元素會有手型游標與透明度變化，移至JS控制 */
+        
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -189,8 +184,11 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* (4) 修正：移除省略號 ... */
-        .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; overflow: hidden; white-space: nowrap; text-overflow: clip; }
+        /* 修正(4): 移除 line-clamp 與 overflow hidden，讓內容完全顯示 */
+        .desc-content { 
+            font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; 
+            white-space: normal;
+        }
 
         .m-btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
@@ -210,15 +208,16 @@
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
             background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
-            /* (8) 置中且自動換行 */
-            white-space: normal; word-wrap: break-word; 
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 文字大小一致 (2rem) */
-        .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
+        /* 修正(8): 確保日文品項置中且不超過視窗自動換行 */
+        .cp-jp { 
+            font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; 
+            word-break: break-all; white-space: pre-wrap; 
+        }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
         .cp-close { 
@@ -259,9 +258,8 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        /* (7) 調整(12) 日期數字大小 0.8x -> 0.8rem?? No, "0.9倍" */
-        /* original was 1.6rem, 1.6 * 0.9 = 1.44rem */
-        .d-date { font-family: var(--font-serif); font-size: 1.44rem; line-height: 1; }
+        /* 修正(7): 日期數字大小 1.3 * 0.9 = 1.17rem */
+        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
         
@@ -273,7 +271,7 @@
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         
-        /* Day Vertical */
+        /* Day Vertical - 直排修正 */
         .day-vertical { 
             writing-mode: vertical-rl; 
             text-orientation: upright; 
@@ -288,6 +286,7 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
+        /* Delete/Edit Day Buttons (Moved to Hero Bottom Right) */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -302,8 +301,8 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
         
-        /* (3) Update Weather Btn 0.9x */
-        .weather-update-btn { font-size: 1.2rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
+        /* Update Weather Btn */
+        .weather-update-btn { font-size: 1.35rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
 
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
         .hotel-line { width: 4px; height: 32px; background: #eab308; margin-right: 12px; border-radius: 4px; }
@@ -395,7 +394,7 @@
         .view-section.active { display: block; }
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
         
-        /* 匯出匯入按鈕排版 (並排) (11) */
+        /* 匯出匯入按鈕排版 (並排) */
         .sync-block { margin-top: 20px; border-top: 1px solid #dbeafe; padding-top: 15px; }
         .sync-title { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 10px; }
         .sync-btn-group { display: flex; gap: 10px; }
@@ -424,7 +423,7 @@
 <div id="textEditModal" class="confirm-overlay">
     <div class="confirm-box" style="text-align:left;">
         <div class="confirm-text" id="textEditTitle">編輯內容</div>
-        <textarea class="edit-textarea-popup" id="textEditArea" rows="5"></textarea>
+        <textarea class="edit-textarea" id="textEditArea" rows="5"></textarea>
         <div class="confirm-btns" style="margin-top:15px;">
             <button class="confirm-btn btn-no" onclick="closeTextEdit()">取消</button>
             <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="textEditConfirmBtn">確定</button>
@@ -447,14 +446,14 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:40px;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:80%; height:34px; margin-left:auto; margin-right:auto; display:block;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
-            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input edit-input-fixed-height" id="day-edit-title"></div>
-            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input edit-input-fixed-height" id="day-edit-loc"></div>
-            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input edit-input-fixed-height" id="day-edit-hotel"></div>
-            <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input edit-input-fixed-height" id="day-edit-bg"></div>
+            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="day-edit-title"></div>
+            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="day-edit-loc"></div>
+            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="day-edit-hotel"></div>
+            <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="day-edit-bg"></div>
         </div>
 
         <div class="confirm-btns" style="margin-top:20px;">
@@ -492,7 +491,7 @@
     <div class="weather-container">
         <div class="weather-header">
             <div style="display:flex; align-items:center;">
-                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.2rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
+                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.35rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
                 <div>
                     <div class="weather-loc" id="wLoc">Tokyo</div>
                     </div>
@@ -504,7 +503,7 @@
             <div class="hotel-line"></div>
             <div>
                 <span class="hotel-label">住宿資訊 Accommodation</span>
-                <div class="hotel-name" id="hotelInfoName">Yksi Stay Shinjuku</div>
+                <div class="hotel-name" id="hotelName">Yksi Stay Shinjuku</div>
             </div>
         </div>
     </div>
@@ -674,14 +673,13 @@
         setInterval(updateTimeHighlight, 60000); 
         updateRate();
         setInterval(updateRate, 3600000);
-        
-        // (9) Init with updateWeather
-        setTimeout(() => updateWeather(), 500); 
     }
 
     function updateWeather() {
+        // Auto set location based on day
         const day = itineraryData[currentDayIdx];
         let loc = "Shinjuku";
+        // Simple logic based on day index (0-4)
         if(currentDayIdx === 0) loc = "Shinjuku";
         else if(currentDayIdx === 1) loc = "Yamanakako";
         else if(currentDayIdx === 2) loc = "Kawaguchiko";
@@ -751,11 +749,6 @@
         btn.innerText = "新增";
         
         document.getElementById('editDayExtraFields').style.display = 'none';
-        
-        // (1) 0.8x sizing logic applied via style in HTML
-        document.getElementById('newDateInput').style.width = "90%";
-        document.getElementById('newDateInput').style.height = "40px";
-
         document.getElementById('dateInputModal').classList.add('active');
     }
 
@@ -796,10 +789,6 @@
         document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
-        // (2) Edit Day Date field: same size as others
-        document.getElementById('newDateInput').style.width = "100%";
-        document.getElementById('newDateInput').style.height = "45px";
-
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
         document.getElementById('day-edit-loc').value = dayData.heroCity;
@@ -874,10 +863,10 @@
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
         
         renderTimeline(data);
-        updateWeather(); 
+        updateWeather(); // Sync location with day
         updateTimeHighlight();
         
-        // (13) Stay Info Logic
+        // Check for stay event
         let hasStay = false;
         let stayEvt = null;
         const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
@@ -888,8 +877,8 @@
         const hotelBar = document.getElementById('hotelInfoBar');
         if(hasStay && stayEvt) {
              hotelBar.style.display = 'flex';
-             document.getElementById('hotelInfoName').innerText = stayEvt.title;
              hotelBar.onclick = function() {
+                  // find index
                   const eIdx = events.indexOf(stayEvt);
                   const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
                   openDetailModal(stayEvt, ctx);
@@ -961,7 +950,6 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
-        // (5) 預設 00:00
         events.push({
             time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "請編輯內容", location: "地點",
             ps_label_1: "", ps_content_1: "", 
@@ -1025,46 +1013,44 @@
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || 'JAPANTOKYO'}</div>`;
 
+        // 修正(4): 移除 desc-content 的 inline style，允許其完整顯示
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
             <div class="food-rec-list">
                 <div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
+                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')">${evt.ps_label_1 || ''}</span>
+                    <span class="rec-name-jp">${evt.ps_content_1 || ''}</span>
                 </div>
                 <div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
+                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')">${evt.ps_label_2 || ''}</span>
+                    <span class="rec-name-jp">${evt.ps_content_2 || ''}</span>
                 </div>
                 <div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
+                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')">${evt.ps_label_3 || ''}</span>
+                    <span class="rec-name-jp">${evt.ps_content_3 || ''}</span>
                 </div>
             </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // (3) Fix copy function, (8) Remove /CONFIRMATION text, (9) Style fix
+            // 修正(3): 修正複製功能
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
-                        <div class="res-bottom">
-                            <div><div class="conf-title">CONFIRMATION</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div>
-                            <i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>
-                        </div>
+                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
                      </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (evt.type === 'sightseeing') {
              html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 (POINT & SPEAK)</div>
@@ -1072,9 +1058,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         }
 
@@ -1094,7 +1080,7 @@
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
-    // --- Show Full Description Logic (View Mode) ---
+    // --- Show Full Description Logic ---
     function showFullDesc(title, content) {
         document.getElementById('textEditTitle').innerText = title;
         document.getElementById('textEditArea').value = content;
@@ -1109,10 +1095,12 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         
-        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
+
+        // 修正(5): 增加 style="width:100%; height:34px;" 到 inline html 或是依賴 CSS 修正
+        // 已經在CSS類別 .edit-input 設定了height:34px，此處不需額外加，除非特殊欄位
 
         if(type === 'food') {
              if(!t1) t1 = "店名由來";
@@ -1144,7 +1132,6 @@
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                <div class="edit-group"><div class="edit-label">CONFIRMATION</div></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
 
@@ -1167,15 +1154,15 @@
             <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
             
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input edit-input-fixed-height" id="e-d1-t" value="${t1}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input edit-input-fixed-height" id="e-d2-t" value="${t2}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input edit-input-fixed-height" id="e-d3-t" value="${t3}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
@@ -1206,7 +1193,6 @@
         const newType = document.getElementById('e-type').value;
         const dynamicArea = document.getElementById('dynamic-fields');
         const evt = { ...window.currentEvent }; 
-        // Reset titles to defaults based on new type logic inside render
         evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
         dynamicArea.innerHTML = renderEditFormFields(newType, evt);
     }
@@ -1215,15 +1201,14 @@
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
         
-        // (5) 新增地點欄位, (9) 時間和類別長度一致
         container.innerHTML = `
             <div class="edit-form">
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || 'JAPANTOKYO'}"></div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input input-sm" id="e-time" value="${evt.time}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:34px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select input-sm" id="e-type" onchange="onTypeChange()">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
                             <option value="stay" ${evt.type==='stay'?'selected':''}>住宿</option>
@@ -1299,9 +1284,8 @@
 
     // --- Center Popup Logic (Food Big Card) ---
     function openCenterPopup(cn, jp, theme) {
-        if(!jp) return; // Fix: Only show if JP text exists or if user clicks
+        if(!jp) return; 
         document.getElementById('cpJp').innerText = jp;
-        // Fix (10): Hide CN
         document.getElementById('cpSub').innerText = ""; 
         
         const modal = document.getElementById('centerPopup');
@@ -1419,39 +1403,38 @@
     }
 
     // --- Utils ---
-    // (3) Fix copy functionality for mobile web view compatibility
+    // 修正(3): 手機版複製相容性
     function copyToClipboard(text) {
+        if (!text) return;
+        
+        // 嘗試使用現代 API
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
-                // Success logic if needed
-            }).catch(err => {
-                fallbackCopyTextToClipboard(text);
-            });
+            navigator.clipboard.writeText(text)
+                .then(() => alert('已複製：' + text))
+                .catch(err => fallbackCopy(text));
         } else {
-            fallbackCopyTextToClipboard(text);
+            fallbackCopy(text);
         }
     }
-    
-    function fallbackCopyTextToClipboard(text) {
-        var textArea = document.createElement("textarea");
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
         textArea.value = text;
-        
-        // Ensure textarea is not visible but part of DOM
+        // 避免頁面滾動
         textArea.style.position = "fixed";
         textArea.style.left = "-9999px";
-        textArea.style.top = "0";
         document.body.appendChild(textArea);
-        
         textArea.focus();
         textArea.select();
-    
+        
         try {
-            var successful = document.execCommand('copy');
-            // var msg = successful ? 'successful' : 'unsuccessful';
+            const successful = document.execCommand('copy');
+            if(successful) alert('已複製：' + text);
+            else alert('複製失敗，請手動複製');
         } catch (err) {
-            // console.error('Fallback: Oops, unable to copy', err);
+            alert('複製失敗，請手動複製');
         }
-    
+        
         document.body.removeChild(textArea);
     }
 
