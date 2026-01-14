@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖2 】</title>
+    <title>【 2026 冬季。河口湖3 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -91,18 +91,19 @@
             box-sizing: border-box; height: 45px; 
         }
         
-        /* 0.8x Size Class for Dates/Times */
+        /* (1) (2) (5) 0.8x Size Class */
         .input-sm {
             width: 80% !important;
-            height: 36px !important; /* 45px * 0.8 */
+            height: 36px !important; /* approx 45 * 0.8 */
         }
         
-        /* 模擬 Textarea 的 Div - 固定高度 45px */
+        /* 模擬 Textarea 的 Div (編輯模式用) - (6) 固定高度 */
         .edit-content-box {
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            height: 45px; /* Fixed height same as input title */
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            height: 45px; /* Same as input for uniformity */
+            overflow: hidden; text-overflow: clip; /* (4) No ellipsis */
+            white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
         }
 
@@ -188,7 +189,7 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* 移除省略號 ... */
+        /* (4) 移除省略號 ... */
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; overflow: hidden; white-space: nowrap; text-overflow: clip; }
 
         .m-btn {
@@ -209,7 +210,7 @@
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
             background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
-            white-space: normal; word-wrap: break-word; /* 自動換行 */
+            white-space: normal; word-wrap: break-word; /* (8) 自動換行 */
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
@@ -255,7 +256,8 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; } /* 0.9x size */
+        /* (7) 調整日期數字大小 0.9x (approx 1.17rem) */
+        .d-date { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1; } 
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
         
@@ -442,7 +444,7 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input input-sm" style="margin-bottom:20px;">
+            <input type="date" id="newDateInput" class="input-sm edit-input" style="margin-bottom:20px;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
@@ -487,7 +489,7 @@
     <div class="weather-container">
         <div class="weather-header">
             <div style="display:flex; align-items:center;">
-                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.2rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
+                <i class="fas fa-sync-alt weather-update-btn" onclick="updateWeather()"></i>
                 <div>
                     <div class="weather-loc" id="wLoc">Tokyo</div>
                     </div>
@@ -670,14 +672,15 @@
         updateRate();
         setInterval(updateRate, 3600000);
         
-        // (1) 預設地點設置 (無Alert)
+        // (9) 預設地點設置 (無Alert)
         updateWeather();
     }
 
     function updateWeather() {
         // Auto set location based on day
-        // (1) Default locations logic
+        const day = itineraryData[currentDayIdx];
         let loc = "Shinjuku";
+        // Simple logic based on day index (0-4)
         if(currentDayIdx === 0) loc = "Shinjuku";
         else if(currentDayIdx === 1) loc = "Yamanakako";
         else if(currentDayIdx === 2) loc = "Kawaguchiko";
@@ -727,7 +730,7 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        // Sort itineraryData by date
+        // Sort itineraryData by date first if needed
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
@@ -750,10 +753,8 @@
         
         document.getElementById('editDayExtraFields').style.display = 'none';
         
-        // (1) 0.8x sizing logic applied via style in HTML (input-sm class or inline style)
-        // Resetting to default small size for add
+        // (1) 0.8x sizing logic applied via style in HTML (input-sm class)
         document.getElementById('newDateInput').classList.add('input-sm');
-
         document.getElementById('dateInputModal').classList.add('active');
     }
 
@@ -780,6 +781,7 @@
             events: []
         };
         itineraryData.push(newDay);
+        // Sort
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
         
         saveItineraryToLocal();
@@ -794,7 +796,7 @@
         document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
-        // (2) Edit Day Date field: same size as others
+        // (2) 編輯當日資訊時 日期長度恢復正常
         document.getElementById('newDateInput').classList.remove('input-sm');
         document.getElementById('newDateInput').style.width = "100%";
         document.getElementById('newDateInput').style.height = "45px";
@@ -874,7 +876,7 @@
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
         
         renderTimeline(data);
-        updateWeather(); 
+        updateWeather(); // Sync location with day
         updateTimeHighlight();
         
         // (13) Stay Info Logic
@@ -961,7 +963,6 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
-        // (5) 預設 00:00
         events.push({
             time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "請編輯內容", location: "地點",
             ps_label_1: "", ps_content_1: "", 
@@ -1049,13 +1050,13 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // (6) Fix copy function, (8) Remove /CONFIRMATION text, (9) Style fix
+            // (3) Fix copy function on mobile (use textarea trick if navigator fails, here simplified)
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom">
-                            <div><div class="conf-title">CONFIRMATION</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div>
+                            <div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div>
                             <i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>
                         </div>
                      </div>
@@ -1107,20 +1108,37 @@
     // --- Dynamic Form Rendering ---
     function renderEditFormFields(type, evt) {
         let fields = '';
+        
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
 
         if(type === 'food') {
-             if(!t1) t1 = "店名由來"; if(!t2) t2 = "職人堅持"; if(!t3) t3 = "美食介紹";
+             if(!t1) t1 = "店名由來";
+             if(!t2) t2 = "職人堅持";
+             if(!t3) t3 = "美食介紹";
+             
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div></div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div></div>
-                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div></div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                </div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
+                </div>
+                <div class="edit-row">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
+                </div>
              `;
+
         } else if (['transport', 'car', 'flight', 'stay'].includes(type)) {
-             if(!t1) t1 = "接駁位置"; if(!t2) t2 = "坐駕介紹"; if(!t3) t3 = "注意事項";
+             if(!t1) t1 = "接駁位置";
+             if(!t2) t2 = "坐駕介紹";
+             if(!t3) t3 = "注意事項";
+
              fields = `
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -1128,8 +1146,12 @@
                 <div class="edit-group"><div class="edit-label">CONFIRMATION</div></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
+
         } else if (type === 'sightseeing') {
-             if(!t1) t1 = "停車攻略"; if(!t2) t2 = "歷史地位"; if(!t3) t3 = "注意事項";
+             if(!t1) t1 = "停車攻略";
+             if(!t2) t2 = "歷史地位";
+             if(!t3) t3 = "注意事項";
+
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -1138,11 +1160,11 @@
              `;
         }
 
-        // (6) 區塊欄位高度一致 & (12) 點擊編輯
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊 (ABOUT)</div>
             <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
+            
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
@@ -1197,7 +1219,7 @@
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || 'JAPANTOKYO'}"></div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input input-sm" id="e-time" value="${evt.time}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
                         <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
@@ -1396,26 +1418,17 @@
 
     // --- Utils ---
     function copyToClipboard(text) {
-        // (3) Improved Clipboard for Mobile
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(() => { alert("已複製: " + text); });
-        } else {
-            // Fallback
-            let textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                alert("已複製: " + text);
-            } catch (err) {
-                alert("複製失敗");
-            }
-            document.body.removeChild(textArea);
-        }
+        // Mobile compatible copy
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        // Feedback
+        const icon = event.target;
+        icon.style.color = '#3b82f6';
+        setTimeout(() => icon.style.color = '#94a3b8', 500);
     }
 
     function renderWeather() {
