@@ -97,11 +97,11 @@
             height: 36px !important; /* 45px * 0.8 */
         }
         
-        /* 模擬 Textarea 的 Div */
+        /* 模擬 Textarea 的 Div - 固定高度 45px */
         .edit-content-box {
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            height: 45px; /* Fixed height same as input for symmetry */
+            height: 45px; /* Fixed height same as input title */
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
         }
@@ -442,7 +442,7 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:80%; height:36px;">
+            <input type="date" id="newDateInput" class="edit-input input-sm" style="margin-bottom:20px;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
@@ -752,8 +752,7 @@
         
         // (1) 0.8x sizing logic applied via style in HTML (input-sm class or inline style)
         // Resetting to default small size for add
-        document.getElementById('newDateInput').style.width = "80%";
-        document.getElementById('newDateInput').style.height = "36px";
+        document.getElementById('newDateInput').classList.add('input-sm');
 
         document.getElementById('dateInputModal').classList.add('active');
     }
@@ -796,6 +795,7 @@
         document.getElementById('newDateInput').value = dayData.fullDate;
         
         // (2) Edit Day Date field: same size as others
+        document.getElementById('newDateInput').classList.remove('input-sm');
         document.getElementById('newDateInput').style.width = "100%";
         document.getElementById('newDateInput').style.height = "45px";
 
@@ -1072,9 +1072,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
             </div>`;
         }
 
@@ -1107,38 +1107,20 @@
     // --- Dynamic Form Rendering ---
     function renderEditFormFields(type, evt) {
         let fields = '';
-        
-        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
 
         if(type === 'food') {
-             if(!t1) t1 = "店名由來";
-             if(!t2) t2 = "職人堅持";
-             if(!t3) t3 = "美食介紹";
-             
+             if(!t1) t1 = "店名由來"; if(!t2) t2 = "職人堅持"; if(!t3) t3 = "美食介紹";
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
-                </div>
-                <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
-                </div>
+                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項A (中)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項A (日)</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div></div>
+                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項B (中)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項B (日)</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div></div>
+                <div class="edit-row"><div class="edit-group" style="flex:1"><div class="edit-label">品項C (中)</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div><div class="edit-group" style="flex:1"><div class="edit-label">品項C (日)</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div></div>
              `;
-
         } else if (['transport', 'car', 'flight', 'stay'].includes(type)) {
-             if(!t1) t1 = "接駁位置";
-             if(!t2) t2 = "坐駕介紹";
-             if(!t3) t3 = "注意事項";
-
+             if(!t1) t1 = "接駁位置"; if(!t2) t2 = "坐駕介紹"; if(!t3) t3 = "注意事項";
              fields = `
                 <div class="edit-section-title">RESERVATION / CONFIRMATION</div>
                 <div class="edit-group"><div class="edit-label">預約標籤 (ABC)</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -1146,12 +1128,8 @@
                 <div class="edit-group"><div class="edit-label">CONFIRMATION</div></div>
                 <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
-
         } else if (type === 'sightseeing') {
-             if(!t1) t1 = "停車攻略";
-             if(!t2) t2 = "歷史地位";
-             if(!t3) t3 = "注意事項";
-
+             if(!t1) t1 = "停車攻略"; if(!t2) t2 = "歷史地位"; if(!t3) t3 = "注意事項";
              fields = `
                 <div class="edit-section-title">POINT & SPEAK</div>
                 <div class="edit-group"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -1160,11 +1138,11 @@
              `;
         }
 
+        // (6) 區塊欄位高度一致 & (12) 點擊編輯
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊 (ABOUT)</div>
             <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
-            
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
@@ -1205,7 +1183,6 @@
         const newType = document.getElementById('e-type').value;
         const dynamicArea = document.getElementById('dynamic-fields');
         const evt = { ...window.currentEvent }; 
-        // Reset titles to defaults based on new type logic inside render
         evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
         dynamicArea.innerHTML = renderEditFormFields(newType, evt);
     }
@@ -1419,7 +1396,26 @@
 
     // --- Utils ---
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {});
+        // (3) Improved Clipboard for Mobile
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => { alert("已複製: " + text); });
+        } else {
+            // Fallback
+            let textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert("已複製: " + text);
+            } catch (err) {
+                alert("複製失敗");
+            }
+            document.body.removeChild(textArea);
+        }
     }
 
     function renderWeather() {
