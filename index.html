@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 12026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -284,7 +284,7 @@
 
         .weather-container { padding: 0 20px; margin-bottom: 20px; }
         .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
-        .weather-loc { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1; color: #1e3a8a; }
+        .weather-loc { font-family: var(--font-serif); font-size: 1.2rem; line-height: 1; color: #1e3a8a; }
         .weather-sub { font-size: 0.8rem; color: #64748b; margin-top: 5px; }
         .weather-strip { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .weather-strip::-webkit-scrollbar { display: none; }
@@ -293,7 +293,7 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
         
-        .weather-update-btn { font-size: 1.35rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
+        .weather-update-btn { font-size: 1.2rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
 
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
         .hotel-line { width: 4px; height: 32px; background: #eab308; margin-right: 12px; border-radius: 4px; }
@@ -443,10 +443,10 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:24px; margin-left:auto; margin-right:auto; display:block;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:15px; width:90%; height:22px; margin-left:auto; margin-right:auto; display:block;">
         </div>
         
-        <div id="editDayExtraFields" style="display:none; margin-top:10px;">
+        <div id="editDayExtraFields" style="display:none; margin-bottom:15px;">
             <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="day-edit-title"></div>
             <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="day-edit-loc"></div>
             <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="day-edit-hotel"></div>
@@ -948,11 +948,11 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "請編輯內容", location: "請填寫地點",
-            ps_label_1: "請輸入內容", ps_content_1: "請輸入內容", 
-            desc1_title: "停車攻略", desc1_content: "請輸入內容",
-            desc2_title: "歷史地位", desc2_content: "請輸入內容",
-            desc3_title: "注意事項", desc3_content: "請輸入內容"
+            time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "", location: "",
+            ps_label_1: "", ps_content_1: "", 
+            desc1_title: "停車攻略", desc1_content: "",
+            desc2_title: "歷史地位", desc2_content: "",
+            desc3_title: "注意事項", desc3_content: ""
         });
         saveItineraryToLocal();
         switchDay(currentDayIdx); 
@@ -1011,7 +1011,7 @@
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || 'JAPANTOKYO'}</div>`;
 
         if (evt.type === 'food') {
-            html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( Point & Speak )</div>
+            html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="food-rec-list">`;
             
             // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
@@ -1035,8 +1035,8 @@
             }
             
             html += `</div>
-            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( About )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
@@ -1045,23 +1045,23 @@
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
             html += `<div class="res-combined-box">
-                        <div class="res-top"><div class="res-label">Reservation Information</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                        <div class="res-top"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
-                        <div class="res-bottom"><div><div class="conf-title">Confirmation No.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
+                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION No.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
                      </div>
-            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( About )</div>
-            ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (evt.type === 'sightseeing') {
-             html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 ( Point & Speak )</div>
+             html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
-            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( About )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
@@ -1073,7 +1073,7 @@
              html += `<div style="margin-top:30px">
                 ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
                 ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
-                ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> Search Vlogs</a>` : ''}
+                ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> Vlogs </a>` : ''}
              </div>`;
         }
 
@@ -1135,7 +1135,7 @@
                 <div class="edit-group"><div class="edit-label">預約內容</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-section-title">Confirmation No.</div>
-                <div class="edit-group"><div class="edit-label">訂單代號 (987654)</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                <div class="edit-group"><div class="edit-label">訂單代號</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
 
         } else if (type === 'sightseeing') {
@@ -1154,7 +1154,7 @@
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊</div>
-            <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
+            <div class="edit-group"><div class="edit-label">Map Code</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
             
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
@@ -1208,7 +1208,7 @@
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || 'JAPANTOKYO'}"></div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:34px;"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:25px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
                         <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
