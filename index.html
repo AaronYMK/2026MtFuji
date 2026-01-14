@@ -83,22 +83,20 @@
 
         /* 編輯模式表單 */
         .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; padding-bottom: 40px; }
-        /* 修正(6): 強制均分寬度，避免文字撐開 */
         .edit-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* 修正(5): 調整欄位高度與Padding，使其為原來的0.8倍 (原padding 12px -> 8px, 原高度依賴文字撐開 -> 設為固定約34px) */
         .edit-input, .edit-textarea, .edit-select { 
             padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
-            height: 34px; /* 固定高度 */
+            height: 34px; 
         }
         
         /* 模擬 Textarea 的 Div */
         .edit-content-box {
             padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            height: 34px; /* 修正(5) */
+            height: 34px; 
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
         }
@@ -141,9 +139,9 @@
             background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px;
         }
         .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
-        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; text-decoration: underline; text-decoration-color: #bfdbfe;}
-        /* 修正(8): 只有點擊觸發的元素會有手型游標與透明度變化，移至JS控制 */
-        
+        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; text-decoration: underline; text-decoration-color: #bfdbfe; cursor: pointer; }
+        .rec-name-jp:active { opacity: 0.7; }
+
         .res-combined-box {
             background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
             overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
@@ -184,7 +182,6 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* 修正(4): 移除 line-clamp 與 overflow hidden，讓內容完全顯示 */
         .desc-content { 
             font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; 
             white-space: normal;
@@ -200,7 +197,7 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) - 淡藍色 */
+        /* Center Popup (Big Card) */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; z-index: 3000; display: none;
@@ -213,7 +210,6 @@
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        /* 修正(8): 確保日文品項置中且不超過視窗自動換行 */
         .cp-jp { 
             font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; 
             word-break: break-all; white-space: pre-wrap; 
@@ -258,7 +254,6 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        /* 修正(7): 日期數字大小 1.3 * 0.9 = 1.17rem */
         .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
@@ -270,8 +265,6 @@
         }
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
-        
-        /* Day Vertical - 直排修正 */
         .day-vertical { 
             writing-mode: vertical-rl; 
             text-orientation: upright; 
@@ -286,7 +279,6 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete/Edit Day Buttons (Moved to Hero Bottom Right) */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -301,7 +293,6 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
         
-        /* Update Weather Btn */
         .weather-update-btn { font-size: 1.35rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
 
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
@@ -313,7 +304,6 @@
         .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
         .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1); }
 
-        /* --- Timeline --- */
         .timeline-wrapper { padding: 10px 20px 30px 20px; position: relative; }
         .timeline-row { display: flex; position: relative; min-height: 100px; } 
         .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: #334155; font-weight: 600; padding-top: 0; }
@@ -400,6 +390,13 @@
         .sync-btn-group { display: flex; gap: 10px; }
         .btn-sync { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #bfdbfe; background: #f8fbff; color: #334155; cursor: pointer; font-weight: 500; text-align: left; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-sync i { color: var(--primary-blue); }
+        
+        /* 修正(4): 重置按鈕樣式 */
+        .btn-reset-app { 
+            width: 100%; padding: 12px; border-radius: 10px; border: none; 
+            background: #475569; color: #fff; cursor: pointer; font-weight: 500; 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
     </style>
 </head>
 <body>
@@ -557,6 +554,11 @@
                 </div>
                 <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             </div>
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
+                 <button class="btn-reset-app" onclick="resetApp()">
+                    <i class="fas fa-redo-alt"></i> 重置所有內容 (回到預設值)
+                 </button>
+            </div>
         </div>
     </div>
 </div>
@@ -644,7 +646,6 @@
                 }
             ]
         },
-        // ... (Simplified for brevity, structure kept)
         { day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村", loc: "Yamanakako", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: [] },
         { day: 3, dayCN: "第三天", date: "1/28", fullDate: "2026-01-28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖", loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800", events: []},
         { day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市", loc: "Fujiyoshida", hotel: "The Knot Shinjuku", bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", events: []},
@@ -676,10 +677,8 @@
     }
 
     function updateWeather() {
-        // Auto set location based on day
         const day = itineraryData[currentDayIdx];
         let loc = "Shinjuku";
-        // Simple logic based on day index (0-4)
         if(currentDayIdx === 0) loc = "Shinjuku";
         else if(currentDayIdx === 1) loc = "Yamanakako";
         else if(currentDayIdx === 2) loc = "Kawaguchiko";
@@ -863,10 +862,9 @@
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
         
         renderTimeline(data);
-        updateWeather(); // Sync location with day
+        updateWeather(); 
         updateTimeHighlight();
         
-        // Check for stay event
         let hasStay = false;
         let stayEvt = null;
         const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
@@ -878,7 +876,6 @@
         if(hasStay && stayEvt) {
              hotelBar.style.display = 'flex';
              hotelBar.onclick = function() {
-                  // find index
                   const eIdx = events.indexOf(stayEvt);
                   const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
                   openDetailModal(stayEvt, ctx);
@@ -1013,23 +1010,31 @@
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || 'JAPANTOKYO'}</div>`;
 
-        // 修正(4): 移除 desc-content 的 inline style，允許其完整顯示
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 (POINT & SPEAK)</div>
-            <div class="food-rec-list">
-                <div class="food-rec-item">
-                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')">${evt.ps_label_1 || ''}</span>
-                    <span class="rec-name-jp">${evt.ps_content_1 || ''}</span>
-                </div>
-                <div class="food-rec-item">
-                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')">${evt.ps_label_2 || ''}</span>
-                    <span class="rec-name-jp">${evt.ps_content_2 || ''}</span>
-                </div>
-                <div class="food-rec-item">
-                    <span class="rec-name-cn" style="cursor:pointer;" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')">${evt.ps_label_3 || ''}</span>
-                    <span class="rec-name-jp">${evt.ps_content_3 || ''}</span>
-                </div>
-            </div>
+            <div class="food-rec-list">`;
+            
+            // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
+            if (evt.ps_label_1 || evt.ps_content_1) {
+                html += `<div class="food-rec-item">
+                    <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
+                </div>`;
+            }
+            if (evt.ps_label_2 || evt.ps_content_2) {
+                html += `<div class="food-rec-item">
+                    <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
+                </div>`;
+            }
+            if (evt.ps_label_3 || evt.ps_content_3) {
+                html += `<div class="food-rec-item">
+                    <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
+                </div>`;
+            }
+            
+            html += `</div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
@@ -1038,7 +1043,7 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // 修正(3): 修正複製功能
+            // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
@@ -1098,9 +1103,6 @@
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
-
-        // 修正(5): 增加 style="width:100%; height:34px;" 到 inline html 或是依賴 CSS 修正
-        // 已經在CSS類別 .edit-input 設定了height:34px，此處不需額外加，除非特殊欄位
 
         if(type === 'food') {
              if(!t1) t1 = "店名由來";
@@ -1180,7 +1182,6 @@
         document.getElementById('textEditConfirmBtn').onclick = function() {
             const val = document.getElementById('textEditArea').value;
             document.getElementById(currentTextEditTargetId).value = val;
-            // update display div
             document.getElementById(currentTextEditTargetId).previousElementSibling.innerText = val || '點擊編輯...';
             closeTextEdit();
         };
@@ -1273,7 +1274,7 @@
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
         
-        evt.guide = d3c; // Sync for list view
+        evt.guide = d3c; 
 
         saveItineraryToLocal();
         closeDetailModal();
@@ -1354,7 +1355,6 @@
         txtContent += "-------------------------\n";
         txtContent += `總計: JPY ${total} (約 TWD ${Math.round(total * RATE)})`;
 
-        // 建立 Blob 並下載
         const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -1401,16 +1401,26 @@
         };
         reader.readAsText(file);
     }
+    
+    // 修正(4): 重置 App 功能
+    function resetApp() {
+        if(confirm("警告：這將會刪除所有編輯過的行程與記帳紀錄，並回到最原始的預設狀態。\n\n確定要重置嗎？")) {
+            localStorage.removeItem('tripData2026');
+            localStorage.removeItem('tripExp2026');
+            location.reload();
+        }
+    }
 
     // --- Utils ---
-    // 修正(3): 手機版複製相容性
+    // 修正(1): 修正後的複製功能，成功時不跳出 alert
     function copyToClipboard(text) {
         if (!text) return;
         
-        // 嘗試使用現代 API
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text)
-                .then(() => alert('已複製：' + text))
+                .then(() => {
+                    // 成功時不顯示任何提示 (silent)
+                })
                 .catch(err => fallbackCopy(text));
         } else {
             fallbackCopy(text);
@@ -1420,7 +1430,6 @@
     function fallbackCopy(text) {
         const textArea = document.createElement("textarea");
         textArea.value = text;
-        // 避免頁面滾動
         textArea.style.position = "fixed";
         textArea.style.left = "-9999px";
         document.body.appendChild(textArea);
@@ -1428,11 +1437,10 @@
         textArea.select();
         
         try {
-            const successful = document.execCommand('copy');
-            if(successful) alert('已複製：' + text);
-            else alert('複製失敗，請手動複製');
+            document.execCommand('copy');
+            // 成功時不顯示任何提示 (silent)
         } catch (err) {
-            alert('複製失敗，請手動複製');
+            // 失敗時保持安靜或可選擇 console.log
         }
         
         document.body.removeChild(textArea);
