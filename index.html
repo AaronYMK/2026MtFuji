@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖zzz 】</title>
+    <title>【 2026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -28,7 +28,7 @@
             --col-transport: #ef4444; 
             --col-food: #2563eb;      
             --col-sight: #f97316;     
-            --col-stay: #eab308;
+            --col-stay: #eab308;      /* 新增類別：住宿 淡黃色 */
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -83,28 +83,20 @@
 
         /* 編輯模式表單 */
         .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; padding-bottom: 40px; }
-        .edit-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+        .edit-group { display: flex; flex-direction: column; gap: 5px; flex: 1; }
         .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .edit-input, .edit-textarea, .edit-select { 
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
-            box-sizing: border-box; height: 45px; 
+            box-sizing: border-box; height: 45px; /* (6) 固定高度 */
         }
         
-        /* 0.8x Size Class for Dates/Times (Req 1, 2, 5) */
-        .input-sm {
-            width: 80% !important;
-            height: 36px !important; /* 45px * 0.8 */
-            margin: 0 auto; /* Center it */
-            display: block;
-        }
-        
-        /* 模擬 Textarea 的 Div (編輯模式用 - Req 6 固定高度) */
+        /* 模擬 Textarea 的 Div (編輯模式用) */
         .edit-content-box {
             padding: 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            height: 45px; /* Fixed height match input */
-            overflow: hidden; text-overflow: clip; white-space: nowrap;
+            height: 45px; /* (6) 固定高度，與標題一致 */
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
         }
 
@@ -190,7 +182,7 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* (4) 移除省略號 ... */
+        /* (4) 移除省略號 ... 使用 clip */
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; overflow: hidden; white-space: nowrap; text-overflow: clip; }
 
         .m-btn {
@@ -211,14 +203,15 @@
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
             background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
-            white-space: normal; word-wrap: break-word; /* 自動換行 */
+            white-space: normal; word-wrap: break-word; /* (8) 自動換行 */
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
-        .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
-        .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
+        /* (8) 字卡文字置中 */
+        .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; text-align: center; }
+        .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; text-align: center; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
         .cp-close { 
             position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); color: #64748b; 
@@ -258,8 +251,8 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        /* (7) 日期數字大小 0.9x */
-        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; } 
+        /* (7) 調整日期數字大小 0.9倍 (1.3 * 0.9 = 1.17) */
+        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
         
@@ -271,7 +264,7 @@
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         
-        /* Day Vertical */
+        /* Day Vertical - 直排修正 */
         .day-vertical { 
             writing-mode: vertical-rl; 
             text-orientation: upright; 
@@ -286,7 +279,7 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete/Edit Day Buttons */
+        /* Delete/Edit Day Buttons (Moved to Hero Bottom Right) */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -301,7 +294,7 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
         
-        /* Update Weather Btn */
+        /* Update Weather Btn (3) 0.9x size */
         .weather-update-btn { font-size: 1.2rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
 
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
@@ -398,7 +391,7 @@
         .sync-block { margin-top: 20px; border-top: 1px solid #dbeafe; padding-top: 15px; }
         .sync-title { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 10px; }
         .sync-btn-group { display: flex; gap: 10px; }
-        .btn-sync { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #bfdbfe; background: #f8fbff; color: #334155; cursor: pointer; font-weight: 500; text-align: left; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-sync { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #bfdbfe; background: #f8fbff; color: #334155; cursor: pointer; margin-bottom: 8px; font-weight: 500; text-align: left; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-sync i { color: var(--primary-blue); }
     </style>
 </head>
@@ -446,7 +439,7 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="input-sm" style="margin-bottom:20px;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:80%; height:36px;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
@@ -491,7 +484,7 @@
     <div class="weather-container">
         <div class="weather-header">
             <div style="display:flex; align-items:center;">
-                <i class="fas fa-sync-alt weather-update-btn" onclick="updateWeather()"></i>
+                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.2rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
                 <div>
                     <div class="weather-loc" id="wLoc">Tokyo</div>
                     </div>
@@ -644,6 +637,7 @@
                 }
             ]
         },
+        // ... (Simplified for brevity, structure kept)
         { day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村", loc: "Yamanakako", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: [] },
         { day: 3, dayCN: "第三天", date: "1/28", fullDate: "2026-01-28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖", loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800", events: []},
         { day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市", loc: "Fujiyoshida", hotel: "The Knot Shinjuku", bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", events: []},
@@ -673,13 +667,13 @@
         updateRate();
         setInterval(updateRate, 3600000);
         
-        // (9) 預設更新天氣
+        // (9) 預設地點設置 (無Alert)
         updateWeather();
     }
 
     function updateWeather() {
         // Auto set location based on day
-        const day = itineraryData[currentDayIdx];
+        // (1) Default locations logic
         let loc = "Shinjuku";
         if(currentDayIdx === 0) loc = "Shinjuku";
         else if(currentDayIdx === 1) loc = "Yamanakako";
@@ -730,7 +724,9 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
+        // Sort itineraryData by date
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
 
         el.innerHTML = itineraryData.map((d, i) => `
@@ -751,8 +747,11 @@
         
         document.getElementById('editDayExtraFields').style.display = 'none';
         
-        // (1) 0.8x sizing logic applied via style/class
-        document.getElementById('newDateInput').className = "edit-input input-sm";
+        // (1) 0.8x sizing logic applied via style in HTML (input-sm class or inline style)
+        // Resetting to default small size for add
+        document.getElementById('newDateInput').style.width = "80%";
+        document.getElementById('newDateInput').style.height = "36px";
+
         document.getElementById('dateInputModal').classList.add('active');
     }
 
@@ -794,7 +793,8 @@
         document.getElementById('newDateInput').value = dayData.fullDate;
         
         // (2) Edit Day Date field: same size as others
-        document.getElementById('newDateInput').className = "edit-input"; 
+        document.getElementById('newDateInput').style.width = "100%";
+        document.getElementById('newDateInput').style.height = "45px";
 
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
@@ -858,6 +858,7 @@
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
         
+        // Update Hero
         document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
         document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
         document.getElementById('dayVertical').innerText = data.dayCN;
@@ -1045,13 +1046,13 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // (3) Fix copy function
+            // (6) Fix copy function, (8) Remove /CONFIRMATION text, (9) Style fix
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom">
-                            <div><div class="conf-title">CONFIRMATION</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div>
+                            <div><div class="conf-title">CONFIRMATION</div><div class="conf-val" id="copy-${evt.id}">${evt.ps_label_2 || '987654'}</div></div>
                             <i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>
                         </div>
                      </div>
@@ -1068,9 +1069,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">CAR GPS PHONE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc1_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc2_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || '...'}</div></div>
             </div>`;
         }
 
@@ -1105,6 +1106,7 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         
+        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
@@ -1156,7 +1158,6 @@
              `;
         }
 
-        // (6) 區塊欄位高度一致 & (12) 點擊編輯
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊 (ABOUT)</div>
@@ -1202,6 +1203,7 @@
         const newType = document.getElementById('e-type').value;
         const dynamicArea = document.getElementById('dynamic-fields');
         const evt = { ...window.currentEvent }; 
+        // Reset titles to defaults based on new type logic inside render
         evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
         dynamicArea.innerHTML = renderEditFormFields(newType, evt);
     }
@@ -1415,33 +1417,28 @@
 
     // --- Utils ---
     function copyToClipboard(text) {
-        // (3) Fallback logic for mobile copy
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(() => alert("已複製: " + text));
-        } else {
-            // Fallback for non-https or older mobile browsers
-            let textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                alert("已複製: " + text);
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
+        // Fallback for mobile/http
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert("已複製: " + text);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
         }
+        document.body.removeChild(textArea);
     }
 
     function renderWeather() {
         const el = document.getElementById('weatherStrip');
         let html = '';
+        // (9) Use actual current hour
+        const now = new Date().getHours();
         for(let i=0; i<24; i++) {
-            let t = i < 10 ? `0${i}:00` : `${i}:00`;
+            let h = (now + i) % 24;
+            let t = h < 10 ? `0${h}:00` : `${h}:00`;
             html += `<div class="w-col"><div class="w-time">${t}</div><div class="w-icon"><i class="fas fa-sun"></i></div><div class="w-temp">${10 + Math.floor(Math.random()*5)}°</div></div>`;
         }
         el.innerHTML = html;
