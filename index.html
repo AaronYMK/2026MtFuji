@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 12026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -739,7 +739,7 @@
     }
 
     function openAddDayModal() {
-        document.getElementById('dateModalTitle').innerText = "新增日期";
+        document.getElementById('dateModalTitle').innerText = "ADD DATE";
         document.getElementById('newDateInput').value = "";
         
         const btn = document.getElementById('dateModalConfirmBtn');
@@ -784,7 +784,7 @@
     function openEditDayModal() {
         const dayData = itineraryData[currentDayIdx];
         
-        document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
+        document.getElementById('dateModalTitle').innerText = "DAILY INFORMATION";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
         document.getElementById('editDayExtraFields').style.display = 'block';
