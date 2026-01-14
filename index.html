@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 2026 冬季。河口湖111 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -28,7 +28,7 @@
             --col-transport: #ef4444; 
             --col-food: #2563eb;      
             --col-sight: #f97316;     
-            --col-stay: #eab308;
+            --col-stay: #eab308;      /* 新增類別：住宿 淡黃色 */
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -73,6 +73,7 @@
             color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
         }
         
+        /* 編輯按鈕 (底部) */
         .modal-edit-btn-bottom {
             width: 100%; padding: 16px; border-radius: 12px; border: 2px dashed #bfdbfe; 
             font-size: 1rem; cursor: pointer; color: var(--primary-blue); font-weight: 700;
@@ -91,17 +92,20 @@
             box-sizing: border-box; height: 45px; 
         }
         
-        /* 0.8x Size Class for Dates/Times - Only applied in specific modals via inline style or logic */
+        /* 0.8x Size Class for Dates/Times */
+        .input-sm {
+            width: 80% !important;
+            height: 36px !important; /* 45px * 0.8 */
+        }
         
         /* 固定高度的標題與內容 */
-        .edit-input-fixed-height { height: 45px !important; }
-        .edit-content-box {
-            padding: 0 12px; border: 1px solid #bfdbfe; border-radius: 8px;
+        .edit-input-fixed, .edit-content-box {
+            height: 45px !important;
+            padding: 10px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
             font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
-            height: 45px; /* 固定高度 */
+            box-sizing: border-box; width: 100%;
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             cursor: pointer; display: flex; align-items: center;
-            box-sizing: border-box;
         }
 
         .edit-textarea-popup { resize: vertical; min-height: 150px; width: 100%; padding: 15px; font-size: 1.1rem; border: 1px solid #bfdbfe; border-radius: 8px; background: #f8fbff; color:#1e3a8a; outline:none; } 
@@ -186,7 +190,7 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* 移除 ...，直接截斷 */
+        /* 移除省略號 ... */
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; overflow: hidden; white-space: nowrap; text-overflow: clip; }
 
         .m-btn {
@@ -199,7 +203,7 @@
         .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
         .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
 
-        /* Center Popup (Big Card) */
+        /* Center Popup (Big Card) - 淡藍色 */
         .center-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 80%; max-width: 320px; z-index: 3000; display: none;
@@ -254,6 +258,7 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
+        /* 日期數字 0.9x (1.17rem) */
         .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
@@ -266,7 +271,7 @@
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         
-        /* Day Vertical - 直排 */
+        /* Day Vertical - 直排修正 */
         .day-vertical { 
             writing-mode: vertical-rl; 
             text-orientation: upright; 
@@ -281,6 +286,7 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
+        /* Delete/Edit Day Buttons (Moved to Hero Bottom Right) */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -388,6 +394,7 @@
         .view-section.active { display: block; }
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
         
+        /* 匯出匯入按鈕排版 (並排) */
         .sync-block { margin-top: 20px; border-top: 1px solid #dbeafe; padding-top: 15px; }
         .sync-title { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 10px; }
         .sync-btn-group { display: flex; gap: 10px; }
@@ -439,7 +446,7 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input input-sm" style="margin-bottom:20px;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:80%; height:36px;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
@@ -606,7 +613,7 @@
         stay: 'var(--col-stay)' 
     };
 
-    // Make data mutable
+    // Initialize Itinerary Data (Load from LocalStorage or Default)
     let itineraryData = [
         {
             day: 1, dayCN: "第一天", date: "1/26", fullDate: "2026-01-26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
@@ -675,10 +682,8 @@
     }
 
     function updateWeather() {
-        // Auto set location based on day
         const day = itineraryData[currentDayIdx];
         let loc = "Shinjuku";
-        // Simple logic based on day index (0-4)
         if(currentDayIdx === 0) loc = "Shinjuku";
         else if(currentDayIdx === 1) loc = "Yamanakako";
         else if(currentDayIdx === 2) loc = "Kawaguchiko";
@@ -728,9 +733,7 @@
 
     function renderDateScroller() {
         const el = document.getElementById('dateScroller');
-        // Sort itineraryData by date
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
-        // Re-index days
         itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
 
         el.innerHTML = itineraryData.map((d, i) => `
@@ -751,8 +754,10 @@
         
         document.getElementById('editDayExtraFields').style.display = 'none';
         
-        // (1) 0.8x sizing logic applied via style in HTML (input-sm class or inline style)
-        document.getElementById('newDateInput').classList.add('input-sm');
+        // (1) 0.8x sizing logic applied via style in HTML
+        document.getElementById('newDateInput').style.width = "80%";
+        document.getElementById('newDateInput').style.height = "36px";
+
         document.getElementById('dateInputModal').classList.add('active');
     }
 
@@ -793,8 +798,9 @@
         document.getElementById('dateModalTitle').innerText = "編輯當日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
-        // (2) Edit Day Date field: same size as others (remove input-sm class)
-        document.getElementById('newDateInput').classList.add('input-sm');
+        // (2) Edit Day Date field: same size as others
+        document.getElementById('newDateInput').style.width = "100%";
+        document.getElementById('newDateInput').style.height = "45px";
 
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
@@ -1027,15 +1033,15 @@
             <div class="food-rec-list">
                 <div class="food-rec-item">
                     <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_label_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
                 </div>
                 <div class="food-rec-item">
                     <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_label_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
                 </div>
                 <div class="food-rec-item">
                     <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_label_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
+                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_content_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
                 </div>
             </div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 關於此處 (ABOUT)</div>
@@ -1046,7 +1052,7 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // (6) Fix copy function, (8) Remove /CONFIRMATION text, (9) Style fix
+            // (3) Fix copy function
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
@@ -1095,7 +1101,6 @@
     function showFullDesc(title, content) {
         document.getElementById('textEditTitle').innerText = title;
         document.getElementById('textEditArea').value = content;
-        // View mode
         document.getElementById('textEditConfirmBtn').style.display = 'none';
         document.getElementById('textEditModal').querySelector('.btn-no').innerText = "關閉";
         document.getElementById('textEditArea').readOnly = true; 
@@ -1106,7 +1111,6 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         
-        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
@@ -1163,6 +1167,7 @@
             ${fields}
             <div class="edit-section-title">詳細資訊 (ABOUT)</div>
             <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
+            
             <div class="edit-row">
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input edit-input-fixed-height" id="e-d1-t" value="${t1}"></div>
                 <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
@@ -1212,9 +1217,7 @@
         const evt = window.currentEvent;
         const container = document.getElementById('modalContent');
         
-        // (5) 時間欄位0.8倍，高度0.8倍 (via input-sm class in HTML)
-        // (9) Check time and type layout
-        
+        // (5) 新增地點欄位, (9) 時間和類別長度一致
         container.innerHTML = `
             <div class="edit-form">
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
