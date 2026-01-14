@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖111 】</title>
+    <title>【 2026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -92,13 +92,12 @@
             box-sizing: border-box; height: 45px; 
         }
         
-        /* 0.8x Size Class for Dates/Times */
-        .input-sm {
-            width: 80% !important;
-            height: 36px !important; /* 45px * 0.8 */
+        /* (2) 編輯當日資訊：日期欄位等高 */
+        .edit-input-date-full {
+             width: 100%; height: 45px;
         }
-        
-        /* 固定高度的標題與內容 */
+
+        /* (6) 固定高度的標題與內容 */
         .edit-input-fixed, .edit-content-box {
             height: 45px !important;
             padding: 10px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
@@ -190,7 +189,7 @@
         .desc-list { display: flex; flex-direction: column; gap: 25px; margin-top: 20px; }
         .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
         .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
-        /* 移除省略號 ... */
+        /* (4) 修正：移除省略號 ... */
         .desc-content { font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; overflow: hidden; white-space: nowrap; text-overflow: clip; }
 
         .m-btn {
@@ -211,12 +210,14 @@
             box-shadow: 0 10px 40px rgba(30, 58, 138, 0.15);
             background: #eff6ff; 
             animation: zoomIn 0.2s ease-out;
-            white-space: normal; word-wrap: break-word; /* 自動換行 */
+            /* (8) 置中且自動換行 */
+            white-space: normal; word-wrap: break-word; 
         }
         .center-popup.active { display: block; }
         @keyframes zoomIn { from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;} to {transform: translate(-50%, -50%) scale(1); opacity: 1;} }
         
         .cp-content { display: flex; flex-direction: column; align-items: center; }
+        /* 文字大小一致 (2rem) */
         .cp-jp { font-family: var(--font-serif); font-size: 2rem; font-weight: 900; line-height: 1.2; color: #1e3a8a; order: 3; }
         .cp-sub { font-size: 2rem; color: #1e3a8a; font-weight: 900; order: 1; }
         .cp-spacer { height: 40px; width: 100%; order: 2; }
@@ -258,8 +259,9 @@
         .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
         .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
         .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
-        /* 日期數字 0.9x (1.17rem) */
-        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
+        /* (7) 調整(12) 日期數字大小 0.8x -> 0.8rem?? No, "0.9倍" */
+        /* original was 1.6rem, 1.6 * 0.9 = 1.44rem */
+        .d-date { font-family: var(--font-serif); font-size: 1.44rem; line-height: 1; }
         .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
         .date-item.active::after { opacity: 1; }
         
@@ -271,7 +273,7 @@
 
         .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
         
-        /* Day Vertical - 直排修正 */
+        /* Day Vertical */
         .day-vertical { 
             writing-mode: vertical-rl; 
             text-orientation: upright; 
@@ -286,7 +288,6 @@
         .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
         .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
         
-        /* Delete/Edit Day Buttons (Moved to Hero Bottom Right) */
         .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
         .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 
@@ -301,7 +302,7 @@
         .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
         .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
         
-        /* Update Weather Btn 0.9x */
+        /* (3) Update Weather Btn 0.9x */
         .weather-update-btn { font-size: 1.2rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
 
         .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
@@ -394,7 +395,7 @@
         .view-section.active { display: block; }
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
         
-        /* 匯出匯入按鈕排版 (並排) */
+        /* 匯出匯入按鈕排版 (並排) (11) */
         .sync-block { margin-top: 20px; border-top: 1px solid #dbeafe; padding-top: 15px; }
         .sync-title { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 10px; }
         .sync-btn-group { display: flex; gap: 10px; }
@@ -446,14 +447,14 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:80%; height:36px;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:40px;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
-            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="day-edit-title"></div>
-            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="day-edit-loc"></div>
-            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="day-edit-hotel"></div>
-            <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input" id="day-edit-bg"></div>
+            <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input edit-input-fixed-height" id="day-edit-title"></div>
+            <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input edit-input-fixed-height" id="day-edit-loc"></div>
+            <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input edit-input-fixed-height" id="day-edit-hotel"></div>
+            <div class="edit-group"><div class="edit-label">Hero 圖片 URL</div><input class="edit-input edit-input-fixed-height" id="day-edit-bg"></div>
         </div>
 
         <div class="confirm-btns" style="margin-top:20px;">
@@ -613,7 +614,7 @@
         stay: 'var(--col-stay)' 
     };
 
-    // Initialize Itinerary Data (Load from LocalStorage or Default)
+    // Make data mutable
     let itineraryData = [
         {
             day: 1, dayCN: "第一天", date: "1/26", fullDate: "2026-01-26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
@@ -644,13 +645,10 @@
                 }
             ]
         },
-        // ... (Simplified other days for brevity, structure remains same)
-        {
-            day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村",
-            loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: []
-        },
+        // ... (Simplified for brevity, structure kept)
+        { day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村", loc: "Yamanakako", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: [] },
         { day: 3, dayCN: "第三天", date: "1/28", fullDate: "2026-01-28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖", loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800", events: []},
-        { day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市", loc: "Shimoyoshida", hotel: "The Knot Shinjuku", bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", events: []},
+        { day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "吉田市", loc: "Fujiyoshida", hotel: "The Knot Shinjuku", bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", events: []},
         { day: 5, dayCN: "第五天", date: "1/30", fullDate: "2026-01-30", week: "FRI", title: "依依不捨－捨不得回家", heroCity: "東京都", loc: "Shinjuku", hotel: "溫暖的家", bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800", events: []}
     ];
 
@@ -755,8 +753,8 @@
         document.getElementById('editDayExtraFields').style.display = 'none';
         
         // (1) 0.8x sizing logic applied via style in HTML
-        document.getElementById('newDateInput').style.width = "80%";
-        document.getElementById('newDateInput').style.height = "36px";
+        document.getElementById('newDateInput').style.width = "90%";
+        document.getElementById('newDateInput').style.height = "40px";
 
         document.getElementById('dateInputModal').classList.add('active');
     }
@@ -864,7 +862,6 @@
         const data = itineraryData[idx];
         document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
         
-        // Update Hero
         document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
         document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
         document.getElementById('dayVertical').innerText = data.dayCN;
@@ -1052,7 +1049,7 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content" style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
-            // (3) Fix copy function
+            // (3) Fix copy function, (8) Remove /CONFIRMATION text, (9) Style fix
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || 'ABC'}</div></div>
@@ -1101,6 +1098,7 @@
     function showFullDesc(title, content) {
         document.getElementById('textEditTitle').innerText = title;
         document.getElementById('textEditArea').value = content;
+        // View mode
         document.getElementById('textEditConfirmBtn').style.display = 'none';
         document.getElementById('textEditModal').querySelector('.btn-no').innerText = "關閉";
         document.getElementById('textEditArea').readOnly = true; 
@@ -1111,6 +1109,7 @@
     function renderEditFormFields(type, evt) {
         let fields = '';
         
+        // --- Set Default Titles based on Type ---
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
@@ -1162,7 +1161,6 @@
              `;
         }
 
-        // (6) 區塊欄位高度一致
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊 (ABOUT)</div>
@@ -1437,15 +1435,23 @@
     function fallbackCopyTextToClipboard(text) {
         var textArea = document.createElement("textarea");
         textArea.value = text;
+        
+        // Ensure textarea is not visible but part of DOM
         textArea.style.position = "fixed";
         textArea.style.left = "-9999px";
         textArea.style.top = "0";
         document.body.appendChild(textArea);
+        
         textArea.focus();
         textArea.select();
+    
         try {
             var successful = document.execCommand('copy');
-        } catch (err) {}
+            // var msg = successful ? 'successful' : 'unsuccessful';
+        } catch (err) {
+            // console.error('Fallback: Oops, unable to copy', err);
+        }
+    
         document.body.removeChild(textArea);
     }
 
