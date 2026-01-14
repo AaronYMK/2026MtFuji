@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 12026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -446,7 +446,7 @@
             <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:22px; margin-left:auto; margin-right:auto; display:block;">
         </div>
         
-        <div id="editDayExtraFields" style="display:none; margin-bottom:20px;">
+        <div id="editDayExtraFields" style="display:none; margin-bottom:20px; margin-top:20px">
             <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="day-edit-title"></div>
             <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="day-edit-loc"></div>
             <div class="edit-group"><div class="edit-label">住宿</div><input class="edit-input" id="day-edit-hotel"></div>
@@ -1209,7 +1209,7 @@
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || 'JAPANTOKYO'}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:10px;"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label" style="width:80%; height:10px;">類別</div>
                         <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
