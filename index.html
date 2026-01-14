@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 12026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -28,7 +28,7 @@
             --col-transport: #ef4444; 
             --col-food: #2563eb;       
             --col-sight: #f97316;      
-            --col-stay: #eab308;       
+            --col-lodging: #eab308;       
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -322,7 +322,7 @@
         .type-transport .t-bar, .type-car .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
         .type-food .t-bar { background-color: var(--col-food); }
         .type-sightseeing .t-bar { background-color: var(--col-sight); }
-        .type-stay .t-bar { background-color: var(--col-stay); }
+        .type-lodging .t-bar { background-color: var(--col-lodging); }
 
         .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: #1e3a8a; }
         .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
@@ -443,7 +443,7 @@
         <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
         <div class="edit-group">
             <div class="edit-label">日期</div>
-            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:26px; margin-left:auto; margin-right:auto; display:block;">
+            <input type="date" id="newDateInput" class="edit-input" style="margin-bottom:20px; width:90%; height:20px; margin-left:auto; margin-right:auto; display:block;">
         </div>
         
         <div id="editDayExtraFields" style="display:none; margin-top:10px;">
@@ -612,7 +612,7 @@
         car: 'var(--col-transport)',
         flight: 'var(--col-transport)',
         sightseeing: 'var(--col-sight)',
-        stay: 'var(--col-stay)' 
+        lodging: 'var(--col-lodging)' 
     };
 
     // Make data mutable
@@ -865,20 +865,20 @@
         updateWeather(); 
         updateTimeHighlight();
         
-        let hasStay = false;
-        let stayEvt = null;
+        let haslodging = false;
+        let lodgingEvt = null;
         const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
         if(events) {
-             stayEvt = events.find(e => e.type === 'stay');
-             if(stayEvt) hasStay = true;
+             lodgingEvt = events.find(e => e.type === 'lodging');
+             if(lodgingEvt) haslodging = true;
         }
         const hotelBar = document.getElementById('hotelInfoBar');
-        if(hasStay && stayEvt) {
+        if(haslodging && lodgingEvt) {
              hotelBar.style.display = 'flex';
              hotelBar.onclick = function() {
-                  const eIdx = events.indexOf(stayEvt);
+                  const eIdx = events.indexOf(lodgingEvt);
                   const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
-                  openDetailModal(stayEvt, ctx);
+                  openDetailModal(lodgingEvt, ctx);
              }
         } else {
              hotelBar.style.display = 'none';
@@ -948,11 +948,11 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "請編輯內容", location: "地點",
-            ps_label_1: "", ps_content_1: "", 
-            desc1_title: "區塊1", desc1_content: "",
-            desc2_title: "區塊2", desc2_content: "",
-            desc3_title: "區塊3", desc3_content: ""
+            time: "00:00", title: "新行程", type: "sightseeing", iconType: "camera", desc: "請編輯內容", location: "請填寫地點",
+            ps_label_1: "請輸入內容", ps_content_1: "請輸入內容", 
+            desc1_title: "停車攻略", desc1_content: "請輸入內容",
+            desc2_title: "歷史地位", desc2_content: "請輸入內容",
+            desc3_title: "注意事項", desc3_content: "請輸入內容"
         });
         saveItineraryToLocal();
         switchDay(currentDayIdx); 
@@ -1042,7 +1042,7 @@
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
             </div>`;
-        } else if (['transport', 'car', 'flight', 'stay'].includes(evt.type)) {
+        } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
             html += `<div class="res-combined-box">
                         <div class="res-top"><div class="res-label">RESERVATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
@@ -1078,7 +1078,7 @@
         }
 
         html += `<div class="modal-edit-btn-bottom" onclick="enableEditMode()">
-            <i class="fas fa-pen"></i> 編輯此行程
+            <i class="fas fa-pen"></i> 編輯行程
         </div>`;
 
         container.innerHTML = html;
@@ -1125,7 +1125,7 @@
                 </div>
              `;
 
-        } else if (['transport', 'car', 'flight', 'stay'].includes(type)) {
+        } else if (['transport', 'car', 'flight', 'lodging'].includes(type)) {
              if(!t1) t1 = "接駁位置";
              if(!t2) t2 = "坐駕介紹";
              if(!t3) t3 = "注意事項";
@@ -1156,16 +1156,16 @@
             <div class="edit-group"><div class="edit-label">CAR GPS PHONE</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
             
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1標題</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊1內容</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2標題</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊2內容</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(二)</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
             <div class="edit-row">
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3標題</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">區塊3內容</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(三)</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
     }
@@ -1212,7 +1212,7 @@
                         <select class="edit-select" id="e-type" onchange="onTypeChange()">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
-                            <option value="stay" ${evt.type==='stay'?'selected':''}>住宿</option>
+                            <option value="lodging" ${evt.type==='lodging'?'selected':''}>住宿</option>
                             <option value="transport" ${evt.type==='transport'?'selected':''}>交通</option>
                             <option value="flight" ${evt.type==='flight'?'selected':''}>航班</option>
                             <option value="car" ${evt.type==='car'?'selected':''}>租車</option>
