@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 冬季。河口湖 】</title>
+    <title>【 12026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -446,10 +446,10 @@
         </div>
         
         <div id="editDayExtraFields" style="display:none">
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">TITLE</div><input class="edit-input" id="day-edit-title" style="margin-top: 8px; height:40px"></div>
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">LOCATION</div><input class="edit-input" id="day-edit-loc" style="margin-top: 8px; height:40px"></div>
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">LODGING</div><input class="edit-input" id="day-edit-hotel" style="margin-top: 8px; height:40px"></div>
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">PHOTO</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
+            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">首頁標題</div><input class="edit-input" id="day-edit-title" style="margin-top: 8px; height:40px"></div>
+            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊地點</div><input class="edit-input" id="day-edit-loc" style="margin-top: 8px; height:40px"></div>
+            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">住宿資訊</div><input class="edit-input" id="day-edit-hotel" style="margin-top: 8px; height:40px"></div>
+            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">景點圖片</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
         </div>
 
         <div class="confirm-btns" style="margin-top:20px;">
@@ -513,7 +513,7 @@
 <div id="view-wallet" class="view-section">
     <div class="wallet-container">
         <div class="balance-card" style="padding:15px; margin-bottom:15px;">
-            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">EXCHANGE RATE (0.22)</div>
+            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率 (0.22)</div>
             <div class="calc-box">
                 <div class="calc-row" id="rowTop">
                     <span class="calc-label" id="labelTop">JPY</span>
@@ -528,7 +528,7 @@
         </div>
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
-                TOTAL ( <span id="displayDateLabel">12月30日</span> )
+                總支出 ( <span id="displayDateLabel">12月30日</span> )
                 <i class="fas fa-chevron-down date-chevron"></i>
             </div>
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
@@ -542,20 +542,20 @@
             </div>
             <div class="expense-list" id="expenseList"></div>
             <div class="wallet-actions">
-                <button class="btn-export" onclick="exportExpenses()">OUTPUT ( TXT )</button>
-                <button class="btn-clear" onclick="askClearAll()">CLEAR</button>
+                <button class="btn-export" onclick="exportExpenses()">匯出明細</button>
+                <button class="btn-clear" onclick="askClearAll()">清除所有明細</button>
             </div>
             <div class="sync-block">
-                <div class="sync-title">SYNCHRONOUS</div>
+                <div class="sync-title">資料同步</div>
                 <div class="sync-btn-group">
-                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>OUTPUT BACKUP</button>
-                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>INPUT BACKUP</button>
+                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>匯出</button>
+                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>匯入</button>
                 </div>
                 <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             </div>
             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
                  <button class="btn-reset-app" onclick="resetApp()">
-                    <i class="fas fa-redo-alt"></i> 重置所有內容
+                    <i class="fas fa-redo-alt"></i> 重置
                  </button>
             </div>
         </div>
@@ -700,7 +700,7 @@
             const data = await res.json();
             if(data && data.rates && data.rates.TWD) {
                 RATE = data.rates.TWD;
-                document.getElementById('rateTitle').innerText = `EXCHANGE RATE (${RATE.toFixed(3)})`;
+                document.getElementById('rateTitle').innerText = `匯率 (${RATE.toFixed(3)})`;
             }
         } catch(e) {}
     }
@@ -739,7 +739,7 @@
     }
 
     function openAddDayModal() {
-        document.getElementById('dateModalTitle').innerText = "ADD DATE";
+        document.getElementById('dateModalTitle').innerText = "旅遊日期";
         document.getElementById('newDateInput').value = "";
         
         const btn = document.getElementById('dateModalConfirmBtn');
@@ -784,7 +784,7 @@
     function openEditDayModal() {
         const dayData = itineraryData[currentDayIdx];
         
-        document.getElementById('dateModalTitle').innerText = "DAILY INFORMATION";
+        document.getElementById('dateModalTitle').innerText = "每日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
         document.getElementById('editDayExtraFields').style.display = 'block';
@@ -1037,9 +1037,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '美食介紹'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
@@ -1052,9 +1052,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '接駁位置'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '坐駕介紹'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (evt.type === 'sightseeing') {
              html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
@@ -1062,9 +1062,9 @@
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
-                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
-                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || '...'}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || '...'}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+                <div class="desc-item" onclick="showFullDesc('${evt.desc3_title || '注意事項'}', '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
             </div>`;
         }
 
@@ -1110,17 +1110,17 @@
              
              fields = `
                 <div class="edit-section-title">指差し会話</div>
-                <div class="edit-row" style="margin-top:15px">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項1</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項1</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                <div class="edit-row" style="margin-top:10px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項1</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項1</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 </div>
-                <div class="edit-row" style="margin-top:15px">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項2</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項2</div><input class="edit-input" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
+                <div class="edit-row" style="margin-top:10px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項2</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項2</div><input class="edit-input" style="margin-top:5px" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
                 </div>
-                <div class="edit-row" style="margin-top:15px">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項3</div><input class="edit-input" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
-                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項3</div><input class="edit-input" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
+                <div class="edit-row" style="margin-top:1px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項3</div><input class="edit-input" style="margin-top:5px" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項3</div><input class="edit-input" style="margin-top:5px" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
                 </div>
              `;
 
@@ -1130,11 +1130,11 @@
              if(!t3) t3 = "注意事項";
 
              fields = `
-                <div class="edit-section-title">Reservation Information</div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">預約內容</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">預約連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
-                <div class="edit-section-title">Confirmation No.</div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">訂單代號</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                <div class="edit-section-title">預約資訊</div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                <div class="edit-section-title">訂單資訊</div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
 
         } else if (type === 'sightseeing') {
@@ -1144,28 +1144,28 @@
 
              fields = `
                 <div class="edit-section-title">指差し会話</div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">中文名稱</div><input class="edit-input" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">日文名稱</div><input class="edit-input" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
-                <div class="edit-group" style="margin-top:15px"><div class="edit-label">連結</div><input class="edit-input" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">日文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
              `;
         }
 
         return `
             ${fields}
             <div class="edit-section-title">詳細資訊</div>
-            <div class="edit-group" style="margin-top:15px"><div class="edit-label">Map Code</div><input class="edit-input" id="e-gps" value="${evt.gps || ''}"></div>
+            <div class="edit-group" style="margin-top:10px"><div class="edit-label">Map Code</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
             
-            <div class="edit-row" style="margin-top:15px">
-                <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || ''}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" style="margin-top:5px" id="e-d1-t" value="${t1}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || ''}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
-            <div class="edit-row" style="margin-top:15px">
-                <div class="edit-group" style="flex:1"><div class="edit-label">標題(二)</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || ''}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(二)</div><input class="edit-input" style="margin-top:5px" id="e-d2-t" value="${t2}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || ''}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
-            <div class="edit-row" style="margin-top:15px">
-                <div class="edit-group" style="flex:1"><div class="edit-label">標題(三)</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || ''}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(三)</div><input class="edit-input" id="e-d3-t" style="margin-top:5px" value="${t3}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || ''}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
     }
@@ -1204,12 +1204,12 @@
         
         container.innerHTML = `
             <div class="edit-form">
-                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
-                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || ''}"></div>
+                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:5px； height:37px" id="e-title" value="${evt.title}"></div>
+                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" style="margin-top:5px； height:37px" id="e-loc" value="${evt.location || ''}"></div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:19px;"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="margin-top:5px； width:80%; height:19px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="height:37px">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="margin-top:5px； height:37px">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
                             <option value="lodging" ${evt.type==='lodging'?'selected':''}>住宿</option>
@@ -1225,9 +1225,9 @@
                 </div>
 
                 <div class="edit-section-title">連結</div>
-                <div class="edit-group"><div class="edit-label">Google Maps</div><input class="edit-input" id="e-l-map" value="${evt.link_map || ''}"></div>
-                <div class="edit-group"><div class="edit-label">官方網站</div><input class="edit-input" id="e-l-web" value="${evt.link_web || ''}"></div>
-                <div class="edit-group"><div class="edit-label">Vlog</div><input class="edit-input" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">GOOGLE MPAS</div><input class="edit-input" style="margin-top:5px" id="e-l-map" value="${evt.link_map || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:5px" id="e-l-web" value="${evt.link_web || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">VLOGS</div><input class="edit-input" style="margin-top:5px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
 
                 <button class="btn-save" onclick="saveEdit()">儲存修改</button>
                 <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
