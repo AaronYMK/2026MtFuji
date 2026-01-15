@@ -1060,7 +1060,7 @@
              html += `<div class="m-sec-header"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '停車攻略'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '歷史地位'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
@@ -1157,15 +1157,15 @@
             
             <div class="edit-row" style="margin-top:15px">
                 <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" id="e-d1-t" value="${t1}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || '點擊編輯...'}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || ''}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
             </div>
             <div class="edit-row" style="margin-top:15px">
                 <div class="edit-group" style="flex:1"><div class="edit-label">標題(二)</div><input class="edit-input" id="e-d2-t" value="${t2}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || '點擊編輯...'}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || ''}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
             </div>
             <div class="edit-row" style="margin-top:15px">
                 <div class="edit-group" style="flex:1"><div class="edit-label">標題(三)</div><input class="edit-input" id="e-d3-t" value="${t3}"></div>
-                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || '點擊編輯...'}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || ''}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
             </div>
         `;
     }
@@ -1182,7 +1182,7 @@
         document.getElementById('textEditConfirmBtn').onclick = function() {
             const val = document.getElementById('textEditArea').value;
             document.getElementById(currentTextEditTargetId).value = val;
-            document.getElementById(currentTextEditTargetId).previousElementSibling.innerText = val || '點擊編輯...';
+            document.getElementById(currentTextEditTargetId).previousElementSibling.innerText = val || '';
             closeTextEdit();
         };
     }
