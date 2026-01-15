@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 12026 冬季。河口湖 】</title>
+    <title>【 2026 冬季。河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -1007,7 +1007,7 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
+        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || '123'}</div>`;
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
@@ -1152,7 +1152,7 @@
 
         return `
             ${fields}
-            <div class="edit-section-title" style="margin-top:10px">詳細資訊</div>
+            <div class="edit-section-title" style="margin-top:40px">詳細資訊</div>
             <div class="edit-group" style="margin-top:10px"><div class="edit-label">Map Code</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
             
             <div class="edit-row" style="margin-top:10px">
@@ -1207,7 +1207,7 @@
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:10px； height:40px" id="e-title" value="${evt.title}"></div>
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" style="margin-top:10px； height:40px" id="e-loc" value="${evt.location || ''}"></div>
                 <div class="edit-row">
-                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="height:20px;"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:20px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
                         <select class="edit-select" id="e-type" onchange="onTypeChange()" style="margin-top:5px； height:40px">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
