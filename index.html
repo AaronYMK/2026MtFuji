@@ -1007,7 +1007,7 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || 'JAPANTOKYO1'}</div>`;
+        html += `<div class="m-addr"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
@@ -1205,7 +1205,7 @@
         container.innerHTML = `
             <div class="edit-form">
                 <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" id="e-title" value="${evt.title}"></div>
-                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || 'JAPANTOKYO2'}"></div>
+                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" id="e-loc" value="${evt.location || ''}"></div>
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:19px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
