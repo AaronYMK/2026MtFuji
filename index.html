@@ -1035,7 +1035,7 @@
             
             html += `</div>
             <div class="m-sec-header"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || '123-456-789'}</div></div></div>
+            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || '...'}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || '...'}</div></div>
                 <div class="desc-item" onclick="showFullDesc('${evt.desc2_title || '職人堅持'}', '${evt.desc2_content || '...'}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || '...'}</div></div>
