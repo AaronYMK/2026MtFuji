@@ -513,7 +513,7 @@
 <div id="view-wallet" class="view-section">
     <div class="wallet-container">
         <div class="balance-card" style="padding:15px; margin-bottom:15px;">
-            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率計算 (0.22)</div>
+            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">EXCHANGE RATE (0.22)</div>
             <div class="calc-box">
                 <div class="calc-row" id="rowTop">
                     <span class="calc-label" id="labelTop">JPY</span>
@@ -528,7 +528,7 @@
         </div>
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
-                總支出 ( <span id="displayDateLabel">12月30日</span> )
+                TOTAL ( <span id="displayDateLabel">12月30日</span> )
                 <i class="fas fa-chevron-down date-chevron"></i>
             </div>
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
@@ -542,14 +542,14 @@
             </div>
             <div class="expense-list" id="expenseList"></div>
             <div class="wallet-actions">
-                <button class="btn-export" onclick="exportExpenses()">匯出支出明細 ( TXT )</button>
-                <button class="btn-clear" onclick="askClearAll()">清除所有紀錄</button>
+                <button class="btn-export" onclick="exportExpenses()">OUTPUT ( TXT )</button>
+                <button class="btn-clear" onclick="askClearAll()">CLEAR</button>
             </div>
             <div class="sync-block">
-                <div class="sync-title">資料同步</div>
+                <div class="sync-title">SYNCHRONOUS</div>
                 <div class="sync-btn-group">
-                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i> 匯出備份</button>
-                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i> 匯入備份</button>
+                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>OUTPUT BACKUP</button>
+                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>INPUT BACKUP</button>
                 </div>
                 <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             </div>
@@ -700,7 +700,7 @@
             const data = await res.json();
             if(data && data.rates && data.rates.TWD) {
                 RATE = data.rates.TWD;
-                document.getElementById('rateTitle').innerText = `匯率計算 (${RATE.toFixed(3)})`;
+                document.getElementById('rateTitle').innerText = `EXCHANGE RATE (${RATE.toFixed(3)})`;
             }
         } catch(e) {}
     }
