@@ -1010,7 +1010,7 @@
         html += `<div class="m-addr" style="margin-top:12px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
         if (evt.type === 'food') {
-            html += `<div class="m-sec-header" style="margin-top:50px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
+            html += `<div class="m-sec-header" style="margin-top:10px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="food-rec-list">`;
             
             // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
@@ -1034,7 +1034,7 @@
             }
             
             html += `</div>
-            <div class="m-sec-header" style="margin-top:5px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="m-sec-header" style="margin-top:10px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
