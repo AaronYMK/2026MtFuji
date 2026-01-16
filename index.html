@@ -1109,7 +1109,7 @@
              if(!t3) t3 = "美食介紹";
              
              fields = `
-                <div class="edit-section-title">指差し会話</div>
+                <div class="edit-section-title" style="margin-top:15px">指差し会話</div>
                 <div class="edit-row" style="margin-top:10px">
                     <div class="edit-group" style="flex:1"><div class="edit-label">中文品項1</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">日文品項1</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
@@ -1130,7 +1130,7 @@
              if(!t3) t3 = "注意事項";
 
              fields = `
-                <div class="edit-section-title">預約資訊</div>
+                <div class="edit-section-title" style="margin-top:15px">預約資訊</div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-section-title">訂單資訊</div>
@@ -1143,7 +1143,7 @@
              if(!t3) t3 = "注意事項";
 
              fields = `
-                <div class="edit-section-title">指差し会話</div>
+                <div class="edit-section-title" style="margin-top:15px">指差し会話</div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">日文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
@@ -1152,7 +1152,7 @@
 
         return `
             ${fields}
-            <div class="edit-section-title" style="margin-top:40px">詳細資訊</div>
+            <div class="edit-section-title" style="margin-top:15px">詳細資訊</div>
             <div class="edit-group" style="margin-top:10px"><div class="edit-label">Map Code</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
             
             <div class="edit-row" style="margin-top:10px">
