@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 22026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -947,11 +947,11 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "food", iconType: "camera", desc: "", location: "",
-            ps_label_1: "", ps_content_1: "", 
-            desc1_title: "停車攻略", desc1_content: "",
-            desc2_title: "歷史地位", desc2_content: "",
-            desc3_title: "注意事項", desc3_content: ""
+            time: "00:00", title: "新行程", type: "food", iconType: "camera", desc: "123", location: "新地點",
+            ps_label_1: "牛肉麵", ps_content_1: "ぎゅうにくめん", 
+            desc1_title: "店名由來", desc1_content: "",
+            desc2_title: "職人堅持", desc2_content: "",
+            desc3_title: "美食介紹", desc3_content: ""
         });
         saveItineraryToLocal();
         switchDay(currentDayIdx); 
@@ -1007,10 +1007,10 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr" style="margin-top:12px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || '1234'}</div>`;
+        html += `<div class="m-addr" style="margin-top:12px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
         if (evt.type === 'food') {
-            html += `<div class="m-sec-header"><i class="fas fa-thumbs-up" style="margin-top:0px"></i> 指差し会話 ( POINT & SPEAK1 )</div>
+            html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="food-rec-list">`;
             
             // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
@@ -1034,7 +1034,7 @@
             }
             
             html += `</div>
-            <div class="m-sec-header"><i class="fas fa-exclamation-circle" style="margin-top:0px"></i> 詳細資訊 ( ABOUT1 )</div>
+            <div class="m-sec-header" style="margin-top:100px"><i class="fas fa-exclamation-circle" style="margin-top:100px"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item" onclick="showFullDesc('${evt.desc1_title || '店名由來'}', '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
@@ -1204,7 +1204,7 @@
         
         container.innerHTML = `
             <div class="edit-form">
-                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:5px" id="e-title" value="${evt.title}"></div>
+                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:7px" id="e-title" value="${evt.title}"></div>
                 <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" style="margin-top:5px" id="e-loc" value="${evt.location || ''}"></div>
                 <div class="edit-row" style="margin-top:1px">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:20px;"></div>
@@ -1225,9 +1225,9 @@
                 </div>
 
                 <div class="edit-section-title" style="margin-top:0px">連結</div>
-                <div class="edit-group" style="margin-top:5px"><div class="edit-label">GOOGLE MAPS</div><input class="edit-input" style="margin-top:7px" id="e-l-map" value="${evt.link_map || ''}"></div>
-                <div class="edit-group" style="margin-top:5px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:7px" id="e-l-web" value="${evt.link_web || ''}"></div>
-                <div class="edit-group" style="margin-top:5px"><div class="edit-label">VLOGS</div><input class="edit-input" style="margin-top:7px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">GOOGLE MAPS</div><input class="edit-input" style="margin-top:7px" id="e-l-map" value="${evt.link_map || ''}"></div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:7px" id="e-l-web" value="${evt.link_web || ''}"></div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">VLOGS</div><input class="edit-input" style="margin-top:7px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
 
                 <button class="btn-save" onclick="saveEdit()">儲存修改</button>
                 <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
