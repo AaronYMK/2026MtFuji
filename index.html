@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 12026 冬季。河口湖 】</title>
+    <title>【 2026 河口湖 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -739,7 +739,7 @@
     }
 
     function openAddDayModal() {
-        document.getElementById('dateModalTitle').innerText = "旅遊日期";
+        document.getElementById('dateModalTitle').innerText = "新增旅遊日期";
         document.getElementById('newDateInput').value = "";
         
         const btn = document.getElementById('dateModalConfirmBtn');
@@ -784,7 +784,7 @@
     function openEditDayModal() {
         const dayData = itineraryData[currentDayIdx];
         
-        document.getElementById('dateModalTitle').innerText = "每日資訊";
+        document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
         document.getElementById('newDateInput').value = dayData.fullDate;
         
         document.getElementById('editDayExtraFields').style.display = 'block';
@@ -1007,7 +1007,7 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr" style="margin-top:50px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || '123'}</div>`;
+        html += `<div class="m-addr" style="margin-top:10px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || '123'}</div>`;
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
@@ -1209,7 +1209,7 @@
                 <div class="edit-row">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:20px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="margin-top:5px； height:40px">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="margin-top:5px； height:42px">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
                             <option value="lodging" ${evt.type==='lodging'?'selected':''}>住宿</option>
