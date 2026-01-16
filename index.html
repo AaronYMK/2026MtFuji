@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 12026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -1204,12 +1204,12 @@
         
         container.innerHTML = `
             <div class="edit-form">
-                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:15px； height:40px" id="e-title" value="${evt.title}"></div>
-                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" style="margin-top:15px； height:40px" id="e-loc" value="${evt.location || ''}"></div>
-                <div class="edit-row">
+                <div class="edit-group"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:20px； height:40px" id="e-title" value="${evt.title}"></div>
+                <div class="edit-group"><div class="edit-label">地點</div><input class="edit-input" style="margin-top:20px； height:40px" id="e-loc" value="${evt.location || ''}"></div>
+                <div class="edit-row" style="margin-top:20px">
                     <div class="edit-group" style="flex:1"><div class="edit-label">時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="width:80%; height:20px;"></div>
                     <div class="edit-group" style="flex:1"><div class="edit-label">類別</div>
-                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="height:40px">
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="height:38px">
                             <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
                             <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
                             <option value="lodging" ${evt.type==='lodging'?'selected':''}>住宿</option>
