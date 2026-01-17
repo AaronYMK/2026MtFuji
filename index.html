@@ -607,6 +607,7 @@
                 </div>
             </div>
         </div>
+
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
                 總支出 ( <span id="displayDateLabel">12月30日</span> )
@@ -627,8 +628,24 @@
                 <button class="btn-clear" onclick="askClearAll()">清除所有明細</button>
             </div>
         </div>
-    </div>
-</div>
+
+        <div class="balance-card" style="margin-top: 20px;">
+            <div class="sync-block">
+                <div class="sync-title" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">資料同步</div>
+                <div class="sync-btn-group">
+                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>匯出</button>
+                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>匯入</button>
+                </div>
+                <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
+            </div>
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
+                 <button class="btn-reset-app" onclick="resetApp()">
+                    <i class="fas fa-redo-alt"></i> 
+                 </button>
+            </div>
+        </div>
+
+    </div> </div>
 
 <div id="view-info" class="view-section">
     <div class="wallet-container">
@@ -669,15 +686,15 @@
                 </div>
                 <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             </div>
-            <div style="margin-top: 20px">
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
                  <button class="btn-reset-app" onclick="resetApp()">
-                    <i class="fas fa-redo-alt" style="font-size: 1.2rem"></i> 
+                    <i class="fas fa-redo-alt"></i> 
                  </button>
             </div>
         </div>
 
     </div> </div>
-
+    
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
     <i class="fas fa-wallet nav-icon" onclick="switchView('wallet', this)"></i>
@@ -1079,97 +1096,97 @@
         if (activeRow) activeRow.classList.add('active');
     }
 
-    // --- Modal Logic ---
-    function openDetailModal(evt, context) {
-        window.currentEvent = evt;
-        window.currentEventContext = context;
-        
-        const container = document.getElementById('modalContent');
-        const color = COLORS[evt.type] || '#333';
-        let html = '';
+// --- Modal Logic ---
+function openDetailModal(evt, context) {
+    window.currentEvent = evt;
+    window.currentEventContext = context;
+    
+    const container = document.getElementById('modalContent');
+    const color = COLORS[evt.type] || '#333';
+    let html = '';
 
-        html += `<div class="m-header">
-                    <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
-                    <i class="far fa-clock m-time-icon"></i>
-                    <span class="m-time">${evt.time}</span>
-                 </div>`;
-        html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
-
-        if (evt.type === 'food') {
-            html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="food-rec-list">`;
-            
-            // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
-            if (evt.ps_label_1 || evt.ps_content_1) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
-                </div>`;
-            }
-            if (evt.ps_label_2 || evt.ps_content_2) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
-                </div>`;
-            }
-            if (evt.ps_label_3 || evt.ps_content_3) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
-                </div>`;
-            }
-            
-            html += `</div>
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
-            <div class="desc-list">
-                <div class="desc-item", '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
-        } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
-            // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
-            html += `<div class="res-combined-box" style="margin-top:50px">
-                        <div class="res-top" style="margin-bottom: 0px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
-                        <div style="padding:0 20px;margin-top:0px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
-                        <div class="res-divider"></div>
-                        <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
-                     </div>
-            <div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
-            <div class="desc-list">
-                <div class="desc-item", '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
-        } else if (evt.type === 'sightseeing') {
-             html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
-            <div class="desc-list">
-                <div class="desc-item", '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc2_content || ''}')"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item", '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
-        }
-
-        if(evt.link_map || evt.link_web || evt.link_vlog) {
-             html += `<div style="margin-top:20px">
-                ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
-                ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
-                ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog" style="margin-top:10px"><i class="fab fa-youtube"></i> VLOGS </a>` : ''}
+    html += `<div class="m-header">
+                <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
+                <i class="far fa-clock m-time-icon"></i>
+                <span class="m-time">${evt.time}</span>
              </div>`;
-        }
+    html += `<div class="m-title">${evt.title}</div>`;
+    html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
-        html += `<div class="modal-edit-btn-bottom" onclick="enableEditMode()">
-            <i class="fas fa-pen"></i> 編輯行程
+    if (evt.type === 'food') {
+        html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
+        <div class="food-rec-list">`;
+        
+        if (evt.ps_label_1 || evt.ps_content_1) {
+            html += `<div class="food-rec-item">
+                <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
+                <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
+            </div>`;
+        }
+        if (evt.ps_label_2 || evt.ps_content_2) {
+            html += `<div class="food-rec-item">
+                <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
+                <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
+            </div>`;
+        }
+        if (evt.ps_label_3 || evt.ps_content_3) {
+            html += `<div class="food-rec-item">
+                <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
+                <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
+            </div>`;
+        }
+        
+        html += `</div>
+        <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
+        <div class="desc-list">
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
         </div>`;
 
-        container.innerHTML = html;
-        document.querySelector('.modal-overlay').classList.add('active');
+    } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
+        html += `<div class="res-combined-box" style="margin-top:50px">
+                    <div class="res-top" style="margin-bottom: 0px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                    <div style="padding:0 20px;margin-top:0px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
+                    <div class="res-divider"></div>
+                    <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
+                 </div>
+        <div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+        ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
+        <div class="desc-list">
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
+        </div>`;
+
+    } else if (evt.type === 'sightseeing') {
+         html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
+        <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
+        <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
+        <div class="desc-list">
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
+            <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
+        </div>`;
     }
+
+    if(evt.link_map || evt.link_web || evt.link_vlog) {
+         html += `<div style="margin-top:20px">
+            ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
+            ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
+            ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog" style="margin-top:10px"><i class="fab fa-youtube"></i> VLOGS </a>` : ''}
+         </div>`;
+    }
+
+    html += `<div class="modal-edit-btn-bottom" onclick="enableEditMode()">
+        <i class="fas fa-pen"></i> 編輯行程
+    </div>`;
+
+    container.innerHTML = html;
+    document.querySelector('.modal-overlay').classList.add('active');
+}
 
     // --- Show Full Description Logic ---
     function showFullDesc(title, content) {
