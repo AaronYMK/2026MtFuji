@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 12026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -421,7 +421,7 @@
     <div class="confirm-box" style="text-align:left;">
         <div class="confirm-text" id="textEditTitle">編輯內容</div>
         <textarea class="edit-textarea" id="textEditArea" rows="5"></textarea>
-        <div class="confirm-btns" style="margin-top:15px;">
+        <div class="confirm-btns" style="margin-top:15px">
             <button class="confirm-btn btn-no" onclick="closeTextEdit()">取消</button>
             <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="textEditConfirmBtn">確定</button>
         </div>
@@ -452,7 +452,7 @@
             <div class="edit-group" style="margin-top: 10px"><div class="edit-label">景點圖片</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
         </div>
 
-        <div class="confirm-btns" style="margin-top:20px;">
+        <div class="confirm-btns" style="margin-top:20px">
             <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active')">取消</button>
             <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="dateModalConfirmBtn">確定</button>
         </div>
@@ -533,7 +533,7 @@
             </div>
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
             <div style="font-size:2.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
-            <div style="margin-top:20px;">
+            <div style="margin-top:20px">
                 <div class="input-row">
                     <input type="text" id="expName" class="input-std" placeholder="項目">
                     <input type="number" id="expCost" class="input-std" placeholder="日幣">
@@ -577,9 +577,9 @@
         </div>
         <div class="info-block">
             <div class="info-title"><i class="fas fa-ticket-alt"></i> 預約代碼</div>
-            <div style="margin-bottom:10px;"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] 中華航空</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">5IPVMR</div></div>
-            <div style="margin-bottom:10px;"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] Budget</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">RC-2026-888</div></div>
-            <div style="margin-bottom:10px;"><div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Yksi Stay</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023</div></div>
+            <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] 中華航空</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">5IPVMR</div></div>
+            <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] Budget</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">RC-2026-888</div></div>
+            <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Yksi Stay</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023</div></div>
         </div>
         <div class="info-block">
             <div class="info-title"><i class="fas fa-exclamation-circle"></i> 緊急聯絡</div>
@@ -1007,7 +1007,7 @@
                     <span class="m-time">${evt.time}</span>
                  </div>`;
         html += `<div class="m-title">${evt.title}</div>`;
-        html += `<div class="m-addr" style="margin-top:12px;"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
+        html += `<div class="m-addr" style="margin-top:12px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
         if (evt.type === 'food') {
             html += `<div class="m-sec-header" style="margin-top:5px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
@@ -1044,7 +1044,7 @@
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
             html += `<div class="res-combined-box">
-                        <div class="res-top" style="margin-bottom: 100px;"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                        <div class="res-top" style="margin-bottom: 100px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                         <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
