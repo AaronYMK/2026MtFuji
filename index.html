@@ -1051,7 +1051,7 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "food", iconType: "camera", desc: "新內容", location: "新地點",
+            time: "00:00", title: "新行程", type: "lodging", iconType: "camera", desc: "新內容", location: "新地點",
             ps_label_1: "牛肉麵", ps_content_1: "ぎゅうにくめん", 
             desc1_title: "店名由來", desc1_content: "",
             desc2_title: "職人堅持", desc2_content: "",
@@ -1147,8 +1147,8 @@ function openDetailModal(evt, context) {
 
     } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
         html += `<div class="res-combined-box" style="margin-top:15px">
-                    <div class="res-top" style="margin-bottom: 0px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
-                    <div style="padding:0 20px;margin-top:0px;margin-bottom:10px;"><div class="res-abc" style="margin-top:0px; margin-bottom: 0px">${evt.ps_label_1 || '新預約'}</div></div>
+                    <div class="res-top" style="margin-bottom: 0px"><div class="res-label" style="margin-top:0px; margin-bottom: 0px">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                    <div style="padding:0 20px><div class="res-abc" style="margin-top:0px; margin-bottom: 0px">${evt.ps_label_1 || '新預約'}</div></div>
                     <div class="res-divider"></div>
                     <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val" style="margin-top:10px">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
                  </div>
@@ -1176,7 +1176,7 @@ function openDetailModal(evt, context) {
          html += `<div style="margin-top:20px">
             ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
             ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
-            ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube" style="margin-top:10px; margin-bottom:10px"></i> VLOGS </a>` : ''}
+            ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube" style="margin-top:0px; margin-bottom:0px"></i> VLOGS </a>` : ''}
          </div>`;
     }
 
@@ -1334,7 +1334,7 @@ function openDetailModal(evt, context) {
 
                 <button class="btn-save" onclick="saveEdit()">儲存修改</button>
                 <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
-                <button class="btn-delete-event" style="margin-top:10px" onclick="deleteEvent()">刪除此行程</button>
+                <button class="btn-delete-event" style="margin-top:100px" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
     }
