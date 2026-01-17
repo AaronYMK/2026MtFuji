@@ -385,7 +385,7 @@
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
         
         /* 匯出匯入按鈕排版 (並排) */
-        .sync-block { margin-top: 20px; border-top: 1px solid #dbeafe; padding-top: 15px; }
+        .sync-block { margin-top: 20px; border-top: none; solid #none; padding-top: 15px; }
         .sync-title { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 10px; }
         .sync-btn-group { display: flex; gap: 10px; }
         .btn-sync { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #bfdbfe; background: #f8fbff; color: #334155; cursor: pointer; font-weight: 500; text-align: left; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -574,7 +574,7 @@
             </div>
         </div>
         <div class="info-block" style="margin-top: 15px">
-            <div class="sync-block">
+            <div class="sync-block" style="border-top: none; padding-top: 0;">
                 <div class="sync-title" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">資料同步</div>
                 <div class="sync-btn-group">
                     <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>匯出</button>
@@ -582,13 +582,13 @@
                 </div>
                 <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             </div>
-            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
+            <div style="margin-top: 15px;">
                  <button class="btn-reset-app" onclick="resetApp()">
                     <i class="fas fa-redo-alt"></i> 
                  </button>
             </div>
         </div>
-    </div> </div>
+</div> </div>
     
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
