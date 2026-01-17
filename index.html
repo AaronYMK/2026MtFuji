@@ -16,9 +16,9 @@
     <style>
         :root {
             --bg-color: #eff6ff;        
-            --card-bg: #f8fbff;         
+            --card-bg: #f8fbff;          
             
-            --text-main: #1e3a8a;      
+            --text-main: #1e3a8a;       
             --text-light: #64748b;
             
             --primary-blue: #3b82f6;
@@ -26,9 +26,9 @@
             --line-color: #bfdbfe;
 
             --col-transport: #ef4444; 
-            --col-food: #2563eb;       
-            --col-sight: #f97316;      
-            --col-lodging: #eab308;       
+            --col-food: #2563eb;        
+            --col-sight: #f97316;       
+            --col-lodging: #eab308;        
 
             --font-serif: 'Shippori Mincho', serif;
             --font-sans: 'Noto Sans TC', sans-serif;
@@ -105,9 +105,12 @@
         .edit-row { display: flex; gap: 10px; align-items: center; }
         .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
         
-        .btn-save { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
-        .btn-cancel { background: #fff; border: 1px solid #bfdbfe; color: #64748b; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        .btn-delete-event { background: #fee2e2; border: none; color: #ef4444; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; }
+        /* 修正(3): 並排按鈕容器 */
+        .edit-btn-group { display: flex; gap: 10px; margin-top: 10px; }
+
+        .btn-save { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); flex: 1; }
+        .btn-cancel { background: #fff; border: 1px solid #bfdbfe; color: #64748b; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; flex: 1; }
+        .btn-delete-event { background: #fee2e2; border: none; color: #ef4444; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; width: 100%; }
 
         /* Modal Content Styles */
         .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 10px; }
@@ -242,6 +245,7 @@
         }
         .btn-yes { background: #ef4444; color: white; }
         .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
+        .btn-ok { background: var(--primary-blue); color: white; width: 100%; flex: auto; }
 
         /* --- Header & Tabs --- */
         header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
@@ -431,7 +435,7 @@
 <div id="confirmModal" class="confirm-overlay">
     <div class="confirm-box">
         <div class="confirm-text" id="confirmText">確定要清除紀錄嗎？</div>
-        <div class="confirm-btns">
+        <div class="confirm-btns" id="confirmBtnGroup">
             <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
             <button class="confirm-btn btn-yes" id="confirmYesBtn">確定</button>
         </div>
@@ -654,7 +658,7 @@
                     desc: "班次：中華航空 CI 100", location:"桃園機場",
                     ps_label_1: "中華航空 (T2) CI 100 09：30 ～ 13：30", ps_content_1: "https://www.china-airlines.com/tw/zh",
                     ps_label_2: "5IPVMR", 
-                    gps: "", 
+                    gps: "", gps_title: "MAP CODE",
                     desc1_title: "搭乘位置", desc1_content: "桃園機場 第二航廈",
                     desc2_title: "機型介紹", desc2_content: "這班飛機主要以「波音 777-300ER (77W)」或「空中巴士 A350-900 (A359)」執飛，但航空公司仍會依調度狀況改派舊型的「A330-300」。",
                     desc3_title: "行李限制", desc3_content: "隨身行李：可托運1件(7kg)，尺寸不超過56x36x23cm。託運行李：可托運1件(23kg)，總尺寸(長+寬+高)上限為158公分，單件重量不可超過32kg。",
@@ -667,7 +671,7 @@
                     desc: "炸牛元村 (西新宿店)", location:"新宿",
                     guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名...",
                     ps_label_1: "炸牛排定食", ps_content_1: "牛かつ定食をください",
-                    gps: "+815017218829",
+                    gps: "+815017218829", gps_title: "MAP CODE",
                     desc1_title:"店名由來", desc1_content:"可能是店家的姓氏（元村）或創始人的名字，強調其「本源、元祖」的炸牛排專賣店地位，意在讓顧客知道這是專注於炸牛排這項日本新興飲食文化的指標性店鋪。 ",
                     desc2_title:"職人堅持", desc2_content:"牛排油炸約60秒，保持鮮嫩多汁的半熟狀態，再用石板烤至喜歡的熟度。",
                     desc3_title:"美食介紹", desc3_content:"先單吃原味或岩鹽，再試試醬油芥末，最後用山葵蘿蔔泥等搭配；續加的麥飯可拌入明太子或山藥泥，或最後做成茶泡飯。 ",
@@ -720,7 +724,8 @@
 
     function updateDateLabel(dateStr) {
         const d = new Date(dateStr);
-        const label = `${d.getMonth() + 1}月${d.getDate()}日`;
+        // 修正(1): 格式改為 1/17
+        const label = `${d.getMonth() + 1}/${d.getDate()}`;
         document.getElementById('displayDateLabel').innerText = label;
     }
 
@@ -782,7 +787,7 @@
 
     function confirmAddDay() {
         const input = document.getElementById('newDateInput').value;
-        if(!input) return alert("請選擇日期");
+        if(!input) return showCustomAlert("請選擇日期");
         
         const d = new Date(input);
         const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -820,7 +825,8 @@
         document.getElementById('editDayExtraFields').style.display = 'block';
         document.getElementById('day-edit-title').value = dayData.title;
         document.getElementById('day-edit-loc').value = dayData.heroCity;
-        document.getElementById('day-edit-hotel').value = dayData.hotel;
+        // 修正(5): 移除住宿資訊欄位
+        // document.getElementById('day-edit-hotel').value = dayData.hotel;
         document.getElementById('day-edit-bg').value = dayData.bg;
 
         const btn = document.getElementById('dateModalConfirmBtn');
@@ -832,7 +838,7 @@
 
     function confirmEditDay() {
         const input = document.getElementById('newDateInput').value;
-        if(!input) return alert("請選擇日期");
+        if(!input) return showCustomAlert("請選擇日期");
 
         const d = new Date(input);
         const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -844,7 +850,8 @@
         
         dayData.title = document.getElementById('day-edit-title').value;
         dayData.heroCity = document.getElementById('day-edit-loc').value;
-        dayData.hotel = document.getElementById('day-edit-hotel').value;
+        // 修正(5): 停止儲存住宿欄位 (從事件中自動讀取)
+        // dayData.hotel = document.getElementById('day-edit-hotel').value;
         dayData.bg = document.getElementById('day-edit-bg').value;
 
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
@@ -858,16 +865,14 @@
     }
 
     function deleteDay() {
-        document.getElementById('confirmText').innerText = "刪除本日所有行程？";
-        document.getElementById('confirmModal').classList.add('active');
-        document.getElementById('confirmYesBtn').onclick = function() { 
+        showCustomConfirm("刪除本日所有行程？", function() {
              itineraryData.splice(currentDayIdx, 1);
              if(itineraryData.length === 0) {}
              saveItineraryToLocal();
              renderDateScroller();
              switchDay(0);
              closeConfirm();
-        };
+        });
     }
 
     function switchDay(idx) {
@@ -886,32 +891,36 @@
         document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`;
         document.getElementById('heroTitle').innerText = data.title;
         document.getElementById('wLoc').innerText = data.loc;
-        document.getElementById('hotelName').innerText = data.hotel;
+        
+        // 修正(4): 住宿資訊名稱自動抓取 Lodging 行程
+        const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
+        let lodgingEvt = null;
+        let haslodging = false;
+        
+        if(events) {
+             lodgingEvt = events.find(e => e.type === 'lodging');
+             if(lodgingEvt) haslodging = true;
+        }
+
+        if(haslodging && lodgingEvt) {
+             // 設定名稱為行程標題
+             document.getElementById('hotelName').innerText = lodgingEvt.title;
+             
+             document.getElementById('hotelInfoBar').style.display = 'flex';
+             document.getElementById('hotelInfoBar').onclick = function() {
+                  const eIdx = events.indexOf(lodgingEvt);
+                  const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
+                  openDetailModal(lodgingEvt, ctx);
+             }
+        } else {
+             document.getElementById('hotelInfoBar').style.display = 'none';
+        }
         
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
         
         renderTimeline(data);
         updateWeather(); 
         updateTimeHighlight();
-        
-        let haslodging = false;
-        let lodgingEvt = null;
-        const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
-        if(events) {
-             lodgingEvt = events.find(e => e.type === 'lodging');
-             if(lodgingEvt) haslodging = true;
-        }
-        const hotelBar = document.getElementById('hotelInfoBar');
-        if(haslodging && lodgingEvt) {
-             hotelBar.style.display = 'flex';
-             hotelBar.onclick = function() {
-                  const eIdx = events.indexOf(lodgingEvt);
-                  const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
-                  openDetailModal(lodgingEvt, ctx);
-             }
-        } else {
-             hotelBar.style.display = 'none';
-        }
     }
 
     function switchBranch(type) {
@@ -941,6 +950,7 @@
             else if(evt.iconType === 'bowl-rice') iconClass = 'fa-bowl-rice';
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
+            else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; // 確保有 hotel icon
 
             let displayDesc = evt.desc;
             if(evt.guide) displayDesc = evt.guide; 
@@ -977,8 +987,9 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         
         events.push({
-            time: "00:00", title: "新行程", type: "food", iconType: "camera", desc: "新內容", location: "新地點",
-            ps_label_1: "牛肉麵", ps_content_1: "ぎゅうにくめん", 
+            time: "00:00", title: "新行程", type: "food", iconType: "utensils", desc: "新內容", location: "新地點",
+            ps_label_1: "新項目", ps_content_1: "", 
+            gps_title: "MAP CODE",
             desc1_title: "店名由來", desc1_content: "",
             desc2_title: "職人堅持", desc2_content: "",
             desc3_title: "美食介紹", desc3_content: ""
@@ -988,9 +999,7 @@
     }
 
     function deleteEvent() {
-        document.getElementById('confirmText').innerText = "刪除此行程？";
-        document.getElementById('confirmModal').classList.add('active');
-        document.getElementById('confirmYesBtn').onclick = function() {
+        showCustomConfirm("刪除此行程？", function() {
             const data = itineraryData[currentDayIdx];
             let events = data.events;
             if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
@@ -1001,7 +1010,7 @@
             closeDetailModal();
             closeConfirm();
             switchDay(currentDayIdx);
-        };
+        });
     }
 
     function updateTimeHighlight() {
@@ -1064,7 +1073,7 @@ function openDetailModal(evt, context) {
         
         html += `</div>
         <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
+        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps || ''}</div></div></div>
         <div class="desc-list">
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
@@ -1072,15 +1081,19 @@ function openDetailModal(evt, context) {
         </div>`;
 
     } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
+        // 修正(8): res-link-icon 點擊跳轉到 view-info
+        // 修正(10): copy-icon 在住宿 (lodging) 時不顯示
+        const showCopy = evt.type !== 'lodging';
+        
         html += `<div class="res-combined-box" style="margin-top:10px">
             <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
                 <div>
                     <div class="res-label" style="margin:0;">RESERVATION INFORMATION</div>
-                    <div class="res-abc" style="margin-top:10px; margin-bottom:0;">${evt.ps_label_1 || '新預約'}</div>
+                    <div class="res-abc" style="margin-top:10px; margin-bottom:0;">${evt.ps_label_1 || '預約資訊'}</div>
                 </div>
-                <a href="${evt.ps_content_1 || '#'}" target="_blank" style="text-decoration:none; display:flex;">
+                <div onclick="switchView('info', document.querySelectorAll('.nav-icon')[2]); closeDetailModal();" style="display:flex;">
                     <i class="fas fa-ticket-alt res-link-icon"></i>
-                </a>
+                </div>
             </div>
             <div class="res-divider"></div>
             <div class="res-bottom">
@@ -1088,12 +1101,12 @@ function openDetailModal(evt, context) {
                     <div class="conf-title">CONFIRMATION NO.</div>
                     <div class="conf-val" style="margin-top:10px">${evt.ps_label_2 || '987654'}</div>
                 </div>
-                <i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>
+                ${showCopy ? `<i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
             </div>
          </div>
 
         <div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-        ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
+        ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
         <div class="desc-list">
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
@@ -1104,7 +1117,7 @@ function openDetailModal(evt, context) {
          html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
         <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
         <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
+        <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps || ''}</div></div></div>
         <div class="desc-list">
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
@@ -1173,10 +1186,10 @@ function openDetailModal(evt, context) {
              if(!t2) t2 = "坐駕介紹";
              if(!t3) t3 = "注意事項";
 
+             // 修正(9): 移除預約連結欄位
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">預約 & 訂單 ( RESERVATION & CONFIRMATION )</div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
 
@@ -1193,10 +1206,14 @@ function openDetailModal(evt, context) {
              `;
         }
 
+        // 修正(12): 增加 Map Code 標題修改欄位
         return `
             ${fields}
             <div class="edit-section-title" style="margin-top:30px">詳細資訊 ( ABOUT )</div>
-            <div class="edit-group" style="margin-top:10px"><div class="edit-label">Map Code</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
+            <div class="edit-row" style="margin-top:10px">
+                 <div class="edit-group" style="flex:1"><div class="edit-label">標題</div><input class="edit-input" style="margin-top:5px" id="e-gps-title" value="${evt.gps_title || 'MAP CODE'}"></div>
+                 <div class="edit-group" style="flex:2"><div class="edit-label">內容</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
+            </div>
             
             <div class="edit-row" style="margin-top:10px">
                 <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" style="margin-top:5px" id="e-d1-t" value="${t1}"></div>
@@ -1272,9 +1289,11 @@ function openDetailModal(evt, context) {
                 <div class="edit-group" style="margin-top:0px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:7px" id="e-l-web" value="${evt.link_web || ''}"></div>
                 <div class="edit-group" style="margin-top:0px"><div class="edit-label">VLOGS</div><input class="edit-input" style="margin-top:7px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
 
-                <button class="btn-save" onclick="saveEdit()">儲存修改</button>
-                <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
-                <button class="btn-delete-event" style="margin-top:10px" onclick="deleteEvent()">刪除此行程</button>
+                <div class="edit-btn-group">
+                    <button class="btn-save" onclick="saveEdit()">儲存修改</button>
+                    <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
+                </div>
+                <button class="btn-delete-event" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
     }
@@ -1293,6 +1312,7 @@ function openDetailModal(evt, context) {
         const ps_c3 = document.getElementById('e-ps-c3') ? document.getElementById('e-ps-c3').value : '';
 
         const gps = document.getElementById('e-gps').value;
+        const gps_title = document.getElementById('e-gps-title').value; // 修正(12)
         const d1t = document.getElementById('e-d1-t').value; const d1c = document.getElementById('e-d1-c').value;
         const d2t = document.getElementById('e-d2-t').value; const d2c = document.getElementById('e-d2-c').value;
         const d3t = document.getElementById('e-d3-t').value; const d3c = document.getElementById('e-d3-c').value;
@@ -1311,13 +1331,21 @@ function openDetailModal(evt, context) {
         evt.ps_label_1 = ps_l1; evt.ps_content_1 = ps_c1;
         evt.ps_label_2 = ps_l2; evt.ps_content_2 = ps_c2;
         evt.ps_label_3 = ps_l3; evt.ps_content_3 = ps_c3;
-        evt.gps = gps;
+        evt.gps = gps; evt.gps_title = gps_title;
         evt.desc1_title = d1t; evt.desc1_content = d1c;
         evt.desc2_title = d2t; evt.desc2_content = d2c;
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
         
         evt.guide = d3c; 
+
+        // 修正(11): 自動變更圖示
+        if (newType === 'sightseeing') evt.iconType = 'mountain'; // 自然風光
+        else if (newType === 'food') evt.iconType = 'utensils'; // 餐具
+        else if (newType === 'lodging') evt.iconType = 'hotel'; // 飯店
+        else if (newType === 'transport') evt.iconType = 'train'; // 火車
+        else if (newType === 'flight') evt.iconType = 'plane'; // 飛機
+        else if (newType === 'car') evt.iconType = 'car'; // 汽車
 
         saveItineraryToLocal();
         closeDetailModal();
@@ -1344,14 +1372,34 @@ function openDetailModal(evt, context) {
         document.getElementById('centerPopup').classList.remove('active');
     }
 
+    // --- Helper for Custom Modals (Alert/Confirm) ---
+    // 修正(6) & (7): 統一使用自定義 Modal 樣式，避免原生連結顯示
+    function showCustomAlert(text) {
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmText').innerText = text;
+        const btnGroup = document.getElementById('confirmBtnGroup');
+        btnGroup.innerHTML = `<button class="confirm-btn btn-ok" onclick="closeConfirm()">確定</button>`;
+        modal.classList.add('active');
+    }
+
+    function showCustomConfirm(text, yesCallback) {
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmText').innerText = text;
+        const btnGroup = document.getElementById('confirmBtnGroup');
+        btnGroup.innerHTML = `
+            <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
+            <button class="confirm-btn btn-yes" id="dynamicYesBtn">確定</button>
+        `;
+        document.getElementById('dynamicYesBtn').onclick = yesCallback;
+        modal.classList.add('active');
+    }
+
     // --- Confirm Modal Logic ---
     let pendingDeleteId = null; 
 
     function delExpense(id) {
         pendingDeleteId = id; 
-        document.getElementById('confirmText').innerText = "確定要刪除這筆紀錄嗎？";
-        document.getElementById('confirmModal').classList.add('active');
-        document.getElementById('confirmYesBtn').onclick = function() { performDeleteSingle(); };
+        showCustomConfirm("確定要刪除這筆紀錄嗎？", function() { performDeleteSingle(); });
     }
 
     function performDeleteSingle() {
@@ -1363,9 +1411,7 @@ function openDetailModal(evt, context) {
     }
 
     function askClearAll() {
-        document.getElementById('confirmText').innerText = "確定要清除所有紀錄嗎？";
-        document.getElementById('confirmModal').classList.add('active');
-        document.getElementById('confirmYesBtn').onclick = function() { performClearAll(); };
+        showCustomConfirm("確定要清除所有紀錄嗎？", function() { performClearAll(); });
     }
 
     function performClearAll() {
@@ -1383,7 +1429,8 @@ function openDetailModal(evt, context) {
     function exportExpenses() {
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         if(data.length === 0) {
-            alert("目前沒有任何記帳紀錄可匯出！");
+            // 修正(6): 使用自定義視窗
+            showCustomAlert("目前沒有任何記帳紀錄可匯出！");
             return;
         }
 
@@ -1429,33 +1476,35 @@ function openDetailModal(evt, context) {
             try {
                 const data = JSON.parse(e.target.result);
                 if(data.itinerary && data.expenses) {
-                    if(confirm("匯入將會覆蓋現有所有資料，確定嗎？")) {
+                    // 使用自定義確認
+                    showCustomConfirm("匯入將會覆蓋現有所有資料，確定嗎？", function() {
                         localStorage.setItem('tripData2026', JSON.stringify(data.itinerary));
                         localStorage.setItem('tripExp2026', JSON.stringify(data.expenses));
-                        alert("匯入成功！即將重新整理頁面。");
-                        location.reload();
-                    }
+                        closeConfirm();
+                        showCustomAlert("匯入成功！即將重新整理頁面。");
+                        setTimeout(() => location.reload(), 1500);
+                    });
                 } else {
-                    alert("檔案格式錯誤");
+                    showCustomAlert("檔案格式錯誤");
                 }
             } catch(err) {
-                alert("讀取檔案失敗");
+                showCustomAlert("讀取檔案失敗");
             }
         };
         reader.readAsText(file);
     }
     
-    // 修正(4): 重置 App 功能
+    // 修正(7): 重置 App 功能 - 使用自定義視窗
     function resetApp() {
-        if(confirm("警告：這將會刪除所有編輯過的行程與記帳紀錄，並回到最原始的預設狀態。\n\n確定要重置嗎？")) {
+        showCustomConfirm("警告：這將會刪除所有編輯過的行程與記帳紀錄，並回到最原始的預設狀態。\n\n確定要重置嗎？", function() {
             localStorage.removeItem('tripData2026');
             localStorage.removeItem('tripExp2026');
             location.reload();
-        }
+        });
     }
 
     // --- Utils ---
-    // 修正(1): 修正後的複製功能，成功時不跳出 alert
+    // 修正: 修正後的複製功能，成功時不跳出 alert
     function copyToClipboard(text) {
         if (!text) return;
         
@@ -1503,7 +1552,7 @@ function openDetailModal(evt, context) {
         const dateStr = document.getElementById('expDate').value;
         const name = document.getElementById('expName').value;
         const cost = parseInt(document.getElementById('expCost').value);
-        if(!dateStr || !name || !cost) return alert("請填寫完整資訊");
+        if(!dateStr || !name || !cost) return showCustomAlert("請填寫完整資訊");
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         data.push({ id: Date.now(), date: dateStr, name, cost });
         localStorage.setItem('tripExp2026', JSON.stringify(data));
@@ -1520,7 +1569,8 @@ function openDetailModal(evt, context) {
             total += item.cost;
             const twd = Math.round(item.cost * RATE);
             const dObj = new Date(item.date);
-            const dateDisplay = `${dObj.getFullYear()}年${dObj.getMonth()+1}月${dObj.getDate()}日`;
+            // 修正(2): 格式改為 2026/1/17
+            const dateDisplay = `${dObj.getFullYear()}/${dObj.getMonth()+1}/${dObj.getDate()}`;
             return `
             <div class="exp-item">
                 <div style="flex:1; display:flex; align-items:center; gap:10px;">
