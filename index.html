@@ -573,18 +573,23 @@
                 <div class="action-btn"><i class="fas fa-ambulance"></i> 救護 119</div>
             </div>
         </div>
+
         <div class="info-block" style="margin-top: 15px">
-            <div class="sync-block" style="border-top: none; padding-top: 0;">
-                <div class="sync-title" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">資料同步</div>
-                <div class="sync-btn-group">
-                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>匯出</button>
-                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>匯入</button>
-                </div>
-                <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
+            <div class="info-title">
+                <i class="fas fa-sync-alt"></i> 資料同步
             </div>
-            <div style="margin-top: 15px;">
+            <div class="btn-grid">
+                <button class="action-btn" style="cursor:pointer; width:100%; font-size:0.95rem; border:1px solid #dbeafe; background:#fff;" onclick="exportBackup()">
+                    <i class="fas fa-file-export" style="color:var(--primary-blue)"></i> 匯出
+                </button>  
+                <button class="action-btn" style="cursor:pointer; width:100%; font-size:0.95rem; border:1px solid #dbeafe; background:#fff;" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-file-import" style="color:var(--primary-blue)"></i> 匯入
+                </button>
+            </div>
+            <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
+            <div style="margin-top: 10px;">
                  <button class="btn-reset-app" onclick="resetApp()">
-                    <i class="fas fa-redo-alt"></i> 
+                    <i class="fas fa-redo-alt"></i> 重置 App
                  </button>
             </div>
         </div>
