@@ -478,7 +478,7 @@
                 </div>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
-                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
+                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 東京都</span>
                 </div>
                 <h2 class="hero-title" id="heroTitle">東京副都心－新宿</h2>
             </div>
@@ -559,7 +559,7 @@
                 </div>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
-                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
+                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i>東京都</span>
                 </div>
                 <h2 class="hero-title" id="heroTitle">東京副都心－新宿</h2>
             </div>
@@ -644,8 +644,7 @@
                  </button>
             </div>
         </div>
-
-    </div> </div>
+</div> </div>
 
 <div id="view-info" class="view-section">
     <div class="wallet-container">
@@ -676,7 +675,22 @@
                 <div class="action-btn"><i class="fas fa-ambulance"></i> 救護 119</div>
             </div>
         </div>
-    </div> </div>
+        <div class="info-block" style="margin-top: 15px">
+            <div class="sync-block">
+                <div class="sync-title" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">資料同步</div>
+                <div class="sync-btn-group">
+                    <button class="btn-sync" onclick="exportBackup()"><i class="fas fa-file-export"></i>匯出</button>
+                    <button class="btn-sync" onclick="document.getElementById('importFile').click()"><i class="fas fa-file-import"></i>匯入</button>
+                </div>
+                <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
+            </div>
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dbeafe;">
+                 <button class="btn-reset-app" onclick="resetApp()">
+                    <i class="fas fa-redo-alt"></i> 
+                 </button>
+            </div>
+        </div>
+</div> </div>
     
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
@@ -1025,7 +1039,7 @@
                     <div class="t-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${displayDesc}</div>
                 </div>
             </div>`;
-        }).join('') + `<button class="add-event-btn" style="margin-top: 20px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
+        }).join('') + `<button class="add-event-btn" style="margin-top: 30px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
     }
 
     function addEvent() {
