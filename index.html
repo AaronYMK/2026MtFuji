@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 12026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -194,8 +194,8 @@
         }
         .btn-map { background: #334155; color: white; box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2); } 
         .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
-        .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 10px; }
-        .btn-vlog i { color: #ff0000; font-size: 1.4rem; }
+        .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 5px; margin-bottom: 5px }
+        .btn-vlog i { color: #94a3b8; font-size: 1.2rem; }
 
         /* Center Popup (Big Card) */
         .center-popup {
@@ -545,7 +545,7 @@
                 <button class="btn-export" onclick="exportExpenses()">匯出明細</button>
                 <button class="btn-clear" onclick="askClearAll()">清除所有明細</button>
             </div>
-</div></div>
+</div></div></div>
 
 <div id="view-info" class="view-section">
     <div class="wallet-container">
@@ -1087,7 +1087,7 @@ function openDetailModal(evt, context) {
          html += `<div style="margin-top:20px">
             ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
             ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
-            ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube" style="margin-top:0px; margin-bottom:0px"></i> VLOGS </a>` : ''}
+            ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog"><i class="fab fa-youtube"></i> VLOGS </a>` : ''}
          </div>`;
     }
 
