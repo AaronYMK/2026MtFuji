@@ -547,8 +547,92 @@
             </div>
 </div></div>
 
+<div id="view-trip" class="view-section active">
+    <div class="date-scroller" id="dateScroller"></div>
+    <div class="hero-section">
+        <div class="day-vertical" id="dayVertical">第一天</div>
+        <div class="hero-card" id="heroCard">
+            <div class="hero-overlay">
+                <div class="day-action-btns">
+                    <div class="day-btn" onclick="openEditDayModal()"><i class="fas fa-edit"></i></div>
+                    <div class="day-btn" onclick="deleteDay()"><i class="fas fa-trash-alt"></i></div>
+                </div>
+                <div class="hero-meta-row">
+                    <span class="hero-badge" id="heroDay">DAY 1</span>
+                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 熊本市</span>
+                </div>
+                <h2 class="hero-title" id="heroTitle">東京副都心－新宿</h2>
+            </div>
+        </div>
+    </div>
+    <div class="weather-container">
+        <div class="weather-header">
+            <div style="display:flex; align-items:center;">
+                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.35rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
+                <div>
+                    <div class="weather-loc" id="wLoc">Tokyo</div>
+                </div>
+            </div>
+            <i class="fas fa-sun" style="font-size:1.8rem; color:var(--primary-blue)"></i>
+        </div>
+        <div class="weather-strip" id="weatherStrip"></div>
+        <div class="hotel-bar" id="hotelInfoBar" style="display:none;">
+            <div class="hotel-line"></div>
+            <div>
+                <span class="hotel-label">住宿資訊</span>
+                <div class="hotel-name" id="hotelName">Yksi Stay Shinjuku</div>
+            </div>
+        </div>
+    </div>
+    <div class="branch-toggle" id="branchToggle" style="display:none;">
+        <button class="branch-btn active" onclick="switchBranch('A')"><i class="fas fa-sun"></i> 晴天方案</button>
+        <button class="branch-btn" onclick="switchBranch('B')"><i class="fas fa-snowflake"></i> 雪天備案</button>
+    </div>
+    <div class="timeline-wrapper" id="timelineList"></div>
+</div>
+
+<div id="view-wallet" class="view-section">
+    <div class="wallet-container">
+        <div class="balance-card" style="padding:15px; margin-bottom:15px;">
+            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率換算 [ 0.22 ]</div>
+            <div class="calc-box">
+                <div class="calc-row" id="rowTop">
+                    <span class="calc-label" id="labelTop">JPY</span>
+                    <input type="number" id="inputTop" class="calc-input" placeholder="0" oninput="calcRate('top')">
+                </div>
+                <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-arrows-alt-v"></i></button>
+                <div class="calc-row" id="rowBottom">
+                    <span class="calc-label" id="labelBottom">TWD</span>
+                    <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
+                </div>
+            </div>
+        </div>
+        <div class="balance-card">
+            <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
+                總支出 ( <span id="displayDateLabel">12月30日</span> )
+                <i class="fas fa-chevron-down date-chevron"></i>
+            </div>
+            <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
+            <div style="font-size:2.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
+            <div style="margin-top:20px">
+                <div class="input-row">
+                    <input type="text" id="expName" class="input-std" placeholder="項目">
+                    <input type="number" id="expCost" class="input-std" placeholder="日幣">
+                    <button class="btn-add" onclick="addExpense()">+</button>
+                </div>
+            </div>
+            <div class="expense-list" id="expenseList"></div>
+            <div class="wallet-actions">
+                <button class="btn-export" onclick="exportExpenses()">匯出明細</button>
+                <button class="btn-clear" onclick="askClearAll()">清除所有明細</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="view-info" class="view-section">
     <div class="wallet-container">
+        
         <div class="info-block">
             <div class="info-title"><i class="fas fa-plane-departure"></i> 航班資訊 Flight</div>
             <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px dashed #e2e8f0; padding-bottom:12px;">
@@ -560,12 +644,14 @@
                 <div style="color:var(--primary-blue); font-size:0.8rem; background:var(--light-blue); padding:4px 8px; border-radius:6px; height:fit-content;">已確認</div>
             </div>
         </div>
+
         <div class="info-block">
             <div class="info-title"><i class="fas fa-ticket-alt"></i> 預約代碼</div>
             <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] 中華航空</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">5IPVMR</div></div>
             <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 交通 ] Budget</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">RC-2026-888</div></div>
             <div style="margin-bottom:10px"><div style="font-size:0.75rem; color:#94a3b8;">[ 住宿 ] Yksi Stay</div><div style="font-family:monospace; font-size:1.1rem; letter-spacing:1px;">TF753023</div></div>
         </div>
+
         <div class="info-block">
             <div class="info-title"><i class="fas fa-exclamation-circle"></i> 緊急聯絡</div>
             <div class="btn-grid">
@@ -573,6 +659,7 @@
                 <div class="action-btn"><i class="fas fa-ambulance"></i> 救護 119</div>
             </div>
         </div>
+
         <div class="info-block" style="margin-top: 15px">
             <div class="sync-block">
                 <div class="sync-title" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">資料同步</div>
@@ -588,8 +675,8 @@
                  </button>
             </div>
         </div>
-    </div>
-</div>
+
+    </div> </div>
 
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
