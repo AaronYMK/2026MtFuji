@@ -588,8 +588,8 @@
             </div>
             <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
             <div style="margin-top: 10px;">
-                 <button class="btn-reset-app" onclick="resetApp()">
-                    <i class="fas fa-redo-alt" style="margin-top:10px; font-size: 1.2rem"></i>
+                 <button class="btn-reset-app" style="margin-top:10px" onclick="resetApp()">
+                    <i class="fas fa-redo-alt" style="font-size: 1.2rem"></i>
                  </button>
             </div>
         </div>
@@ -1090,8 +1090,8 @@ function openDetailModal(evt, context) {
 
     if(evt.link_map || evt.link_web || evt.link_vlog) {
          html += `<div style="margin-top:20px">
-            ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
-            ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web">官方網站</a>` : ''}
+            ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map" style="margin-top: 0px; margin-bottom: 0px"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
+            ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web" style="margin-top: 0px; margin-bottom: 0px">官方網站</a>` : ''}
             ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog" style="margin-top: 0px; margin-bottom: 0px"><i class="fab fa-youtube"></i> VLOGS </a>` : ''}
          </div>`;
     }
