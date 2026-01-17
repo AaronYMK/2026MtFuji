@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 12026 Winter Mt. Fuji 】</title>
+    <title>【 2026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -1146,11 +1146,11 @@ function openDetailModal(evt, context) {
         </div>`;
 
     } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
-        html += `<div class="res-combined-box" style="margin-top:0px">
-                    <div class="res-top" style="margin-bottom: 0px"><div class="res-label" style="margin-bottom: 0px">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+        html += `<div class="res-combined-box" style="margin-top:15px">
+                    <div class="res-top" style="margin-bottom: 0px"><div class="res-label" style="margin-bottom: 100px">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
                     <div style="padding:0 20px;margin-top:0px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
                     <div class="res-divider"></div>
-                    <div class="res-bottom"><div><div class="conf-title" style="margin-bottom: 0px">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
+                    <div class="res-bottom"><div><div class="conf-title" style="margin-bottom: 100px">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
                  </div>
         <div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
         ${evt.gps ? `<div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps}</div></div></div>` : ''}
