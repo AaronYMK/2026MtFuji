@@ -513,7 +513,7 @@
 <div id="view-wallet" class="view-section">
     <div class="wallet-container">
         <div class="balance-card" style="padding:15px; margin-bottom:15px;">
-            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率 [ 0.22 ]</div>
+            <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); margin-bottom:12px; font-weight:700;">匯率換算 [ 0.22 ]</div>
             <div class="calc-box">
                 <div class="calc-row" id="rowTop">
                     <span class="calc-label" id="labelTop">JPY</span>
@@ -700,7 +700,7 @@
             const data = await res.json();
             if(data && data.rates && data.rates.TWD) {
                 RATE = data.rates.TWD;
-                document.getElementById('rateTitle').innerText = `匯率 [ ${RATE.toFixed(3)} ]`;
+                document.getElementById('rateTitle').innerText = `匯率換算 [ ${RATE.toFixed(3)} ]`;
             }
         } catch(e) {}
     }
