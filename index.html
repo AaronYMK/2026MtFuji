@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 12026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -545,6 +545,7 @@
                 <button class="btn-export" onclick="exportExpenses()">匯出明細</button>
                 <button class="btn-clear" onclick="askClearAll()">清除所有明細</button>
             </div>
+        </div><div class="balance-card" style="margin-top: 20px">
             <div class="sync-block">
                 <div class="sync-title">資料同步</div>
                 <div class="sync-btn-group">
@@ -559,8 +560,7 @@
                  </button>
             </div>
         </div>
-    </div>
-</div>
+</div></div>
 
 <div id="view-info" class="view-section">
     <div class="wallet-container">
@@ -938,7 +938,7 @@
                     <div class="t-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${displayDesc}</div>
                 </div>
             </div>`;
-        }).join('') + `<button class="add-event-btn" onclick="addEvent()"><i class="fas fa-plus"></i></button>`;
+        }).join('') + `<button class="add-event-btn" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 2rem"></i></button>`;
     }
 
     function addEvent() {
@@ -1010,7 +1010,7 @@
         html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
         if (evt.type === 'food') {
-            html += `<div class="m-sec-header" style="margin-top:0px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
+            html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="food-rec-list">`;
             
             // 修正(2) & (3): 左側點擊不觸發popup、右側點擊觸發popup、無內容不顯示
@@ -1034,7 +1034,7 @@
             }
             
             html += `</div>
-            <div class="m-sec-header" style="margin-top:10px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item", '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
@@ -1043,9 +1043,9 @@
             </div>`;
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             // 修正(1): 複製功能保留但移除跳出提醒 (邏輯在 copyToClipboard 函式內修改)
-            html += `<div class="res-combined-box">
-                        <div class="res-top" style="margin-bottom: 5px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
-                        <div style="padding:0 20px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
+            html += `<div class="res-combined-box" style="margin-top:50px">
+                        <div class="res-top" style="margin-bottom: 0px"><div class="res-label">RESERVATION INFORMATION</div><a href="${evt.ps_content_1 || '#'}" target="_blank"><i class="fas fa-ticket-alt res-link-icon"></i></a></div>
+                        <div style="padding:0 20px;margin-top:0px;margin-bottom:10px;"><div class="res-abc">${evt.ps_label_1 || '新預約'}</div></div>
                         <div class="res-divider"></div>
                         <div class="res-bottom"><div><div class="conf-title">CONFIRMATION NO.</div><div class="conf-val">${evt.ps_label_2 || '987654'}</div></div><i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i></div>
                      </div>
@@ -1057,9 +1057,9 @@
                 <div class="desc-item", '${evt.desc3_content || ''}')"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
             </div>`;
         } else if (evt.type === 'sightseeing') {
-             html += `<div class="m-sec-header" style="margin-top:5px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
+             html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="ps-box"><span class="ps-cn">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp">${evt.ps_label_2 || ''}</a></div>
-            <div class="m-sec-header" style="margin-top:20px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
             <div class="about-box"><i class="fas fa-location-arrow ab-icon"></i><div><div class="ab-label">MAPS CODE</div><div class="ab-code">${evt.gps || ''}</div></div></div>
             <div class="desc-list">
                 <div class="desc-item", '${evt.desc1_content || ''}')"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
