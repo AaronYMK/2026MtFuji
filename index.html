@@ -1146,11 +1146,11 @@ function openDetailModal(evt, context) {
         </div>`;
 
     } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
-        html += `<div class="res-combined-box" style="margin-top:50px">
+        html += `<div class="res-combined-box" style="margin-top:10px">
             <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
                 <div>
                     <div class="res-label" style="margin:0;">RESERVATION INFORMATION</div>
-                    <div class="res-abc" style="margin-top:5px; margin-bottom:0;">${evt.ps_label_1 || '新預約'}</div>
+                    <div class="res-abc" style="margin-top:10px; margin-bottom:0;">${evt.ps_label_1 || '新預約'}</div>
                 </div>
                 <a href="${evt.ps_content_1 || '#'}" target="_blank" style="text-decoration:none; display:flex;">
                     <i class="fas fa-ticket-alt res-link-icon"></i>
