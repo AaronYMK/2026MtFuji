@@ -555,7 +555,7 @@
                 <div class="input-row">
                     <input type="text" id="expName" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="項目">
                     <input type="number" id="expCost" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="日幣">
-                    <button class="btn-add" style="font-size:1.2rem;height: 40px" onclick="addExpense()">+</button>
+                    <button class="btn-add" style="font-size:1.4rem;height: 40px" onclick="addExpense()">+</button>
                 </div>
             </div>
             <div class="expense-list" id="expenseList"></div>
@@ -1102,16 +1102,16 @@ function openDetailModal(evt, context) {
                     <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem">${evt.ps_label_1 || '預約資訊'}</div>
                 </div>
                 <div onclick="switchView('info', document.querySelectorAll('.nav-icon')[2]); closeDetailModal();" style="display:flex;">
-                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1rem"></i>
+                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1.2rem"></i>
                 </div>
             </div>
             <div class="res-divider"></div>
             <div class="res-bottom">
                 <div>
                     <div class="conf-title">CONFIRMATION NO.</div>
-                    <div class="conf-val" style="margin-top:10px; font-size:1rem">${evt.ps_label_2 || '987654'}</div>
+                    <div class="conf-val" style="margin-top:10px; font-size:1.1rem">${evt.ps_label_2 || '987654'}</div>
                 </div>
-                ${showCopy ? `<i class="far fa-copy copy-icon" style="font-size:1rem" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
+                ${showCopy ? `<i class="far fa-copy copy-icon" style="font-size:1.2rem" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
             </div>
          </div>
 
