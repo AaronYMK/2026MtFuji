@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 232026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -1321,7 +1321,7 @@ function openDetailModal(evt, context) {
                     <button class="btn-save" onclick="saveEdit()">儲存修改</button>
                     <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
                 </div>
-                <button class="btn-delete-event" onclick="deleteEvent()">刪除此行程</button>
+                <button class="btn-delete-event" style="margin-top:100px" onclick="deleteEvent()">刪除此行程</button>
             </div>
         `;
     }
@@ -1514,7 +1514,7 @@ function openDetailModal(evt, context) {
     }
     
     function resetApp() {
-        showCustomConfirm("警告：這將會刪除所有編輯過的行程與記帳紀錄，並回到最原始的預設狀態。\n\n確定要重置嗎？", function() {
+        showCustomConfirm("警告：\n\n這將會刪除所有編輯過的行程與記帳紀錄！！", function() {
             localStorage.removeItem('tripData2026');
             localStorage.removeItem('tripExp2026');
             location.reload();
