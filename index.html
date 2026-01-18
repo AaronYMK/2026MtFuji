@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>【 2342026 Winter Mt. Fuji 】</title>
+    <title>【 2026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -550,9 +550,9 @@
                 <i class="fas fa-chevron-down date-chevron"></i>
             </div>
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
-            <div style="font-size:0.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
+            <div style="font-size:1.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
             <div style="margin-top:20px">
-                <div class="input-row">
+                <div class="input-row" style="font-size:0.5rem">
                     <input type="text" id="expName" class="input-std" placeholder="項目">
                     <input type="number" id="expCost" class="input-std" placeholder="日幣">
                     <button class="btn-add" onclick="addExpense()">+</button>
@@ -1084,7 +1084,7 @@ function openDetailModal(evt, context) {
 
         html += `</div>
         <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-        <div class="about-box"><i class="fas ${gpsIcon} ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps || ''}</div></div></div>
+        <div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:0.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:0.5rem">${evt.gps || ''}</div></div></div>
         <div class="desc-list">
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
@@ -1109,7 +1109,7 @@ function openDetailModal(evt, context) {
             <div class="res-bottom">
                 <div>
                     <div class="conf-title">CONFIRMATION NO.</div>
-                    <div class="conf-val" style="margin-top:10px">${evt.ps_label_2 || '987654'}</div>
+                    <div class="conf-val" style="margin-top:10px; font-size:0.5rem">${evt.ps_label_2 || '987654'}</div>
                 </div>
                 ${showCopy ? `<i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
             </div>
@@ -1120,7 +1120,7 @@ function openDetailModal(evt, context) {
         ${(function(){
             let gpsIcon = 'fa-location-arrow';
             if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
-            return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps}</div></div></div>` : '';
+            return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:0.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:0.5rem">${evt.gps}</div></div></div>` : '';
         })()}
         
         <div class="desc-list">
@@ -1137,7 +1137,7 @@ function openDetailModal(evt, context) {
         ${(function(){
             let gpsIcon = 'fa-location-arrow';
             if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
-            return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code">${evt.gps || ''}</div></div></div>`;
+            return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:0.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:0.5rem">${evt.gps || ''}</div></div></div>`;
         })()}
 
         <div class="desc-list">
