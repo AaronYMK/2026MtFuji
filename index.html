@@ -539,7 +539,7 @@
                 </div>
                 <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-arrows-alt-v"></i></button>
                 <div class="calc-row" id="rowBottom">
-                    <span class="calc-label" style="font-size:0.9rem" id="labelBottom">TWD</span>
+                    <span class="calc-label" style="font-size:0.8rem" id="labelBottom">TWD</span>
                     <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
                 </div>
             </div>
@@ -555,7 +555,7 @@
                 <div class="input-row">
                     <input type="text" id="expName" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="項目">
                     <input type="number" id="expCost" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="日幣">
-                    <button class="btn-add" style="font-size:0.9rem;height: 40px" monclick="addExpense()">+</button>
+                    <button class="btn-add" style="font-size:1.2rem;height: 40px" onclick="addExpense()">+</button>
                 </div>
             </div>
             <div class="expense-list" id="expenseList"></div>
@@ -1084,7 +1084,7 @@ function openDetailModal(evt, context) {
 
         html += `</div>
         <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-        <div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.5rem; margin-top:10px">${evt.gps || ''}</div></div></div>
+        <div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.2rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps || ''}</div></div></div>
         <div class="desc-list">
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
             <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
@@ -1098,11 +1098,11 @@ function openDetailModal(evt, context) {
         html += `<div class="res-combined-box" style="margin-top:10px">
             <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
                 <div>
-                    <div class="res-label" style="margin:0; font-size:1rem">RESERVATION INFORMATION</div>
+                    <div class="res-label" style="margin:0; font-size:0.8rem">RESERVATION INFORMATION</div>
                     <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem">${evt.ps_label_1 || '預約資訊'}</div>
                 </div>
                 <div onclick="switchView('info', document.querySelectorAll('.nav-icon')[2]); closeDetailModal();" style="display:flex;">
-                    <i class="fas fa-ticket-alt res-link-icon"></i>
+                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1rem"></i>
                 </div>
             </div>
             <div class="res-divider"></div>
@@ -1111,7 +1111,7 @@ function openDetailModal(evt, context) {
                     <div class="conf-title">CONFIRMATION NO.</div>
                     <div class="conf-val" style="margin-top:10px; font-size:1rem">${evt.ps_label_2 || '987654'}</div>
                 </div>
-                ${showCopy ? `<i class="far fa-copy copy-icon" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
+                ${showCopy ? `<i class="far fa-copy copy-icon" style="font-size:1rem" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
             </div>
          </div>
 
@@ -1120,7 +1120,7 @@ function openDetailModal(evt, context) {
         ${(function(){
             let gpsIcon = 'fa-location-arrow';
             if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
-            return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.5rem; margin-top:10px">${evt.gps}</div></div></div>` : '';
+            return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.2rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>` : '';
         })()}
         
         <div class="desc-list">
@@ -1137,7 +1137,7 @@ function openDetailModal(evt, context) {
         ${(function(){
             let gpsIcon = 'fa-location-arrow';
             if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
-            return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.5rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.5rem; margin-top:10px">${evt.gps || ''}</div></div></div>`;
+            return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.2rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps || ''}</div></div></div>`;
         })()}
 
         <div class="desc-list">
