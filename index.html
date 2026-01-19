@@ -540,21 +540,24 @@
         <div class="edit-group">
             <input type="date" id="newDateInput" class="edit-input" style="width:90%; height:22px; margin-left:auto; margin-right:auto; display:block;">
         </div>
-        <div id="editDayExtraFields" style="display:none">
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊標題</div><input class="edit-input" id="day-edit-title" style="margin-top: 8px; height:40px"></div>
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊地點</div><input class="edit-input" id="day-edit-loc" style="margin-top: 8px; height:40px"></div>
-            <div class="edit-group" style="margin-top: 10px"><div class="edit-label">景點圖片</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
-    
-            <div class="edit-section-title" style="margin-top:15px; border-bottom:1px solid #ddd;">每日地圖設定</div>
-            <div class="edit-group" style="margin-top: 10px">
-                <div class="edit-label">嵌入地圖</div>
-                <input class="edit-input" id="day-edit-map-embed" placeholder="https://..." style="margin-top: 8px; height:40px">
-            </div>
-            <div class="edit-group" style="margin-top: 10px">
-                <div class="edit-label">導航連結</div>
-                <input class="edit-input" id="day-edit-map-link" placeholder="https://..." style="margin-top: 8px; height:40px">
-            </div>
+    <div id="editDayExtraFields" style="display:none">
+        <div style="margin-top: 15px; background: #fff; border: 1px solid #bfdbfe; padding: 10px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div class="edit-label" style="margin:0; font-size: 1rem; color: #1e3a8a;">啟用 晴天/雪天 備案</div>
+            <input type="checkbox" id="day-edit-has-branch" style="width: 25px; height: 25px; accent-color: var(--primary-blue);">
         </div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊標題</div><input class="edit-input" id="day-edit-title" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊地點</div><input class="edit-input" id="day-edit-loc" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">景點圖片</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-section-title" style="margin-top:15px; border-bottom:1px solid #ddd;">每日地圖設定</div>
+        <div class="edit-group" style="margin-top: 10px">
+            <div class="edit-label">嵌入地圖</div>
+            <input class="edit-input" id="day-edit-map-embed" placeholder="https://..." style="margin-top: 8px; height:40px">
+        </div>
+        <div class="edit-group" style="margin-top: 10px">
+            <div class="edit-label">導航連結</div>
+            <input class="edit-input" id="day-edit-map-link" placeholder="https://..." style="margin-top: 8px; height:40px">
+        </div>
+    </div>
         <div class="confirm-btns" style="margin-top:20px">
             <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active')">取消</button>
             <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="dateModalConfirmBtn">確定</button>
@@ -996,58 +999,87 @@
     }
 
     function openEditDayModal() {
-        resetModalUI(); // 新增：確保 UI 狀態正確
-        
-        const dayData = itineraryData[currentDayIdx];
-        
-        document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
-        document.getElementById('newDateInput').value = dayData.fullDate;
-        
-        document.getElementById('editDayExtraFields').style.display = 'block';
-        document.getElementById('day-edit-title').value = dayData.title;
-        document.getElementById('day-edit-loc').value = dayData.heroCity;
-        document.getElementById('day-edit-bg').value = dayData.bg;
+    resetModalUI(); 
+    
+    const dayData = itineraryData[currentDayIdx];
+    
+    document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
+    document.getElementById('newDateInput').value = dayData.fullDate;
+    
+    document.getElementById('editDayExtraFields').style.display = 'block';
+    
+    // 填入基本資料
+    document.getElementById('day-edit-title').value = dayData.title;
+    document.getElementById('day-edit-loc').value = dayData.heroCity;
+    document.getElementById('day-edit-bg').value = dayData.bg;
 
-        // 新增：填入每日地圖資料
-        document.getElementById('day-edit-map-embed').value = dayData.mapEmbed || "";
-        document.getElementById('day-edit-map-link').value = dayData.mapLink || "";
+    // ▼▼▼ 新增：設定 Checkbox 的狀態 ▼▼▼
+    // 如果 hasBranch 為 true，就打勾
+    document.getElementById('day-edit-has-branch').checked = dayData.hasBranch || false;
+    // ▲▲▲ 新增結束 ▲▲▲
 
-        const btn = document.getElementById('dateModalConfirmBtn');
-        btn.onclick = confirmEditDay;
-        btn.innerText = "儲存";
+    document.getElementById('day-edit-map-embed').value = dayData.mapEmbed || "";
+    document.getElementById('day-edit-map-link').value = dayData.mapLink || "";
 
-        document.getElementById('dateInputModal').classList.add('active');
+    const btn = document.getElementById('dateModalConfirmBtn');
+    btn.onclick = confirmEditDay;
+    btn.innerText = "儲存";
+
+    document.getElementById('dateInputModal').classList.add('active');
     }
 
     function confirmEditDay() {
-        const input = document.getElementById('newDateInput').value;
-        if(!input) return showCustomAlert("請選擇日期");
+    const input = document.getElementById('newDateInput').value;
+    if(!input) return showCustomAlert("請選擇日期");
 
-        const d = new Date(input);
-        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-    
-        const dayData = itineraryData[currentDayIdx];
-        dayData.fullDate = input;
-        dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
-        dayData.week = weekDays[d.getDay()];
-    
-        dayData.title = document.getElementById('day-edit-title').value;
-        dayData.heroCity = document.getElementById('day-edit-loc').value;
-        dayData.bg = document.getElementById('day-edit-bg').value;
+    const d = new Date(input);
+    const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-        // --- 新增：儲存地圖資料 ---
-        dayData.mapEmbed = document.getElementById('day-edit-map-embed').value;
-        dayData.mapLink = document.getElementById('day-edit-map-link').value;
-        // -----------------------
+    const dayData = itineraryData[currentDayIdx];
+    dayData.fullDate = input;
+    dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
+    dayData.week = weekDays[d.getDay()];
 
-        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
-        saveItineraryToLocal();
+    dayData.title = document.getElementById('day-edit-title').value;
+    dayData.heroCity = document.getElementById('day-edit-loc').value;
+    dayData.bg = document.getElementById('day-edit-bg').value;
+    dayData.mapEmbed = document.getElementById('day-edit-map-embed').value;
+    dayData.mapLink = document.getElementById('day-edit-map-link').value;
+
+    // ▼▼▼ 新增：處理備案切換邏輯 ▼▼▼
+    const isBranchEnabled = document.getElementById('day-edit-has-branch').checked;
     
-        document.getElementById('dateInputModal').classList.remove('active');
-        renderDateScroller();
-    
-        const newIdx = itineraryData.findIndex(x => x.fullDate === input);
-        switchDay(newIdx);
+    // 如果狀態改變了 (原本沒開現在開，或原本有開現在關)
+    if (dayData.hasBranch !== isBranchEnabled) {
+        dayData.hasBranch = isBranchEnabled;
+        
+        if (isBranchEnabled) {
+            // [開啟模式]：把現有的 events 移到 eventsA，並初始化 eventsB
+            // 如果 eventsA 已經有資料就不覆蓋，避免誤操作
+            if (!dayData.eventsA) dayData.eventsA = dayData.events || [];
+            if (!dayData.eventsB) dayData.eventsB = [];
+            // 清空原本的 events 以免混淆 (之後都讀 A 或 B)
+            dayData.events = []; 
+            currentBranch = 'A'; // 預設切換到晴天
+        } else {
+            // [關閉模式]：把 eventsA (晴天) 的資料存回主 events
+            // 這樣關閉後，原本晴天的行程會變成主行程
+            if (dayData.eventsA && dayData.eventsA.length > 0) {
+                dayData.events = dayData.eventsA;
+            }
+            // 也可以選擇保留 eventsA/B 在記憶體中不刪除，看個人習慣，這裡簡單處理
+        }
+    }
+    // ▲▲▲ 新增結束 ▲▲▲
+
+    itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+    saveItineraryToLocal();
+
+    document.getElementById('dateInputModal').classList.remove('active');
+    renderDateScroller();
+
+    const newIdx = itineraryData.findIndex(x => x.fullDate === input);
+    switchDay(newIdx);
     }
 
     function deleteDay() {
