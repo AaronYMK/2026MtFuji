@@ -806,7 +806,7 @@
 </nav>
 
 <script>
-    // 放在 script 開頭變數定義區
+    // 1. 變數定義區
     const DEFAULT_MAP_EMBED = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
     const DEFAULT_MAP_LINK = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）";
     let RATE = 0.22;
@@ -825,6 +825,7 @@
         lodging: 'var(--col-lodging)' 
     };
 
+    // 2. 行程資料
     let itineraryData = [
         {
             day: 1, dayCN: "第一天", date: "1/26", fullDate: "2026-01-26", week: "MON", title: "東京副都心－新宿", heroCity: "東京都",
@@ -886,7 +887,6 @@
         updateRate();
         setInterval(updateRate, 3600000);
         
-        // 新增：初始化資訊頁地圖
         initInfoMap();
     }
 
@@ -954,15 +954,12 @@
     }
 
     function openAddDayModal() {
-        resetModalUI(); // 新增：確保 UI 狀態正確
-
+        resetModalUI();
         document.getElementById('dateModalTitle').innerText = "新增旅遊日期";
         document.getElementById('newDateInput').value = "";
-        
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.onclick = confirmAddDay;
         btn.innerText = "新增";
-        
         document.getElementById('editDayExtraFields').style.display = 'none';
         document.getElementById('dateInputModal').classList.add('active');
     }
@@ -970,12 +967,10 @@
     function confirmAddDay() {
         const input = document.getElementById('newDateInput').value;
         if(!input) return showCustomAlert("請選擇日期");
-        
         const d = new Date(input);
         const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
         const week = weekDays[d.getDay()];
         const dateStr = `${d.getMonth()+1}/${d.getDate()}`;
-
         const newDay = {
             day: itineraryData.length + 1,
             dayCN: `第${itineraryData.length + 1}天`,
@@ -991,7 +986,6 @@
         };
         itineraryData.push(newDay);
         itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
-        
         saveItineraryToLocal();
         document.getElementById('dateInputModal').classList.remove('active');
         renderDateScroller();
@@ -999,93 +993,64 @@
     }
 
     function openEditDayModal() {
-    resetModalUI(); 
-    
-    const dayData = itineraryData[currentDayIdx];
-    
-    document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
-    document.getElementById('newDateInput').value = dayData.fullDate;
-    
-    document.getElementById('editDayExtraFields').style.display = 'block';
-    
-    // 填入基本資料
-    document.getElementById('day-edit-title').value = dayData.title;
-    document.getElementById('day-edit-loc').value = dayData.heroCity;
-    document.getElementById('day-edit-bg').value = dayData.bg;
-
-    // ▼▼▼ 新增：設定 Checkbox 的狀態 ▼▼▼
-    // 如果 hasBranch 為 true，就打勾
-    document.getElementById('day-edit-has-branch').checked = dayData.hasBranch || false;
-    // ▲▲▲ 新增結束 ▲▲▲
-
-    document.getElementById('day-edit-map-embed').value = dayData.mapEmbed || "";
-    document.getElementById('day-edit-map-link').value = dayData.mapLink || "";
-
-    const btn = document.getElementById('dateModalConfirmBtn');
-    btn.onclick = confirmEditDay;
-    btn.innerText = "儲存";
-
-    document.getElementById('dateInputModal').classList.add('active');
+        resetModalUI(); 
+        const dayData = itineraryData[currentDayIdx];
+        document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
+        document.getElementById('newDateInput').value = dayData.fullDate;
+        document.getElementById('editDayExtraFields').style.display = 'block';
+        document.getElementById('day-edit-title').value = dayData.title;
+        document.getElementById('day-edit-loc').value = dayData.heroCity;
+        document.getElementById('day-edit-bg').value = dayData.bg;
+        document.getElementById('day-edit-has-branch').checked = dayData.hasBranch || false;
+        document.getElementById('day-edit-map-embed').value = dayData.mapEmbed || "";
+        document.getElementById('day-edit-map-link').value = dayData.mapLink || "";
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.onclick = confirmEditDay;
+        btn.innerText = "儲存";
+        document.getElementById('dateInputModal').classList.add('active');
     }
 
     function confirmEditDay() {
-    const input = document.getElementById('newDateInput').value;
-    if(!input) return showCustomAlert("請選擇日期");
+        const input = document.getElementById('newDateInput').value;
+        if(!input) return showCustomAlert("請選擇日期");
+        const d = new Date(input);
+        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const dayData = itineraryData[currentDayIdx];
+        dayData.fullDate = input;
+        dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
+        dayData.week = weekDays[d.getDay()];
+        dayData.title = document.getElementById('day-edit-title').value;
+        dayData.heroCity = document.getElementById('day-edit-loc').value;
+        dayData.bg = document.getElementById('day-edit-bg').value;
+        dayData.mapEmbed = document.getElementById('day-edit-map-embed').value;
+        dayData.mapLink = document.getElementById('day-edit-map-link').value;
 
-    const d = new Date(input);
-    const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-    const dayData = itineraryData[currentDayIdx];
-    dayData.fullDate = input;
-    dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
-    dayData.week = weekDays[d.getDay()];
-
-    dayData.title = document.getElementById('day-edit-title').value;
-    dayData.heroCity = document.getElementById('day-edit-loc').value;
-    dayData.bg = document.getElementById('day-edit-bg').value;
-    dayData.mapEmbed = document.getElementById('day-edit-map-embed').value;
-    dayData.mapLink = document.getElementById('day-edit-map-link').value;
-
-    // ▼▼▼ 新增：處理備案切換邏輯 ▼▼▼
-    const isBranchEnabled = document.getElementById('day-edit-has-branch').checked;
-    
-    // 如果狀態改變了 (原本沒開現在開，或原本有開現在關)
-    if (dayData.hasBranch !== isBranchEnabled) {
-        dayData.hasBranch = isBranchEnabled;
-        
-        if (isBranchEnabled) {
-            // [開啟模式]：把現有的 events 移到 eventsA，並初始化 eventsB
-            // 如果 eventsA 已經有資料就不覆蓋，避免誤操作
-            if (!dayData.eventsA) dayData.eventsA = dayData.events || [];
-            if (!dayData.eventsB) dayData.eventsB = [];
-            // 清空原本的 events 以免混淆 (之後都讀 A 或 B)
-            dayData.events = []; 
-            currentBranch = 'A'; // 預設切換到晴天
-        } else {
-            // [關閉模式]：把 eventsA (晴天) 的資料存回主 events
-            // 這樣關閉後，原本晴天的行程會變成主行程
-            if (dayData.eventsA && dayData.eventsA.length > 0) {
-                dayData.events = dayData.eventsA;
+        const isBranchEnabled = document.getElementById('day-edit-has-branch').checked;
+        if (dayData.hasBranch !== isBranchEnabled) {
+            dayData.hasBranch = isBranchEnabled;
+            if (isBranchEnabled) {
+                if (!dayData.eventsA) dayData.eventsA = dayData.events || [];
+                if (!dayData.eventsB) dayData.eventsB = [];
+                dayData.events = []; 
+                currentBranch = 'A';
+            } else {
+                if (dayData.eventsA && dayData.eventsA.length > 0) {
+                    dayData.events = dayData.eventsA;
+                }
             }
-            // 也可以選擇保留 eventsA/B 在記憶體中不刪除，看個人習慣，這裡簡單處理
         }
-    }
-    // ▲▲▲ 新增結束 ▲▲▲
 
-    itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
-    saveItineraryToLocal();
-
-    document.getElementById('dateInputModal').classList.remove('active');
-    renderDateScroller();
-
-    const newIdx = itineraryData.findIndex(x => x.fullDate === input);
-    switchDay(newIdx);
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        saveItineraryToLocal();
+        document.getElementById('dateInputModal').classList.remove('active');
+        renderDateScroller();
+        const newIdx = itineraryData.findIndex(x => x.fullDate === input);
+        switchDay(newIdx);
     }
 
     function deleteDay() {
         showCustomConfirm("刪除本日所有行程？", function() {
              itineraryData.splice(currentDayIdx, 1);
-             if(itineraryData.length === 0) {}
              saveItineraryToLocal();
              renderDateScroller();
              switchDay(0);
@@ -1113,7 +1078,6 @@
         const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
         let lodgingEvt = null;
         let haslodging = false;
-        
         if(events) {
              lodgingEvt = events.find(e => e.type === 'lodging');
              if(lodgingEvt) haslodging = true;
@@ -1121,7 +1085,6 @@
 
         if(haslodging && lodgingEvt) {
              document.getElementById('hotelName').innerText = lodgingEvt.title;
-             
              document.getElementById('hotelInfoBar').style.display = 'flex';
              document.getElementById('hotelInfoBar').onclick = function() {
                   const eIdx = events.indexOf(lodgingEvt);
@@ -1133,7 +1096,6 @@
         }
         
         document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
-        
         renderTimeline(data);
         updateWeather(); 
         updateTimeHighlight();
@@ -1148,20 +1110,12 @@
 
     function renderTimeline(data) {
         const container = document.getElementById('timelineList');
-        
-        // --- 1. 取得正確的行程列表 (處理備案邏輯) ---
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
-
-        // 依時間排序
         events.sort((a, b) => a.time.localeCompare(b.time));
         
-        // --- 2. 準備地圖 HTML (處理每日自訂地圖邏輯) ---
-        // 定義預設值 (如果該日沒有設定，就用這兩個)
         const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
         const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）";
-
-        // 優先使用該日設定(data.mapEmbed)，沒有則用預設值
         const mapEmbedSrc = data.mapEmbed || defaultEmbed;
         const mapLinkHref = data.mapLink || defaultLink;
 
@@ -1176,9 +1130,7 @@
             </div>
         `;
 
-        // --- 3. 生成行程列表 HTML ---
         const eventsHtml = events.map((evt, idx) => {
-            // 設定圖示
             let iconClass = 'fa-circle';
             if(evt.iconType === 'plane') iconClass = 'fa-plane';
             else if(evt.iconType === 'car') iconClass = 'fa-car';
@@ -1193,16 +1145,10 @@
             else if(evt.iconType === 'music') iconClass = 'fa-music';
             else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; 
 
-            // 設定顯示描述 (優先顯示 guide，若無則顯示 desc)
             let displayDesc = evt.desc;
             if(evt.guide) displayDesc = evt.guide; 
 
-            // 設定上下文 (用於編輯或刪除時定位資料)
-            const eventContext = {
-                 isBranch: data.hasBranch,
-                 branchType: currentBranch,
-                 idx: idx
-            };
+            const eventContext = { isBranch: data.hasBranch, branchType: currentBranch, idx: idx };
 
             return `
             <div class="timeline-row type-${evt.type}" data-time="${evt.time}">
@@ -1223,7 +1169,6 @@
             </div>`;
         }).join('');
 
-        // --- 4. 組合最終 HTML (行程 + 地圖 + 新增按鈕) ---
         container.innerHTML = eventsHtml + mapHtml + `<button class="add-event-btn" style="margin-top: 10px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
     }
 
@@ -1277,7 +1222,7 @@
         if (activeRow) activeRow.classList.add('active');
     }
 
-    // --- Modal Logic ---
+    // --- Modal Logic (Updated with 3 Helper Functions) ---
     function openDetailModal(evt, context) {
         window.currentEvent = evt;
         window.currentEventContext = context;
@@ -1286,7 +1231,7 @@
         const color = COLORS[evt.type] || '#333';
         let html = '';
 
-        // 1. 頂部 Header
+        // 1. Header
         html += `<div class="m-header">
                     <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
                     <i class="far fa-clock m-time-icon"></i>
@@ -1295,30 +1240,21 @@
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
-        // 2. 根據類型呼叫對應的產生器
+        // 2. Body
         if (evt.type === 'food') {
-            // 餐飲：指差し会話 (自動隱藏空白)
             html += getPointAndSpeakHtml(evt);
-            
-            // 餐飲：詳細資訊 (自動隱藏空白)
             html += getAboutSectionHtml(evt, '店名由來', '職人堅持', '美食介紹');
 
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
-            // 交通住宿：預約資訊 (自動隱藏空白)
             html += getReservationHtml(evt);
-            
-            // 交通住宿：詳細資訊
             html += getAboutSectionHtml(evt, '接駁位置', '坐駕介紹', '注意事項');
 
         } else if (evt.type === 'sightseeing') {
-            // 景點：指差し会話 (自動隱藏空白、自動判斷連結)
             html += getPointAndSpeakHtml(evt);
-
-            // 景點：詳細資訊
             html += getAboutSectionHtml(evt, '停車攻略', '歷史地位', '注意事項');
         }
 
-        // 3. 底部連結按鈕
+        // 3. Links
         if(evt.link_map || evt.link_web || evt.link_vlog) {
              html += `<div style="margin-top:20px">
                 ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map" style="margin-top: 10px; margin-bottom: 0px"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
@@ -1327,7 +1263,7 @@
              </div>`;
         }
 
-        // 4. 底部編輯按鈕
+        // 4. Edit Button
         html += `<div class="modal-edit-btn-bottom" style="margin-top: 20px; margin-bottom: 20px" onclick="enableEditMode()">
             <i class="fas fa-pen"></i> 編輯行程
         </div>`;
@@ -1336,21 +1272,126 @@
         document.querySelector('.modal-overlay').classList.add('active');
     }
 
-    // --- Show Full Description Logic ---
+    // --- Helper 1: About Section ---
+    function getAboutSectionHtml(evt, t1Default, t2Default, t3Default) {
+        const hasGps = evt.gps && evt.gps.toString().trim() !== "";
+        const hasC1 = evt.desc1_content && evt.desc1_content.toString().trim() !== "";
+        const hasC2 = evt.desc2_content && evt.desc2_content.toString().trim() !== "";
+        const hasC3 = evt.desc3_content && evt.desc3_content.toString().trim() !== "";
+
+        if (!hasGps && !hasC1 && !hasC2 && !hasC3) return "";
+
+        let html = `<div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>`;
+        if (hasGps) {
+            let gpsIcon = 'fa-location-arrow';
+            if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
+            html += `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>`;
+        }
+        if (hasC1 || hasC2 || hasC3) {
+            html += `<div class="desc-list">`;
+            if (hasC1) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || t1Default}</div><div class="desc-content">${evt.desc1_content}</div></div>`;
+            if (hasC2) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || t2Default}</div><div class="desc-content">${evt.desc2_content}</div></div>`;
+            if (hasC3) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || t3Default}</div><div class="desc-content">${evt.desc3_content}</div></div>`;
+            html += `</div>`;
+        }
+        return html;
+    }
+
+    // --- Helper 2: Reservation Info ---
+    function getReservationHtml(evt) {
+        const val1 = evt.ps_label_1 ? evt.ps_label_1.toString().trim() : ""; 
+        const val2 = evt.ps_label_2 ? evt.ps_label_2.toString().trim() : ""; 
+        const hasTop = val1 !== "";    
+        const hasBottom = val2 !== ""; 
+
+        if (!hasTop && !hasBottom) return "";
+
+        let html = `<div class="res-combined-box" style="margin-top:10px">`;
+        if (hasTop) {
+            html += `
+            <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
+                <div>
+                    <div class="res-label" style="margin:0; font-size:0.8rem">RESERVATION INFORMATION</div>
+                    <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem">${val1}</div>
+                </div>
+                <div onclick="switchView('info', document.querySelectorAll('.nav-icon')[2]); closeDetailModal();" style="display:flex;">
+                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1.2rem"></i>
+                </div>
+            </div>`;
+        }
+        if (hasTop && hasBottom) html += `<div class="res-divider"></div>`;
+        if (hasBottom) {
+            html += `
+            <div class="res-bottom">
+                <div>
+                    <div class="conf-title" style="font-size:0.8rem">CONFIRMATION NO.</div>
+                    <div class="conf-val" style="margin-top:10px; font-size:1rem">${val2}</div>
+                </div>
+                <i class="far fa-copy copy-icon" style="font-size:1.2rem" onclick="copyToClipboard('${val2}')"></i>
+            </div>`;
+        }
+        html += `</div>`;
+        return html;
+    }
+
+    // --- Helper 3: Point & Speak ---
+    function getPointAndSpeakHtml(evt) {
+        const safeTrim = (str) => str ? str.toString().trim() : "";
+        let html = "";
+
+        if (evt.type === 'food') {
+            let rowsHtml = "";
+            const sets = [
+                { cn: safeTrim(evt.ps_label_1), jp: safeTrim(evt.ps_content_1) },
+                { cn: safeTrim(evt.ps_label_2), jp: safeTrim(evt.ps_content_2) },
+                { cn: safeTrim(evt.ps_label_3), jp: safeTrim(evt.ps_content_3) }
+            ];
+            sets.forEach(item => {
+                if (item.cn !== "" || item.jp !== "") {
+                    rowsHtml += `
+                    <div class="food-rec-item">
+                        <span class="rec-name-cn">${item.cn}</span>
+                        <span class="rec-name-jp" onclick="openCenterPopup('${item.cn}', '${item.jp}', 'blue')">${item.jp}</span>
+                    </div>`;
+                }
+            });
+            if (rowsHtml === "") return "";
+            html = `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div><div class="food-rec-list">${rowsHtml}</div>`;
+
+        } else if (evt.type === 'sightseeing') {
+            const cn = safeTrim(evt.ps_label_1);
+            const jp = safeTrim(evt.ps_label_2);
+            const link = safeTrim(evt.ps_content_1);
+
+            if (cn === "" && jp === "" && link === "") return "";
+
+            let jpHtml = "";
+            if (link !== "") {
+                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem">${jp}</a>`;
+            } else {
+                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a;">${jp}</span>`;
+            }
+            html = `
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
+            <div class="ps-box">
+                <span class="ps-cn" style="font-size:1rem">${cn}</span>
+                ${jpHtml}
+            </div>`;
+        }
+        return html;
+    }
+
     function showFullDesc(title, content) {
         document.getElementById('textEditTitle').innerText = title;
         document.getElementById('textEditArea').value = content;
-        // View mode
         document.getElementById('textEditConfirmBtn').style.display = 'none';
         document.getElementById('textEditModal').querySelector('.btn-no').innerText = "關閉";
         document.getElementById('textEditArea').readOnly = true; 
         document.getElementById('textEditModal').classList.add('active');
     }
 
-    // --- Dynamic Form Rendering ---
     function renderEditFormFields(type, evt) {
         let fields = '';
-        
         let t1 = evt.desc1_title || "";
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
@@ -1359,7 +1400,6 @@
              if(!t1) t1 = "店名由來";
              if(!t2) t2 = "職人堅持";
              if(!t3) t3 = "美食介紹";
-             
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
                 <div class="edit-row" style="margin-top:10px">
@@ -1375,23 +1415,19 @@
                     <div class="edit-group" style="flex:1"><div class="edit-label">日文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
                 </div>
              `;
-
         } else if (['transport', 'car', 'flight', 'lodging'].includes(type)) {
              if(!t1) t1 = "接駁位置";
              if(!t2) t2 = "坐駕介紹";
              if(!t3) t3 = "注意事項";
-
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">預約 & 訂單 ( RESERVATION & CONFIRMATION )</div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
-
         } else if (type === 'sightseeing') {
              if(!t1) t1 = "停車攻略";
              if(!t2) t2 = "歷史地位";
              if(!t3) t3 = "注意事項";
-
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
@@ -1478,16 +1514,11 @@
                         </select>
                     </div>
                 </div>
-                
-                <div id="dynamic-fields">
-                    ${renderEditFormFields(evt.type, evt)}
-                </div>
-
+                <div id="dynamic-fields">${renderEditFormFields(evt.type, evt)}</div>
                 <div class="edit-section-title" style="margin-top:16px">連結 ( LINK )</div>
                 <div class="edit-group" style="margin-top:0px"><div class="edit-label">GOOGLE MAPS</div><input class="edit-input" style="margin-top:7px" id="e-l-map" value="${evt.link_map || ''}"></div>
                 <div class="edit-group" style="margin-top:0px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:7px" id="e-l-web" value="${evt.link_web || ''}"></div>
                 <div class="edit-group" style="margin-top:0px"><div class="edit-label">VLOGS</div><input class="edit-input" style="margin-top:7px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
-
                 <div class="edit-btn-group">
                     <button class="btn-save" onclick="saveEdit()">儲存修改</button>
                     <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
@@ -1552,7 +1583,6 @@
 
     function closeDetailModal() { document.querySelector('.modal-overlay').classList.remove('active'); }
 
-    // --- Center Popup Logic (Food Big Card) ---
     function openCenterPopup(cn, jp, theme) {
         if(!jp) return; 
         document.getElementById('cpJp').innerText = jp;
@@ -1584,7 +1614,6 @@
         modal.classList.add('active');
     }
 
-    // --- Confirm Modal Logic ---
     let pendingDeleteId = null; 
 
     function delExpense(id) {
@@ -1615,7 +1644,6 @@
         pendingDeleteId = null;
     }
 
-    // --- Export Logic (TXT) ---
     function exportExpenses() {
         const data = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         if(data.length === 0) {
@@ -1641,7 +1669,6 @@
         link.click();
     }
 
-    // --- Backup & Restore (JSON) ---
     function exportBackup() {
         const expenseData = JSON.parse(localStorage.getItem('tripExp2026') || '[]');
         const backupData = {
@@ -1692,7 +1719,6 @@
 
     function copyToClipboard(text) {
         if (!text) return;
-        
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).catch(err => fallbackCopy(text));
         } else {
@@ -1764,15 +1790,11 @@
         btn.classList.add('active');
         window.scrollTo(0,0);
     }
-    // --- 新增：處理資訊頁 (View-Info) 地圖的邏輯 ---
 
-    // 1. 初始化 Info 地圖 (讀取設定)
     function initInfoMap() {
         const savedConfig = localStorage.getItem('tripInfoMapConfig');
-        // 預設值
         const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
         const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）";
-        
         if (savedConfig) {
             try {
                 const config = JSON.parse(savedConfig);
@@ -1782,177 +1804,45 @@
         }
     }
 
-    // 2. 點擊 Info 頁面「編輯地圖」按鈕時觸發
     function editInfoMap() {
-        // 重複利用 dateInputModal 的 UI
         document.getElementById('dateModalTitle').innerText = "編輯資訊頁地圖";
-        
-        // 隱藏不相關的欄位 (日期、標題、地點、圖片)
         document.getElementById('newDateInput').style.display = 'none'; 
         document.getElementById('editDayExtraFields').style.display = 'block';
-        
         document.getElementById('day-edit-title').parentElement.style.display = 'none';
         document.getElementById('day-edit-loc').parentElement.style.display = 'none';
         document.getElementById('day-edit-bg').parentElement.style.display = 'none';
 
-        // 取得當前地圖的值
         const currentEmbed = document.getElementById('globalInfoMapFrame').src;
         const currentLink = document.getElementById('globalInfoMapLink').getAttribute('href');
-
-        // 填入輸入框 (注意：這裡使用與每日行程共用的 ID)
         document.getElementById('day-edit-map-embed').value = currentEmbed;
         document.getElementById('day-edit-map-link').value = currentLink;
 
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存設定";
-        
-        // 設定按鈕點擊後的儲存邏輯
         btn.onclick = function() {
             const newEmbed = document.getElementById('day-edit-map-embed').value;
             const newLink = document.getElementById('day-edit-map-link').value;
-            
-            // 儲存到 LocalStorage
             const config = { embed: newEmbed, link: newLink };
             localStorage.setItem('tripInfoMapConfig', JSON.stringify(config));
             
-            // 更新畫面
-            // 預設值
             const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
             const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）";
-            
             document.getElementById('globalInfoMapFrame').src = newEmbed || defaultEmbed;
             document.getElementById('globalInfoMapLink').href = newLink || defaultLink;
             
-            // 關閉視窗並復原 UI
             resetModalUI();
             document.getElementById('dateInputModal').classList.remove('active');
         };
-
         document.getElementById('dateInputModal').classList.add('active');
     }
 
-    // 3. 輔助函式：復原 Modal UI (讓編輯每日行程時顯示正確欄位)
     function resetModalUI() {
         document.getElementById('newDateInput').style.display = 'block';
         document.getElementById('day-edit-title').parentElement.style.display = 'block';
         document.getElementById('day-edit-loc').parentElement.style.display = 'block';
         document.getElementById('day-edit-bg').parentElement.style.display = 'block';
     }
-    // --- 新增：智慧型預約資訊產生器 ---
-    function getReservationHtml(evt) {
-        // 1. 取得內容並去除前後空白
-        const val1 = evt.ps_label_1 ? evt.ps_label_1.toString().trim() : ""; // 預約說明
-        const val2 = evt.ps_label_2 ? evt.ps_label_2.toString().trim() : ""; // 訂單代碼
-        
-        const hasTop = val1 !== "";    // 是否有預約說明
-        const hasBottom = val2 !== ""; // 是否有訂單代碼
 
-        // 2. 如果兩個都空白，直接回傳空字串 (隱藏整個框框)
-        if (!hasTop && !hasBottom) return "";
-
-        let html = `<div class="res-combined-box" style="margin-top:10px">`;
-
-        // 3. 如果有「預約說明」，顯示上半部
-        if (hasTop) {
-            html += `
-            <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
-                <div>
-                    <div class="res-label" style="margin:0; font-size:0.8rem">RESERVATION INFORMATION</div>
-                    <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem">${val1}</div>
-                </div>
-                <div onclick="switchView('info', document.querySelectorAll('.nav-icon')[2]); closeDetailModal();" style="display:flex;">
-                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1.2rem"></i>
-                </div>
-            </div>`;
-        }
-
-        // 4. 分隔線：只有當「上下兩部分都有」的時候才顯示
-        if (hasTop && hasBottom) {
-            html += `<div class="res-divider"></div>`;
-        }
-
-        // 5. 如果有「訂單代碼」，顯示下半部
-        if (hasBottom) {
-            html += `
-            <div class="res-bottom">
-                <div>
-                    <div class="conf-title" style="font-size:0.8rem">CONFIRMATION NO.</div>
-                    <div class="conf-val" style="margin-top:10px; font-size:1rem">${val2}</div>
-                </div>
-                <i class="far fa-copy copy-icon" style="font-size:1.2rem" onclick="copyToClipboard('${val2}')"></i>
-            </div>`;
-        }
-
-        html += `</div>`;
-        return html;
-    }
-    // --- 新增：智慧型「指差し会話」產生器 (處理餐飲與景點的隱藏邏輯) ---
-    function getPointAndSpeakHtml(evt) {
-        const safeTrim = (str) => str ? str.toString().trim() : "";
-        let html = "";
-
-        // === 情況 A：分類為餐飲 (Food) ===
-        if (evt.type === 'food') {
-            let rowsHtml = "";
-            
-            // 定義三組欄位
-            const sets = [
-                { cn: safeTrim(evt.ps_label_1), jp: safeTrim(evt.ps_content_1) },
-                { cn: safeTrim(evt.ps_label_2), jp: safeTrim(evt.ps_content_2) },
-                { cn: safeTrim(evt.ps_label_3), jp: safeTrim(evt.ps_content_3) }
-            ];
-
-            sets.forEach(item => {
-                // 邏輯：只要中文或日文其中一個有值，就顯示這一行
-                if (item.cn !== "" || item.jp !== "") {
-                    rowsHtml += `
-                    <div class="food-rec-item">
-                        <span class="rec-name-cn">${item.cn}</span>
-                        <span class="rec-name-jp" onclick="openCenterPopup('${item.cn}', '${item.jp}', 'blue')">${item.jp}</span>
-                    </div>`;
-                }
-            });
-
-            // 邏輯：如果沒有任何一行有內容，回傳空字串 (隱藏標題、框框等全部)
-            if (rowsHtml === "") return "";
-
-            // 組裝完整區塊
-            html = `
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="food-rec-list">
-                ${rowsHtml}
-            </div>`;
-
-        // === 情況 B：分類為景點 (Sightseeing) ===
-        } else if (evt.type === 'sightseeing') {
-            const cn = safeTrim(evt.ps_label_1);   // 中文名稱
-            const jp = safeTrim(evt.ps_label_2);   // 日文名稱
-            const link = safeTrim(evt.ps_content_1); // 連結
-
-            // 邏輯：如果三個欄位全部空白，回傳空字串 (隱藏全部)
-            if (cn === "" && jp === "" && link === "") return "";
-
-            // 邏輯：處理日文名稱 (有無連結)
-            let jpHtml = "";
-            if (link !== "") {
-                // 有連結：使用 <a> 標籤，可點擊開啟
-                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem">${jp}</a>`;
-            } else {
-                // 無連結：使用 <span> 標籤，移除底線，滑鼠游標改為箭頭 (不可點擊)
-                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a;">${jp}</span>`;
-            }
-
-            // 組裝完整區塊
-            html = `
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="ps-box">
-                <span class="ps-cn" style="font-size:1rem">${cn}</span>
-                ${jpHtml}
-            </div>`;
-        }
-
-        return html;
-    }
     init();
 </script>
 </body>
