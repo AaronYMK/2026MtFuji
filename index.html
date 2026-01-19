@@ -228,7 +228,7 @@
         }
         .cp-fuji-icon {
             position: absolute; right: 0; bottom: 20px; /* 圖示固定在橫線右下角 */
-            font-size: 2.5rem; color: #94a3b8;
+            font-size: 1.5rem; color: #94a3b8;
         }
 
         .cp-content { 
@@ -237,7 +237,7 @@
         }
         
         .cp-jp { 
-            font-family: var(--font-serif); font-size: 4.5rem; font-weight: 900; line-height: 1.4; color: #1e3a8a;
+            font-family: var(--font-serif); font-size: 3.5rem; font-weight: 900; line-height: 1.4; color: #1e3a8a;
             word-break: break-all; white-space: pre-wrap; text-align: center;
             padding: 5px 10px;
             margin: 0px 0;
@@ -698,7 +698,7 @@
             <div class="rc-cat">FLIGHT</div>
             <div class="rc-title" style="margin-bottom:5px">中華航空</div>
             <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">[ 去程 ] CI 100 09：30 ～ 13：30</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">[ 返程 ] CI 109 19：30 ～ 22：45</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">[ 返程 ] CI 109 19：30 ～ 22：45</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">5IPVMR</div>
@@ -708,7 +708,7 @@
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">LODGING</div>
             <div class="rc-title" style="margin-bottom:5px">Yksi Stay Hotel</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">CHENK IN 15：00 / CHECK OUT 10：00</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">CHENK IN 15：00 / CHECK OUT 10：00</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">TF753023F3EFB</div>
@@ -718,7 +718,7 @@
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">LODGING</div>
             <div class="rc-title" style="margin-bottom:5px">秀峰閣湖月</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">CHENK IN 15：00 / CHECK OUT 10：00</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">CHENK IN 15：00 / CHECK OUT 10：00</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">6166895693</div>
@@ -728,7 +728,7 @@
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">LODGING</div>
             <div class="rc-title" style="margin-bottom:5px">The Knot HOTEL</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">CHENK IN 15：00 / CHECK OUT 10：00</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">CHENK IN 15：00 / CHECK OUT 10：00</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">1675787208</div>
@@ -738,7 +738,7 @@
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
             <div class="rc-title" style="margin-bottom:5px">牛かつもと村</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">OPEN TIME 11：00 ～ 22：00</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">OPEN TIME 11：00 ～ 22：00</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">TLDK75</div>
@@ -748,7 +748,7 @@
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
             <div class="rc-title" style="margin-bottom:5px">焼肉うしふじ</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:5px">OPEN TIME 17：00 ～ 24：00</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">OPEN TIME 17：00 ～ 24：00</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">J4RY5D</div>
@@ -1228,7 +1228,7 @@
             }
             
             let gpsIcon = 'fa-location-arrow';
-            if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
+            if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
 
             html += `</div>
             <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
@@ -1266,7 +1266,7 @@
             
             ${(function(){
                 let gpsIcon = 'fa-location-arrow';
-                if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
+                if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
                 return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>` : '';
             })()}
             
@@ -1283,7 +1283,7 @@
             
             ${(function(){
                 let gpsIcon = 'fa-location-arrow';
-                if(evt.gps_title === 'Phone') gpsIcon = 'fa-phone-alt';
+                if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
                 return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps || ''}</div></div></div>`;
             })()}
 
