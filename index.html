@@ -1286,6 +1286,7 @@
         const color = COLORS[evt.type] || '#333';
         let html = '';
 
+        // 1. 頂部 Header
         html += `<div class="m-header">
                     <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
                     <i class="far fa-clock m-time-icon"></i>
@@ -1294,53 +1295,30 @@
         html += `<div class="m-title">${evt.title}</div>`;
         html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
 
+        // 2. 根據類型呼叫對應的產生器
         if (evt.type === 'food') {
-            html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="food-rec-list">`;
+            // 餐飲：指差し会話 (自動隱藏空白)
+            html += getPointAndSpeakHtml(evt);
             
-            if (evt.ps_label_1 || evt.ps_content_1) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_1 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_1 || ''}', '${evt.ps_content_1 || ''}', 'blue')">${evt.ps_content_1 || ''}</span>
-                </div>`;
-            }
-            if (evt.ps_label_2 || evt.ps_content_2) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_2 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_2 || ''}', '${evt.ps_content_2 || ''}', 'blue')">${evt.ps_content_2 || ''}</span>
-                </div>`;
-            }
-            if (evt.ps_label_3 || evt.ps_content_3) {
-                html += `<div class="food-rec-item">
-                    <span class="rec-name-cn">${evt.ps_label_3 || ''}</span>
-                    <span class="rec-name-jp" onclick="openCenterPopup('${evt.ps_label_3 || ''}', '${evt.ps_content_3 || ''}', 'blue')">${evt.ps_content_3 || ''}</span>
-                </div>`;
-            }
-            
-            html += `</div>`;
-            
-            // ▼▼▼ 修改這裡：呼叫輔助函式 (餐飲類預設標題) ▼▼▼
+            // 餐飲：詳細資訊 (自動隱藏空白)
             html += getAboutSectionHtml(evt, '店名由來', '職人堅持', '美食介紹');
-            // ▲▲▲ 修改結束 ▲▲▲
 
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
-            
-            // ▼▼▼ 修改這裡：原本是寫死的一大段 HTML，現在改成呼叫函式 ▼▼▼
+            // 交通住宿：預約資訊 (自動隱藏空白)
             html += getReservationHtml(evt);
-            // ▲▲▲ 修改結束 ▲▲▲
-
-            // 這裡保留之前的詳細資訊函式 (不用動)
+            
+            // 交通住宿：詳細資訊
             html += getAboutSectionHtml(evt, '接駁位置', '坐駕介紹', '注意事項');
 
         } else if (evt.type === 'sightseeing') {
-             html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="ps-box"><span class="ps-cn" style="font-size:1rem">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp" style="font-size:1rem">${evt.ps_label_2 || ''}</a></div>`;
-            
-            // ▼▼▼ 修改這裡：呼叫輔助函式 (景點類預設標題) ▼▼▼
+            // 景點：指差し会話 (自動隱藏空白、自動判斷連結)
+            html += getPointAndSpeakHtml(evt);
+
+            // 景點：詳細資訊
             html += getAboutSectionHtml(evt, '停車攻略', '歷史地位', '注意事項');
-            // ▲▲▲ 修改結束 ▲▲▲
         }
 
+        // 3. 底部連結按鈕
         if(evt.link_map || evt.link_web || evt.link_vlog) {
              html += `<div style="margin-top:20px">
                 ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map" style="margin-top: 10px; margin-bottom: 0px"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
@@ -1349,6 +1327,7 @@
              </div>`;
         }
 
+        // 4. 底部編輯按鈕
         html += `<div class="modal-edit-btn-bottom" style="margin-top: 20px; margin-bottom: 20px" onclick="enableEditMode()">
             <i class="fas fa-pen"></i> 編輯行程
         </div>`;
@@ -1905,6 +1884,73 @@
         }
 
         html += `</div>`;
+        return html;
+    }
+    // --- 新增：智慧型「指差し会話」產生器 (處理餐飲與景點的隱藏邏輯) ---
+    function getPointAndSpeakHtml(evt) {
+        const safeTrim = (str) => str ? str.toString().trim() : "";
+        let html = "";
+
+        // === 情況 A：分類為餐飲 (Food) ===
+        if (evt.type === 'food') {
+            let rowsHtml = "";
+            
+            // 定義三組欄位
+            const sets = [
+                { cn: safeTrim(evt.ps_label_1), jp: safeTrim(evt.ps_content_1) },
+                { cn: safeTrim(evt.ps_label_2), jp: safeTrim(evt.ps_content_2) },
+                { cn: safeTrim(evt.ps_label_3), jp: safeTrim(evt.ps_content_3) }
+            ];
+
+            sets.forEach(item => {
+                // 邏輯：只要中文或日文其中一個有值，就顯示這一行
+                if (item.cn !== "" || item.jp !== "") {
+                    rowsHtml += `
+                    <div class="food-rec-item">
+                        <span class="rec-name-cn">${item.cn}</span>
+                        <span class="rec-name-jp" onclick="openCenterPopup('${item.cn}', '${item.jp}', 'blue')">${item.jp}</span>
+                    </div>`;
+                }
+            });
+
+            // 邏輯：如果沒有任何一行有內容，回傳空字串 (隱藏標題、框框等全部)
+            if (rowsHtml === "") return "";
+
+            // 組裝完整區塊
+            html = `
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div>
+            <div class="food-rec-list">
+                ${rowsHtml}
+            </div>`;
+
+        // === 情況 B：分類為景點 (Sightseeing) ===
+        } else if (evt.type === 'sightseeing') {
+            const cn = safeTrim(evt.ps_label_1);   // 中文名稱
+            const jp = safeTrim(evt.ps_label_2);   // 日文名稱
+            const link = safeTrim(evt.ps_content_1); // 連結
+
+            // 邏輯：如果三個欄位全部空白，回傳空字串 (隱藏全部)
+            if (cn === "" && jp === "" && link === "") return "";
+
+            // 邏輯：處理日文名稱 (有無連結)
+            let jpHtml = "";
+            if (link !== "") {
+                // 有連結：使用 <a> 標籤，可點擊開啟
+                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem">${jp}</a>`;
+            } else {
+                // 無連結：使用 <span> 標籤，移除底線，滑鼠游標改為箭頭 (不可點擊)
+                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a;">${jp}</span>`;
+            }
+
+            // 組裝完整區塊
+            html = `
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
+            <div class="ps-box">
+                <span class="ps-cn" style="font-size:1rem">${cn}</span>
+                ${jpHtml}
+            </div>`;
+        }
+
         return html;
     }
     init();
