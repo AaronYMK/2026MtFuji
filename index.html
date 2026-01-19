@@ -1317,17 +1317,11 @@
                 </div>`;
             }
             
-            let gpsIcon = 'fa-location-arrow';
-            if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
-
-            html += `</div>
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            <div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps || ''}</div></div></div>
-            <div class="desc-list">
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '店名由來'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '職人堅持'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '美食介紹'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
+            html += `</div>`;
+            
+            // ▼▼▼ 修改這裡：呼叫輔助函式 (餐飲類預設標題) ▼▼▼
+            html += getAboutSectionHtml(evt, '店名由來', '職人堅持', '美食介紹');
+            // ▲▲▲ 修改結束 ▲▲▲
 
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             const showCopy = true;
@@ -1350,38 +1344,19 @@
                     </div>
                     ${showCopy ? `<i class="far fa-copy copy-icon" style="font-size:1.2rem" onclick="copyToClipboard('${evt.ps_label_2 || ''}')"></i>` : ''}
                 </div>
-             </div>
+             </div>`;
 
-            <div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
-            
-            ${(function(){
-                let gpsIcon = 'fa-location-arrow';
-                if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
-                return evt.gps ? `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>` : '';
-            })()}
-            
-            <div class="desc-list">
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '接駁位置'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '坐駕介紹'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
+            // ▼▼▼ 修改這裡：呼叫輔助函式 (交通住宿類預設標題) ▼▼▼
+            html += getAboutSectionHtml(evt, '接駁位置', '坐駕介紹', '注意事項');
+            // ▲▲▲ 修改結束 ▲▲▲
 
         } else if (evt.type === 'sightseeing') {
              html += `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
-            <div class="ps-box"><span class="ps-cn" style="font-size:1rem">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp" style="font-size:1rem">${evt.ps_label_2 || ''}</a></div>
-            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>
+            <div class="ps-box"><span class="ps-cn" style="font-size:1rem">${evt.ps_label_1 || ''}</span><a href="${evt.ps_content_1 || '#'}" target="_blank" class="ps-jp" style="font-size:1rem">${evt.ps_label_2 || ''}</a></div>`;
             
-            ${(function(){
-                let gpsIcon = 'fa-location-arrow';
-                if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
-                return `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps || ''}</div></div></div>`;
-            })()}
-
-            <div class="desc-list">
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || '停車攻略'}</div><div class="desc-content">${evt.desc1_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || '歷史地位'}</div><div class="desc-content">${evt.desc2_content || ''}</div></div>
-                <div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || '注意事項'}</div><div class="desc-content">${evt.desc3_content || ''}</div></div>
-            </div>`;
+            // ▼▼▼ 修改這裡：呼叫輔助函式 (景點類預設標題) ▼▼▼
+            html += getAboutSectionHtml(evt, '停車攻略', '歷史地位', '注意事項');
+            // ▲▲▲ 修改結束 ▲▲▲
         }
 
         if(evt.link_map || evt.link_web || evt.link_vlog) {
@@ -1902,7 +1877,41 @@
         document.getElementById('day-edit-loc').parentElement.style.display = 'block';
         document.getElementById('day-edit-bg').parentElement.style.display = 'block';
     }
+    // --- 新增：智慧型詳細資訊產生器 ---
+    function getAboutSectionHtml(evt, t1Default, t2Default, t3Default) {
+        // 1. 檢查各個欄位是否有內容 (去除空白後確認)
+        const hasGps = evt.gps && evt.gps.toString().trim() !== "";
+        const hasC1 = evt.desc1_content && evt.desc1_content.toString().trim() !== "";
+        const hasC2 = evt.desc2_content && evt.desc2_content.toString().trim() !== "";
+        const hasC3 = evt.desc3_content && evt.desc3_content.toString().trim() !== "";
 
+        // 2. 如果全部都空白，直接回傳空字串 (隱藏標題、框框、底線全部)
+        if (!hasGps && !hasC1 && !hasC2 && !hasC3) {
+            return "";
+        }
+
+        // 3. 如果有任一內容，開始組裝 HTML
+        let html = `<div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>`;
+
+        // 顯示 GPS/電話區塊 (如果有值)
+        if (hasGps) {
+            let gpsIcon = 'fa-location-arrow';
+            if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
+            html += `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>`;
+        }
+
+        // 顯示文字列表區塊 (如果有任一文字內容)
+        if (hasC1 || hasC2 || hasC3) {
+            html += `<div class="desc-list">`;
+            // 只顯示有內容的條目
+            if (hasC1) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || t1Default}</div><div class="desc-content">${evt.desc1_content}</div></div>`;
+            if (hasC2) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || t2Default}</div><div class="desc-content">${evt.desc2_content}</div></div>`;
+            if (hasC3) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || t3Default}</div><div class="desc-content">${evt.desc3_content}</div></div>`;
+            html += `</div>`;
+        }
+
+        return html;
+    }
     init();
 </script>
 </body>
