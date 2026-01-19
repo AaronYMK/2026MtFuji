@@ -16,7 +16,7 @@
     <style>
         :root {
             --bg-color: #eff6ff;        
-            --card-bg: #f8fbff;          
+            --card-bg: #f8fbff;           
             
             --text-main: #1e3a8a;       
             --text-light: #64748b;
@@ -398,10 +398,44 @@
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .action-btn { background: #fff; border: 1px solid #dbeafe; padding: 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; font-weight: 500; cursor: default; }
 
-        /* Map Embed */
-        .info-map-container { position: relative; width: 100%; height: 250px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 15px; background: #e2e8f0; }
+        /* Map Embed - Modified for Card Style (Req 1) */
+        .map-card-wrapper {
+             border-radius: 16px;
+             overflow: hidden;
+             box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.1);
+             border: 1px solid #dbeafe;
+             background: #fff;
+             margin-bottom: 15px;
+        }
+
+        .info-map-container { 
+            position: relative; width: 100%; height: 250px; 
+            /* border-radius removed here as it is handled by wrapper now */
+            background: #e2e8f0; 
+            margin-bottom: 0; /* remove bottom margin inside wrapper */
+        }
         .info-map-iframe { width: 100%; height: 100%; border: 0; }
-        .info-map-link { padding: 12px; text-align: center; font-size: 0.9rem; color: var(--primary-blue); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; text-decoration: none;}
+        
+        .info-map-link-bottom { 
+            padding: 14px; 
+            text-align: center; 
+            font-size: 0.95rem; 
+            color: #1e3a8a; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            font-weight: 700; 
+            text-decoration: none;
+            background: #f8fbff; /* Light card footer bg */
+            border-top: 1px solid #e0f2fe;
+            transition: background 0.2s;
+        }
+        .info-map-link-bottom:active {
+            background: #dbeafe;
+        }
+
 
         /* VJW Banner */
         .vjw-banner {
@@ -609,12 +643,14 @@
 <div id="view-info" class="view-section">
     <div class="wallet-container">
         
-        <div class="info-map-container">
-            <iframe class="info-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747975468358!2d139.69905561554954!3d35.65803398019967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b563b00109f%3A0x337328def1e2ab26!2sShibuya%20Station!5e0!3m2!1sen!2sjp!4v1675760000000!5m2!1sen!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-card-wrapper">
+            <div class="info-map-container">
+                <iframe class="info-map-iframe" src="https://maps.google.com/maps?q=Kumamoto&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <a href="https://goo.gl/maps/PlaceID" target="_blank" class="info-map-link-bottom">
+                 <i class="fas fa-location-arrow"></i> 開啟 Google Maps 導航
+            </a>
         </div>
-        <a href="https://goo.gl/maps/PlaceID" target="_blank" class="info-map-link">
-             開啟 Google Maps 導航 <i class="fas fa-external-link-alt"></i>
-        </a>
 
         <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="text-decoration:none;">
             <div class="vjw-banner">
@@ -794,7 +830,7 @@
                 }
             ]
         },
-        { day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村", loc: "Yamanakako", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: [] },
+        { day: 2, dayCN: "第二天", date: "1/27", fullDate: "2026-01-27", week: "TUE", title: "世界文化遺產－忍野八海", heroCity: "忍野村", loc: "Oshino Hakkai", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800", events: [] },
         { day: 3, dayCN: "第三天", date: "1/28", fullDate: "2026-01-28", week: "WED", title: "富士五湖－河口湖", heroCity: "河口湖", loc: "Kawaguchiko", hotel: "秀峰閣湖月", bg: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800", events: []},
         { day: 4, dayCN: "第四天", date: "1/29", fullDate: "2026-01-29", week: "THU", title: "懷舊商店街－下吉田", heroCity: "富士吉田市", loc: "Fujiyoshida", hotel: "The Knot Shinjuku", bg: "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=800", events: []},
         { day: 5, dayCN: "第五天", date: "1/30", fullDate: "2026-01-30", week: "FRI", title: "依依不捨－捨不得回家", heroCity: "東京都", loc: "Shinjuku", hotel: "溫暖的家", bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800", events: []}
@@ -1044,6 +1080,18 @@
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
 
         events.sort((a, b) => a.time.localeCompare(b.time));
+        
+        // Req 2: Add Embedded Map to each day's itinerary at the bottom
+        const mapHtml = `
+            <div class="map-card-wrapper" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="info-map-container" style="margin-bottom:0; border-radius: 16px 16px 0 0;">
+                    <iframe class="info-map-iframe" src="https://maps.google.com/maps?q=${data.loc || 'Japan'}&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=${data.loc || 'Japan'}" target="_blank" class="info-map-link-bottom">
+                     <i class="fas fa-location-arrow"></i> 開啟 Google Maps 導航
+                </a>
+            </div>
+        `;
 
         container.innerHTML = events.map((evt, idx) => {
             let iconClass = 'fa-circle';
@@ -1086,7 +1134,7 @@
                     <div class="t-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${displayDesc}</div>
                 </div>
             </div>`;
-        }).join('') + `<button class="add-event-btn" style="margin-top: 30px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
+        }).join('') + mapHtml + `<button class="add-event-btn" style="margin-top: 10px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
     }
 
     function addEvent() {
