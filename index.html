@@ -1036,8 +1036,7 @@
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
             else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; 
-            let displayDesc = evt.desc;
-            if(evt.guide) displayDesc = evt.guide; 
+            let displayDesc = evt.desc1_content || ""; 
             const eventContext = { isBranch: data.hasBranch, branchType: currentBranch, idx: idx };
             return `
             <div class="timeline-row type-${evt.type}" data-time="${evt.time}">
