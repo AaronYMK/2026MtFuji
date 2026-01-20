@@ -603,9 +603,9 @@
             <i class="fas fa-pen"></i>
         </div>
         <div class="info-map-container">
-            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://googleusercontent.com/maps.google.com/0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a id="globalInfoMapLink" href="https://googleusercontent.com/maps.google.com/1" target="_blank" class="info-map-link-bottom">
+        <a id="globalInfoMapLink" href="https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing" target="_blank" class="info-map-link-bottom">
              <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
         </a>
         </div>
@@ -734,8 +734,8 @@
 </nav>
 <script>
     // 1. 變數定義區 (修正 HTTPS)
-    const DEFAULT_MAP_EMBED = "https://googleusercontent.com/maps.google.com/0";
-    const DEFAULT_MAP_LINK = "https://googleusercontent.com/maps.google.com/1";
+    const DEFAULT_MAP_EMBED = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
+    const DEFAULT_MAP_LINK = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing";
     let RATE = 0.22;
     let currentBranch = 'A'; 
     let isJpyTop = true; 
@@ -779,7 +779,7 @@
                     desc1_title:"店名由來", desc1_content:"可能是店家的姓氏（元村）或創始人的名字，強調其「本源、元祖」的炸牛排專賣店地位，意在讓顧客知道這是專注於炸牛排這項日本新興飲食文化的指標性店鋪。 ",
                     desc2_title:"職人堅持", desc2_content:"牛排油炸約60秒，保持鮮嫩多汁的半熟狀態，再用石板烤至喜歡的熟度。",
                     desc3_title:"美食介紹", desc3_content:"先單吃原味或岩鹽，再試試醬油芥末，最後用山葵蘿蔔泥等搭配；續加的麥飯可拌入明太子或山藥泥，或最後做成茶泡飯。 ",
-                    link_map: "https://googleusercontent.com/maps.google.com/2"
+                    link_map: ""
                 }
             ]
         },
@@ -1012,8 +1012,8 @@
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         events.sort((a, b) => a.time.localeCompare(b.time));
-        const defaultEmbed = "https://googleusercontent.com/maps.google.com/0";
-        const defaultLink = "https://googleusercontent.com/maps.google.com/1";
+        const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
+        const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing";
         const mapEmbedSrc = data.mapEmbed || defaultEmbed;
         const mapLinkHref = data.mapLink || defaultLink;
         const mapHtml = `
@@ -1638,8 +1638,8 @@
     }
     function initInfoMap() {
         const savedConfig = localStorage.getItem('tripInfoMapConfig');
-        const defaultEmbed = "https://googleusercontent.com/maps.google.com/0";
-        const defaultLink = "https://googleusercontent.com/maps.google.com/1";
+        const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
+        const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing";
         if (savedConfig) {
             try {
                 const config = JSON.parse(savedConfig);
@@ -1666,8 +1666,8 @@
             const newLink = document.getElementById('day-edit-map-link').value;
             const config = { embed: newEmbed, link: newLink };
             localStorage.setItem('tripInfoMapConfig', JSON.stringify(config));
-            const defaultEmbed = "https://googleusercontent.com/maps.google.com/0";
-            const defaultLink = "https://googleusercontent.com/maps.google.com/1";
+            const defaultEmbed = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
+            const defaultLink = "https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing";
             document.getElementById('globalInfoMapFrame').src = newEmbed || defaultEmbed;
             document.getElementById('globalInfoMapLink').href = newLink || defaultLink;
             resetModalUI();
