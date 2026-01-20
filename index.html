@@ -186,7 +186,7 @@
             width: 100%; max-width: 90%;
             border-bottom: 2px solid #cbd5e1; 
             position: relative;
-            margin-bottom: px; 
+            margin-bottom: 0px; 
             height: 40px; 
             display: flex; 
             align-items: flex-end; 
@@ -213,6 +213,7 @@
             max-width: 100%;
             max-height: 70vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .cp-sub, .cp-spacer, .cp-close { display: none; }
         /* --- Custom Confirm Modal --- */
@@ -1391,32 +1392,35 @@
         `;
     }
     function saveEdit() {
+        // 1. 讀取所有欄位值
         const newTitle = document.getElementById('e-title').value;
         const newTime = document.getElementById('e-time').value;
         const newType = document.getElementById('e-type').value;
         const newLoc = document.getElementById('e-loc').value;
+        // Point & Speak
         const ps_l1 = document.getElementById('e-ps-l1') ? document.getElementById('e-ps-l1').value : '';
         const ps_c1 = document.getElementById('e-ps-c1') ? document.getElementById('e-ps-c1').value : '';
         const ps_l2 = document.getElementById('e-ps-l2') ? document.getElementById('e-ps-l2').value : '';
         const ps_c2 = document.getElementById('e-ps-c2') ? document.getElementById('e-ps-c2').value : '';
         const ps_l3 = document.getElementById('e-ps-l3') ? document.getElementById('e-ps-l3').value : '';
         const ps_c3 = document.getElementById('e-ps-c3') ? document.getElementById('e-ps-c3').value : '';
+        // GPS & Details
         const gps = document.getElementById('e-gps').value;
         const gps_title = document.getElementById('e-gps-title').value; 
         const d1t = document.getElementById('e-d1-t').value; const d1c = document.getElementById('e-d1-c').value;
         const d2t = document.getElementById('e-d2-t').value; const d2c = document.getElementById('e-d2-c').value;
         const d3t = document.getElementById('e-d3-t').value; const d3c = document.getElementById('e-d3-c').value;
+        const dImg = document.getElementById('e-d-img').value; // 圖片連結
+        // Links
         const lmap = document.getElementById('e-l-map').value;
         const lweb = document.getElementById('e-l-web').value;
         const lvlog = document.getElementById('e-l-vlog').value;
+        // 2. 更新資料物件
         const data = itineraryData[currentDayIdx];
         let events = data.events;
         if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
         const idx = window.currentEventContext.idx;
         const evt = events[idx];
-        const d3t = document.getElementById('e-d3-t').value; const d3c = document.getElementById('e-d3-c').value;
-        const dImg = document.getElementById('e-d-img').value;
-        const lmap = document.getElementById('e-l-map').value;
         evt.title = newTitle; evt.time = newTime; evt.type = newType; evt.location = newLoc;
         evt.ps_label_1 = ps_l1; evt.ps_content_1 = ps_c1;
         evt.ps_label_2 = ps_l2; evt.ps_content_2 = ps_c2;
@@ -1427,7 +1431,9 @@
         evt.desc3_title = d3t; evt.desc3_content = d3c;
         evt.desc_img = dImg;
         evt.link_map = lmap; evt.link_web = lweb; evt.link_vlog = lvlog;
+        // 3. 特殊處理 (相容舊邏輯)
         evt.guide = d3c; 
+        // 4. 更新圖示
         if (newType === 'sightseeing') evt.iconType = 'mountain'; 
         else if (newType === 'food') evt.iconType = 'utensils'; 
         else if (newType === 'lodging') evt.iconType = 'hotel'; 
