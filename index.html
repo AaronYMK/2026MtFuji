@@ -1145,6 +1145,7 @@
         </div>`;
         container.innerHTML = html;
         document.querySelector('.modal-overlay').classList.add('active');
+        document.querySelector('.modal-container').scrollTop = 0;
     }
     // --- Helper 1: About Section (已修改：新增圖片連結功能) ---
     function getAboutSectionHtml(evt, t1Default, t2Default, t3Default) {
@@ -1451,6 +1452,7 @@
         document.getElementById('cpSub').innerText = ""; 
         const modal = document.getElementById('centerPopup');
         modal.classList.add('active');
+        document.getElementById('cpJp').scrollTop = 0;
     }
     function closeCenterPopup() {
         document.getElementById('centerPopup').classList.remove('active');
