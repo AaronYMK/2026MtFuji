@@ -588,22 +588,21 @@
     <div class="wallet-container">
         <div class="em-header"><i class="fas fa-map-marked-alt"></i> 行程資訊</div>
         <style>
-            /* CSS 設定：隱藏頂部黑色標題列 */
-            .info-map-container {width: 100%; height: 188px; overflow: hidden; position: relative; border-radius: 15px 15px 0 0}
-            .info-map-iframe {width: 100%; height: calc(100% + 67px); border: 0; margin-top: -67px}
-            .info-map-link-bottom {display: block; background: #fff; text-align: center; padding: 8px; color: #333; text-decoration: none; font-weight: bold; border-radius: 0 0 15px 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1)}
+        .map-card-wrapper {padding: 12px; background: #fff; box-sizing: border-box}
+        .info-map-container {width: 100%; height: 188px; overflow: hidden; position: relative; border-radius: 12px 12px 0 0}
+        .info-map-iframe { width: 100%; height: calc(100% + 67px); border: 0; margin-top: -67px}
+        .info-map-link-bottom {display: block; background: #fff; text-align: center; padding: 10px; color: #333; text-decoration: none; font-weight: bold; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 1px solid #f0f0f0}
         </style>
         <div class="map-card-wrapper" style="position:relative;">
-            <div onclick="editInfoMap()" style="position:absolute; top:10px; right:10px; z-index:10; background:rgba(255,255,255,0.8); padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem; font-weight:bold; color:#1e3a8a; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
-                <i class="fas fa-pen"></i>
-            </div>
-
-            <div class="info-map-container">
-                <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <a id="globalInfoMapLink" href="https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）" target="_blank" class="info-map-link-bottom">
-                 <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
-            </a>
+        <div onclick="editInfoMap()" style="position:absolute; top:20px; right:20px; z-index:10; background:rgba(255,255,255,0.8); padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem; font-weight:bold; color:#1e3a8a; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            <i class="fas fa-pen"></i>
+        </div>
+        <div class="info-map-container">
+            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <a id="globalInfoMapLink" href="https://www.google.com/maps/d/u/0/edit?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&usp=sharing）" target="_blank" class="info-map-link-bottom">
+             <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
+        </a>
         </div>
         <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="text-decoration:none;">
             <div class="vjw-banner">
