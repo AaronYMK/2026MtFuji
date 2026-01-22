@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="referrer" content="no-referrer">
     
-    <title>【 12026 Winter Mt. Fuji 】</title>
+    <title>【 2026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -434,6 +434,72 @@
         .view-section { display: none; animation: fadeIn 0.4s ease; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        /* --- 圖片預覽視窗樣式 --- */
+        .img-preview-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 5000;
+            display: none; justify-content: center; align-items: center;
+            overflow: hidden; /* 防止背景滑動 */
+            animation: fadeIn 0.3s;
+        }
+        .img-preview-overlay.active { display: flex; }
+        .img-preview-container {
+            width: 100%; height: 100%;
+            overflow: auto; /* 允許圖片放大後捲動 */
+            display: flex; justify-content: center; align-items: center;
+            -webkit-overflow-scrolling: touch; /* 讓 iOS 滑動更順暢 */
+        }
+        .img-preview-content {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain;
+            transition: width 0.3s ease; /* 放大縮小的動畫 */
+            cursor: zoom-in;
+        }
+        /* 放大狀態：寬度設為 250% 讓手機可以左右滑動看細節 */
+        .img-preview-content.zoomed {
+            width: 250%; 
+            max-width: none; max-height: none;
+            cursor: zoom-out;
+            margin: auto; /* 放大後保持置中 */
+        }
+        .img-preview-close {
+            position: absolute; top: 20px; right: 20px;
+            color: white; font-size: 2rem; cursor: pointer;
+            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 50%;
+            z-index: 5001;
+        }
+        .img-preview-hint {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7); font-size: 0.9rem; pointer-events: none;
+            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
+        }
+        /* --- 移除舊的 .day-action-btns 相關樣式 (選擇性，不刪也沒關係) --- */
+        /* --- 新增：標題旁的動作按鈕群組 --- */
+        .header-action-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;       /* 按鈕之間的距離 */
+            margin-left: 15px; /* 與地點文字(Shinjuku)的距離 */
+            padding-left: 15px;
+            border-left: 2px solid #dbeafe; /* 加一條分隔線，比較好看 */
+        }
+        .header-btn-icon {
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 5px;
+        }
+        /* 編輯按鈕顏色 */
+        .header-btn-icon.edit {
+            color: var(--primary-blue);
+        }
+        /* 刪除按鈕顏色 */
+        .header-btn-icon.del {
+            color: #ef4444; /* 紅色 */
+        }
+        .header-btn-icon:active {
+            transform: scale(0.9); /* 點擊時縮小效果 */
+        }
     </style>
 </head>
 <body>
@@ -515,10 +581,6 @@
         <div class="day-vertical" id="dayVertical">第一天</div>
         <div class="hero-card" id="heroCard">
             <div class="hero-overlay">
-                <div class="day-action-btns">
-                    <div class="day-btn" onclick="openEditDayModal()"><i class="fas fa-edit"></i></div>
-                    <div class="day-btn" onclick="deleteDay()"><i class="fas fa-trash-alt"></i></div>
-                </div>
                 <div class="hero-meta-row">
                     <span class="hero-badge" id="heroDay">DAY 1</span>
                     <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 東京都</span>
@@ -533,8 +595,12 @@
                 <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.35rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
                 <div>
                     <div class="weather-loc" id="wLoc">Tokyo</div>
-                    </div>
-            </div>
+                </div>
+                <div class="header-action-group">
+                    <i class="fas fa-pen header-btn-icon edit" onclick="openEditDayModal()"></i>
+                    <i class="fas fa-trash-alt header-btn-icon del" onclick="deleteDay()"></i>
+                </div>
+                </div>
             <i class="fas fa-sun" style="font-size:1.8rem; color:var(--primary-blue)"></i>
         </div>
         <div class="weather-strip" id="weatherStrip"></div>
@@ -587,7 +653,9 @@
                 <button class="btn-export" style="font-size:0.9rem" onclick="exportExpenses()">匯出明細</button>
                 <button class="btn-clear" style="font-size:0.9rem" onclick="askClearAll()">清除所有明細</button>
             </div>
-</div></div></div>
+        </div>
+    </div>
+</div>
 <div id="view-info" class="view-section">
     <div class="wallet-container">
         <div class="em-header"><i class="fas fa-map-marked-alt"></i> 行程資訊</div>
@@ -742,6 +810,13 @@
     <i class="fas fa-wallet nav-icon" onclick="switchView('wallet', this)"></i>
     <i class="fas fa-info-circle nav-icon" onclick="switchView('info', this)"></i>
 </nav>
+<div id="imagePreviewModal" class="img-preview-overlay" onclick="closeImagePreview(event)">
+    <div class="img-preview-container">
+        <img id="imgPreviewTarget" class="img-preview-content" src="" onclick="toggleImageZoom(event)">
+    </div>
+    <div class="img-preview-hint"><i class="fas fa-search-plus"></i> 點擊圖片可放大 / 再次點擊縮小</div>
+    <i class="fas fa-times img-preview-close"></i>
+</div>
 <script>
     // 1. 變數定義區 (修正 HTTPS)
     const DEFAULT_MAP_EMBED = "https://www.google.com/maps/d/u/0/embed?mid=1EA8NgY801OYj492d5Qu4i4b8xjrCN04&ehbc=2E312F";
@@ -1052,6 +1127,8 @@
             else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; 
             let displayDesc = evt.desc1_content || ""; 
             const eventContext = { isBranch: data.hasBranch, branchType: currentBranch, idx: idx };
+            const safeEvt = JSON.stringify(evt).replace(/'/g, "&#39;");
+            const safeCtx = JSON.stringify(eventContext).replace(/'/g, "&#39;");
             return `
             <div class="timeline-row type-${evt.type}" data-time="${evt.time}">
                 <div class="t-time-col">${evt.time}</div>
@@ -1176,11 +1253,12 @@
         }
         if (hasC1 || hasC2 || hasC3 || hasImg) {
             html += `<div class="desc-list">`;
-            if (hasC1) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || t1Default}</div><div class="desc-content">${evt.desc1_content}</div></div>`;
-            if (hasC2) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || t2Default}</div><div class="desc-content">${evt.desc2_content}</div></div>`;
-            if (hasC3) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || t3Default}</div><div class="desc-content">${evt.desc3_content}</div></div>`;
+            if (hasC1) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || t1Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc1_content}</div></div>`;
+            if (hasC2) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || t2Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc2_content}</div></div>`;
+            if (hasC3) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || t3Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc3_content}</div></div>`;
             if (hasImg) {
-                html += `<img src="${evt.desc_img}" style="width:100%; border-radius:12px; margin-top:5px; display:block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`;
+                // 修改：加入 onclick="openImagePreview(...)"
+                html += `<img src="${evt.desc_img}" onclick="openImagePreview('${evt.desc_img}')" style="width:100%; border-radius:12px; margin-top:5px; display:block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor:pointer;">`;
             }
             html += `</div>`;
         }
@@ -1199,7 +1277,7 @@
             <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
                 <div>
                     <div class="res-label" style="margin:0; font-size:0.8rem">RESERVATION INFORMATION</div>
-                    <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem">${val1}</div>
+                    <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem; white-space: pre-wrap">${val1}</div>
                 </div>
                 <div onclick="goToReservation()" style="display:flex;">
                     <i class="fas fa-ticket-alt res-link-icon" style="font-size:1.2rem"></i>
@@ -1249,14 +1327,14 @@
             if (cn === "" && jp === "" && link === "") return "";
             let jpHtml = "";
             if (link !== "") {
-                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem">${jp}</a>`;
+                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem; white-space: pre-wrap; display:block">${jp}</a>`;
             } else {
-                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a;">${jp}</span>`;
+                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a; white-space: pre-wrap; display:block">${jp}</span>`;
             }
             html = `
             <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
             <div class="ps-box">
-                <span class="ps-cn" style="font-size:1rem">${cn}</span>
+                <span class="ps-cn" style="font-size:1rem; white-space: pre-wrap; display:block">${cn}</span>
                 ${jpHtml}
             </div>`;
         }
@@ -1300,7 +1378,7 @@
              if(!t3) t3 = "注意事項";
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">預約 & 訂單 ( RESERVATION & CONFIRMATION )</div>
-                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><textarea class="edit-input" style="margin-top:5px; height:80px; padding:5px; line-height:1.4;" id="e-ps-l1">${evt.ps_label_1 || ''}</textarea></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
         } else if (type === 'sightseeing') {
@@ -1309,8 +1387,8 @@
              if(!t3) t3 = "注意事項";
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
-                <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
-                <div class="edit-group" style="margin-top:10px"><div class="edit-label">日文名稱</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><textarea class="edit-input" style="margin-top:5px; height:70px; padding:5px; line-height:1.4;" id="e-ps-l1">${evt.ps_label_1 || ''}</textarea></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">日文名稱</div><textarea class="edit-input" style="margin-top:5px; height:70px; padding:5px; line-height:1.4;" id="e-ps-l2">${evt.ps_label_2 || ''}</textarea></div>
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
              `;
         }
@@ -1702,6 +1780,28 @@
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 100);
+    }
+    // --- Image Preview Logic ---
+    function openImagePreview(src) {
+    if(!src) return;
+    const modal = document.getElementById('imagePreviewModal');
+    const img = document.getElementById('imgPreviewTarget');
+    img.src = src;
+    img.classList.remove('zoomed'); // 預設不放大
+    modal.classList.add('active');
+    }
+    function closeImagePreview(e) {
+    // 只有點擊背景或關閉按鈕才關閉，點擊圖片本身不關閉
+    if (e.target.id === 'imagePreviewModal' || e.target.classList.contains('img-preview-close')) {
+        document.getElementById('imagePreviewModal').classList.remove('active');
+        document.getElementById('imgPreviewTarget').src = "";
+        }
+    }
+    function toggleImageZoom(e) {
+    // 阻止冒泡，避免觸發關閉視窗
+    e.stopPropagation(); 
+    const img = document.getElementById('imgPreviewTarget');
+    img.classList.toggle('zoomed');
     }
     init();
 </script>
