@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="referrer" content="no-referrer">
     
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <title>【 12026 Winter Mt. Fuji 】</title>
     
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -786,9 +786,9 @@
                     guide: "【排隊名店】這家炸牛排以「只有炸60秒」聞名...",
                     ps_label_1: "炸牛排定食", ps_content_1: "牛かつ定食をください",
                     gps: "+815017218829", gps_title: "Phone",
-                    desc1_title:"店名由來", desc1_content:"可能是店家的姓氏（元村）或創始人的名字，強調其「本源、元祖」的炸牛排專賣店地位，意在讓顧客知道這是專注於炸牛排這項日本新興飲食文化的指標性店鋪。 ",
-                    desc2_title:"職人堅持", desc2_content:"牛排油炸約60秒，保持鮮嫩多汁的半熟狀態，再用石板烤至喜歡的熟度。",
-                    desc3_title:"美食介紹", desc3_content:"先單吃原味或岩鹽，再試試醬油芥末，最後用山葵蘿蔔泥等搭配；續加的麥飯可拌入明太子或山藥泥，或最後做成茶泡飯。 ",
+                    desc1_title:"美食介紹", desc1_content:"可能是店家的姓氏（元村）或創始人的名字，強調其「本源、元祖」的炸牛排專賣店地位，意在讓顧客知道這是專注於炸牛排這項日本新興飲食文化的指標性店鋪。 ",
+                    desc2_title:"營業時間", desc2_content:"牛排油炸約60秒，保持鮮嫩多汁的半熟狀態，再用石板烤至喜歡的熟度。",
+                    desc3_title:"店鋪地址", desc3_content:"先單吃原味或岩鹽，再試試醬油芥末，最後用山葵蘿蔔泥等搭配；續加的麥飯可拌入明太子或山藥泥，或最後做成茶泡飯。 ",
                     link_map: ""
                 }
             ]
@@ -1080,9 +1080,9 @@
             time: "24:00", title: "新行程", type: "food", iconType: "utensils", desc: "", location: "新地點",
             ps_label_1: "", ps_content_1: "", 
             gps_title: "PHONE",
-            desc1_title: "店名由來", desc1_content: "",
-            desc2_title: "職人堅持", desc2_content: "",
-            desc3_title: "美食介紹", desc3_content: ""
+            desc1_title: "美食介紹", desc1_content: "",
+            desc2_title: "營業時間", desc2_content: "",
+            desc3_title: "店鋪地址", desc3_content: ""
         });
         saveItineraryToLocal();
         switchDay(currentDayIdx); 
@@ -1136,13 +1136,13 @@
         // 2. Body
         if (evt.type === 'food') {
             html += getPointAndSpeakHtml(evt);
-            html += getAboutSectionHtml(evt, '店名由來', '職人堅持', '美食介紹');
+            html += getAboutSectionHtml(evt, '美食介紹', '營業時間', '店鋪地址');
         } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
             html += getReservationHtml(evt);
             html += getAboutSectionHtml(evt, '接駁位置', '坐駕介紹', '注意事項');
         } else if (evt.type === 'sightseeing') {
             html += getPointAndSpeakHtml(evt);
-            html += getAboutSectionHtml(evt, '停車攻略', '歷史地位', '注意事項');
+            html += getAboutSectionHtml(evt, '景點介紹', '停車地址', '注意事項');
         }
         // 3. Links
         if(evt.link_map || evt.link_web || evt.link_vlog) {
@@ -1276,9 +1276,9 @@
         let t2 = evt.desc2_title || "";
         let t3 = evt.desc3_title || "";
         if(type === 'food') {
-             if(!t1) t1 = "店名由來";
-             if(!t2) t2 = "職人堅持";
-             if(!t3) t3 = "美食介紹";
+             if(!t1) t1 = "美食介紹";
+             if(!t2) t2 = "營業時間";
+             if(!t3) t3 = "店鋪地址";
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
                 <div class="edit-row" style="margin-top:10px">
@@ -1304,8 +1304,8 @@
                 <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
              `;
         } else if (type === 'sightseeing') {
-             if(!t1) t1 = "停車攻略";
-             if(!t2) t2 = "歷史地位";
+             if(!t1) t1 = "景點介紹";
+             if(!t2) t2 = "停車地址";
              if(!t3) t3 = "注意事項";
              fields = `
                 <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
