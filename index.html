@@ -697,11 +697,14 @@
                     <div class="vjw-title" style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px;">Visit Japan Web</div>
                     <div class="vjw-sub" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
                 </div>
+            
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; flex-shrink: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.1);">
-                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.8rem; transition: 0.2s; display: block; line-height: 1;">
+                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.2rem; display: block; line-height: 1;">
                         <i class="fas fa-external-link-alt"></i>
                     </a>
-                    <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.6rem; cursor: pointer; display: none;"></i>
+                    
+                    <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.2rem; cursor: pointer; display: none;"></i>
+                    
                     <i class="fas fa-cog" onclick="editVjwQrs()" style="color: rgba(255, 255, 255, 0.4); font-size: 1.2rem; cursor: pointer;"></i>
                 </div>
             </div>
@@ -818,10 +821,10 @@
             </div>
             <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">   
             <div style="margin-top: 15px; display: flex; gap: 10px;">
-                 <button class="btn-reset-app" style="flex: 1; height: 45px; background: #f1f5f9; color: #475569; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="offlineAllImages()">
+                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #f1f5f9; color: #475569; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="offlineAllImages()">
                     <i class="fas fa-plane-slash"></i> 離線化
                  </button>
-                 <button class="btn-reset-app" style="flex: 1; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="resetApp()">
+                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="resetApp()">
                     <i class="fas fa-redo-alt"></i> 重置
                  </button>
             </div>
@@ -1872,31 +1875,38 @@
     // 在資料同步區或編輯地圖區，新增 5 個連結的輸入欄位
     function editVjwQrs() {
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
-        document.getElementById('dateModalTitle').innerText = "QR Code";
+        document.getElementById('dateModalTitle').innerText = "設定 VJW QR Code 連結";
         document.getElementById('newDateInput').style.display = 'none';
         const fieldsArea = document.getElementById('editDayExtraFields');
         fieldsArea.style.display = 'block';
-        // 清空舊的，放入 5 個輸入框
+        
         fieldsArea.innerHTML = `
-            <div class="edit-label"></div>
-            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:5px" placeholder="" value="${saved[i] || ''}">`).join('')}
+            <div class="edit-label">QR Code 圖片連結 (1-5)</div>
+            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:5px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
         `;
         const btn = document.getElementById('dateModalConfirmBtn');
-        btn.innerText = "儲存";
+        btn.innerText = "儲存"; 
         btn.onclick = function() {
             const inputs = document.querySelectorAll('.vjw-qr-input');
             const urls = Array.from(inputs).map(input => input.value.trim());
             localStorage.setItem('vjw_qrs', JSON.stringify(urls));
-            checkVjwBtn();
+            checkVjwBtn(); // 執行顯示檢查
+            // --- 修正：儲存後自動關閉視窗與解除滾動鎖定 ---
             document.getElementById('dateInputModal').classList.remove('active');
+            unlockScroll(); 
         };
         document.getElementById('dateInputModal').classList.add('active');
     }
     // 檢查是否要顯示離線按鈕
     function checkVjwBtn() {
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
-        const hasAny = saved.some(url => url !== "");
-        document.getElementById('vjw-qr-btn-container').style.display = hasAny ? 'block' : 'none';
+        // 檢查是否「至少有一個欄位」不是空的
+        const hasAnyContent = saved.some(url => url && url.trim() !== "");
+        const qrIcon = document.getElementById('vjw-qr-icon-sidebar');
+        if (qrIcon) {
+            // 欄位有內容才顯示 (block)，否則隱藏 (none)
+            qrIcon.style.display = hasAnyContent ? 'block' : 'none';
+        }
     }
     // 開啟卡片顯示圖片
     function openVjwQrModal() {
@@ -1904,7 +1914,6 @@
         let imgHtml = saved.filter(url => url !== "").map(url => `
             <img src="${url}" style="width:100%; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);" onclick="openImagePreview('${url}')">
         `).join('');
-    
         // 借用 detailModal 來顯示
         window.currentEvent = { type: 'lodging', title: 'VJW QR Codes', time: 'OFFLINE' }; // 偽裝資料
         const container = document.getElementById('modalContent');
