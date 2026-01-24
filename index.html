@@ -1884,6 +1884,9 @@
         fieldsArea.style.display = 'block';
         // 生成輸入框邏輯
         fieldsArea.innerHTML = `
+            <div class="edit-label" style="margin-bottom:15px; color:var(--primary-blue); font-size:0.8rem; line-height:1.4;">
+                * 若已執行「 離線化 」，欄位為已加密狀態\n請點擊「 清除圖片 」移除設定。
+            </div>
             ${saved.map((val, i) => {
                 const isBase64 = val.startsWith('data:image');
                 return `
@@ -2014,7 +2017,7 @@
         // 鎖定滾動防止干擾
         lockScroll(); 
         // 顯示進度提示
-        showCustomAlert("正在處理圖片離線化...\n這可能需要幾秒鐘，請勿關閉網頁。");   
+        showCustomAlert("正在處理圖片離線化...\n需要一些時間，請勿關閉網頁。");   
         try {
             // 1. 處理行程內的圖片
             for (let day of itineraryData) {
@@ -2047,7 +2050,7 @@
             }, 500);
         } catch (err) {
             closeConfirm();
-            showCustomAlert("離線化過程中發生錯誤，請檢查網路連線。");
+            showCustomAlert("離線化過程中發生錯誤，\n請檢查網路連線。");
         } finally {
             unlockScroll();
         }
