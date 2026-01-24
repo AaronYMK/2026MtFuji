@@ -2014,43 +2014,71 @@
         }
     }
     async function offlineAllImages() {
-        // 鎖定滾動防止干擾
         lockScroll(); 
-        // 顯示進度提示
-        showCustomAlert("正在處理圖片離線化...\n需要一些時間，請勿關閉網頁。");   
+        showCustomAlert("正在處理圖片離線化...\n遇到無法轉換的圖片將會跳過，請稍候。");   
+        let errorCount = 0; // 紀錄跳過的圖片數量
         try {
             // 1. 處理行程內的圖片
             for (let day of itineraryData) {
-                // 背景圖
-                if (day.bg) day.bg = await convertUrlToBase64(day.bg);        
-                // 行程事件圖 (考慮分流 A/B)
+                // 處理背景圖
+                if (day.bg && !day.bg.startsWith('data:')) {
+                    try {
+                        day.bg = await convertUrlToBase64(day.bg);
+                    } catch (e) {
+                        console.warn("跳過背景圖轉換:", day.bg);
+                        errorCount++;
+                    }
+                }
+                // 處理行程事件圖 (考慮分流 A/B 及主行程)
                 const allEvts = [
                     ...(day.events || []),
                     ...(day.eventsA || []),
                     ...(day.eventsB || [])
                 ];        
                 for (let evt of allEvts) {
-                    if (evt.desc_img) evt.desc_img = await convertUrlToBase64(evt.desc_img);
+                    if (evt.desc_img && !evt.desc_img.startsWith('data:')) {
+                        try {
+                            evt.desc_img = await convertUrlToBase64(evt.desc_img);
+                        } catch (e) {
+                            console.warn("跳過事件圖片轉換:", evt.desc_img);
+                            errorCount++;
+                        }
+                    }
                 }
             }
             // 2. 處理 VJW QR Codes
             const vjwQrs = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
             const processedVjw = [];
             for (let url of vjwQrs) {
-                processedVjw.push(await convertUrlToBase64(url));
+                if (url && !url.startsWith('data:')) {
+                    try {
+                        const b64 = await convertUrlToBase64(url);
+                        processedVjw.push(b64);
+                    } catch (e) {
+                        console.warn("跳過 VJW QR 轉換:", url);
+                        processedVjw.push(url); // 失敗則保留原網址
+                        errorCount++;
+                    }
+                } else {
+                    processedVjw.push(url);
+                }
             }
             localStorage.setItem('vjw_qrs', JSON.stringify(processedVjw));
             // 儲存至本地
             saveItineraryToLocal();
-            // 關閉之前的 Alert 並顯示成功
             closeConfirm(); 
             setTimeout(() => {
-                showCustomAlert("✅ 離線化完成！\n所有圖片已加密儲存於瀏覽器緩存，無網路時也能正常顯示圖片。");
-                switchDay(currentDayIdx); // 重新渲染畫面
+                let msg = "✅ 離線化處理完成！";
+                if (errorCount > 0) {
+                    msg += `\n(其中 ${errorCount} 張圖片因來源限制無法轉換，仍需網路才能顯示)`;
+                }
+                showCustomAlert(msg);
+                switchDay(currentDayIdx); 
             }, 500);
         } catch (err) {
+            console.error("嚴重錯誤:", err);
             closeConfirm();
-            showCustomAlert("離線化過程中發生錯誤，\n請檢查網路連線。");
+            showCustomAlert("執行過程中發生預期外錯誤。");
         } finally {
             unlockScroll();
         }
