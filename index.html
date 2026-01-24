@@ -1885,18 +1885,18 @@
         // 生成輸入框邏輯
         fieldsArea.innerHTML = `
             <div class="edit-label" style="margin-bottom:15px; color:var(--primary-blue); font-size:0.8rem; line-height:1.4;">
-                * 若已執行「離線化」，欄位將顯示為已加密狀態，請點擊「清除圖片」來移除。
+                * 若已執行「 離線化 」，欄位為已加密狀態。
             </div>
             ${saved.map((val, i) => {
                 const isBase64 = val.startsWith('data:image');
                 return `
-                <div style="margin-bottom:20px; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+                <div style="margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div class="edit-label">第 ${i+1} 張</div>
                         ${isBase64 ? `<span style="font-size:0.7rem; color:#ef4444; font-weight:700; cursor:pointer;" onclick="document.getElementById('vjw-input-${i}').value=''; this.style.display='none'; document.getElementById('vjw-input-${i}').placeholder='已清除，請儲存';">清除圖片</span>` : ''}
                     </div>
                     <input id="vjw-input-${i}" class="edit-input vjw-qr-input" 
-                           style="margin-top:8px; font-size:0.8rem;" 
+                           style="margin-top:10px; font-size:0.8rem;" 
                            placeholder="${isBase64 ? '[ 已儲存離線化圖片 ]' : '請貼上圖片連結'}" 
                            value="${isBase64 ? '' : val}"
                            ${isBase64 ? 'readonly' : ''}>
