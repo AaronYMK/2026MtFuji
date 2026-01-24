@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="referrer" content="no-referrer">
-    <title>【 2026 Winter Mt. Fuji 】</title>
+    <titleOFFLINE QR>【 2026 Winter Mt. Fuji 】</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -690,21 +690,18 @@
         </div>
         <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="text-decoration:none;">
             <div class="vjw-banner" style="display: flex; align-items: center; justify-content: space-between; padding: 22px; cursor: default; background: #233b7d; border-radius: 20px;">
-                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; pointer-events: none;">
                     <div style="margin-bottom: 8px;">
                         <span class="vjw-tag" style="background: #e5534b; padding: 4px 10px; border-radius: 5px; font-weight: 700; font-size: 0.8rem; color: #fff; display: inline-block;">MUST HAVE</span>
                     </div>
                     <div class="vjw-title" style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px;">Visit Japan Web</div>
                     <div class="vjw-sub" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
                 </div>
-            
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; flex-shrink: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.1);">
                     <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.2rem; display: block; line-height: 1;">
                         <i class="fas fa-external-link-alt"></i>
                     </a>
-                    
                     <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.2rem; cursor: pointer; display: none;"></i>
-                    
                     <i class="fas fa-cog" onclick="editVjwQrs()" style="color: rgba(255, 255, 255, 0.4); font-size: 1.2rem; cursor: pointer;"></i>
                 </div>
             </div>
@@ -1918,8 +1915,7 @@
         window.currentEvent = { type: 'lodging', title: 'VJW QR Codes', time: 'OFFLINE' }; // 偽裝資料
         const container = document.getElementById('modalContent');
         container.innerHTML = `
-            <div class="m-header"><span class="m-tag" style="color:red; border-color:red">OFFLINE QR</span></div>
-            <div class="m-title">入境預備 QR Code</div>
+            <div class="m-header"><span class="m-tag" style="color:red; border-color:red">入境 QR CODE</span></div>
             <div style="margin-top:20px">${imgHtml}</div>
         `;
         document.getElementById('detailModal').classList.add('active');
