@@ -2015,70 +2015,60 @@
     }
     async function offlineAllImages() {
         lockScroll(); 
-        showCustomAlert("正在處理圖片離線化...\n遇到無法轉換的圖片將會跳過，請稍候。");   
-        let errorCount = 0; // 紀錄跳過的圖片數量
+        showCustomAlert("正在處理圖片離線化...\n這可能需要一點時間。");   
+        
+        let errorCount = 0;
+        let isSpaceFull = false;
+    
         try {
-            // 1. 處理行程內的圖片
-            for (let day of itineraryData) {
-                // 處理背景圖
+            // 建立一個暫存副本，避免儲存失敗時弄亂原始資料
+            let tempItinerary = JSON.parse(JSON.stringify(itineraryData));
+    
+            // 1. 處理行程圖片
+            for (let day of tempItinerary) {
                 if (day.bg && !day.bg.startsWith('data:')) {
                     try {
                         day.bg = await convertUrlToBase64(day.bg);
-                    } catch (e) {
-                        console.warn("跳過背景圖轉換:", day.bg);
-                        errorCount++;
-                    }
+                    } catch (e) { errorCount++; }
                 }
-                // 處理行程事件圖 (考慮分流 A/B 及主行程)
-                const allEvts = [
-                    ...(day.events || []),
-                    ...(day.eventsA || []),
-                    ...(day.eventsB || [])
-                ];        
+                const allEvts = [...(day.events || []), ...(day.eventsA || []), ...(day.eventsB || [])];        
                 for (let evt of allEvts) {
                     if (evt.desc_img && !evt.desc_img.startsWith('data:')) {
                         try {
                             evt.desc_img = await convertUrlToBase64(evt.desc_img);
-                        } catch (e) {
-                            console.warn("跳過事件圖片轉換:", evt.desc_img);
-                            errorCount++;
-                        }
+                        } catch (e) { errorCount++; }
                     }
                 }
             }
-            // 2. 處理 VJW QR Codes
-            const vjwQrs = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
-            const processedVjw = [];
-            for (let url of vjwQrs) {
-                if (url && !url.startsWith('data:')) {
-                    try {
-                        const b64 = await convertUrlToBase64(url);
-                        processedVjw.push(b64);
-                    } catch (e) {
-                        console.warn("跳過 VJW QR 轉換:", url);
-                        processedVjw.push(url); // 失敗則保留原網址
-                        errorCount++;
-                    }
+    
+            // 2. 嘗試儲存
+            try {
+                localStorage.setItem('tripData2026', JSON.stringify(tempItinerary));
+                itineraryData = tempItinerary; // 儲存成功才更新主變數
+            } catch (e) {
+                if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    isSpaceFull = true;
                 } else {
-                    processedVjw.push(url);
+                    throw e; 
                 }
             }
-            localStorage.setItem('vjw_qrs', JSON.stringify(processedVjw));
-            // 儲存至本地
-            saveItineraryToLocal();
+    
             closeConfirm(); 
             setTimeout(() => {
-                let msg = "✅ 離線化處理完成！";
-                if (errorCount > 0) {
-                    msg += `\n(其中 ${errorCount} 張圖片因來源限制無法轉換，仍需網路才能顯示)`;
+                if (isSpaceFull) {
+                    showCustomAlert("⚠️ 儲存空間已滿！\n您的圖片太多或解析度太高，瀏覽器無法容納。建議減少圖片數量或使用較小的圖檔。");
+                } else {
+                    let msg = "✅ 離線化處理完成！";
+                    if (errorCount > 0) msg += `\n(跳過了 ${errorCount} 張無法轉換的圖片)`;
+                    showCustomAlert(msg);
+                    switchDay(currentDayIdx);
                 }
-                showCustomAlert(msg);
-                switchDay(currentDayIdx); 
             }, 500);
+    
         } catch (err) {
             console.error("嚴重錯誤:", err);
             closeConfirm();
-            showCustomAlert("執行過程中發生預期外錯誤。");
+            showCustomAlert("❌ 執行失敗：請嘗試重新整理頁面，或檢查是否使用了過大的圖片檔案。");
         } finally {
             unlockScroll();
         }
