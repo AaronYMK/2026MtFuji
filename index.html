@@ -657,7 +657,9 @@
             </div>
             <div class="expense-list" id="expenseList"></div>
             <div class="wallet-actions">
-                <button class="btn-export" style="font-size:0.9rem" onclick="exportExpenses()">匯出明細</button>
+                <button class="action-btn" style="width: 100%; margin-top: 20px; background: #f1f5f9; color: #475569; border: none; font-weight: 500;" onclick="exportExpenses()">
+                    <i class="fas fa-file-download"></i> 匯出明細
+                </button>
                 <button class="btn-clear" style="font-size:0.9rem" onclick="askClearAll()">清除所有明細</button>
             </div>
         </div>
@@ -818,11 +820,11 @@
             </div>
             <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">   
             <div style="margin-top: 15px; display: flex; gap: 10px;">
-                 <button class="btn-reset-app" style="background: #0f172a; flex: 1;" onclick="offlineAllImages()">
-                    <i class="fas fa-plane-slash" style="font-size: 1.2rem"></i> 離線化
-                 </button>
-                 <button class="btn-reset-app" style="background: #475569; flex: 1;" onclick="resetApp()">
-                    <i class="fas fa-redo-alt" style="font-size: 1.2rem"></i> 重置
+                 <button class="btn-reset-app" style="background: #f1f5f9; color: #475569; flex: 1; border: none;" onclick="offlineAllImages()">
+                    <i class="fas fa-plane-slash"></i> 離線化
+                 </button> 
+                 <button class="btn-reset-app" style="background: #fee2e2; color: #ef4444; flex: 1; border: none;" onclick="resetApp()">
+                    <i class="fas fa-redo-alt"></i> 重置
                  </button>
             </div>
         </div> 
