@@ -1873,30 +1873,39 @@
         };
         document.getElementById('dateInputModal').classList.add('active');
     }
-    // 在資料同步區或編輯地圖區，新增 5 個連結的輸入欄位
+    // 編輯 VJW QR Code 連結的視窗
     function editVjwQrs() {
         lockScroll();
-        const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
+        // 取得儲存的資料，如果沒有則建立一個包含 5 個空字串的陣列
+        let saved = JSON.parse(localStorage.getItem('vjw_qrs') || '["", "", "", "", ""]');
+        // 確保陣列長度至少有 5，防止舊資料格式不符
+        while(saved.length < 5) saved.push("");
         document.getElementById('dateModalTitle').innerText = "QR Code Links";
         document.getElementById('newDateInput').style.display = 'none';
         const fieldsArea = document.getElementById('editDayExtraFields');
         fieldsArea.style.display = 'block';
+        // 生成 5 個輸入框，value 會直接帶入儲存的內容（如果是空字串就是空白）
         fieldsArea.innerHTML = `
-            <div class="edit-label"></div>
-            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:0px;margin-bottom:20px" placeholder="" value="${saved[i] || ''}">`).join('')}
+            <div class="edit-label" style="margin-bottom:10px; color:var(--primary-blue);">請貼上圖片網址或 Base64：</div>
+            ${saved.map((val, i) => `
+                <div style="margin-bottom:15px;">
+                    <div class="edit-label">第 ${i+1} 格</div>
+                    <input class="edit-input vjw-qr-input" style="margin-top:5px;" 
+                           placeholder="暫無網址 (空白)" value="${val}">
+                </div>
+            `).join('')}
         `;
         const btnContainer = document.querySelector('#dateInputModal .confirm-btns');
-        if (btnContainer) {
-            btnContainer.style.marginTop = "0px"; // 這裡的數值越大，間距就越寬
-        }
+        if (btnContainer) btnContainer.style.marginTop = "0px";
         const btn = document.getElementById('dateModalConfirmBtn');
-        btn.innerText = "儲存"; 
+        btn.innerText = "儲存設定"; 
         btn.onclick = function() {
             const inputs = document.querySelectorAll('.vjw-qr-input');
+            // 讀取所有輸入框的內容
             const urls = Array.from(inputs).map(input => input.value.trim());
+            // 儲存回 localStorage
             localStorage.setItem('vjw_qrs', JSON.stringify(urls));
-            checkVjwBtn(); // 執行顯示檢查
-            // --- 修正：儲存後自動關閉視窗與解除滾動鎖定 ---
+            checkVjwBtn(); // 更新主介面按鈕顯示狀態
             document.getElementById('dateInputModal').classList.remove('active');
             unlockScroll(); 
         };
