@@ -1872,14 +1872,13 @@
     // 在資料同步區或編輯地圖區，新增 5 個連結的輸入欄位
     function editVjwQrs() {
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
-        document.getElementById('dateModalTitle').innerText = "設定 VJW QR Code 連結";
+        document.getElementById('dateModalTitle').innerText = "QR Code Links";
         document.getElementById('newDateInput').style.display = 'none';
         const fieldsArea = document.getElementById('editDayExtraFields');
         fieldsArea.style.display = 'block';
-        
         fieldsArea.innerHTML = `
-            <div class="edit-label">QR Code 圖片連結 (1-5)</div>
-            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:5px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
+            <div class="edit-label"></div>
+            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:10px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
         `;
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存"; 
