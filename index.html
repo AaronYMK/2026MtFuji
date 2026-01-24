@@ -657,7 +657,7 @@
             </div>
             <div class="expense-list" id="expenseList"></div>
             <div class="wallet-actions" style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="btn-export" style="flex: 1; height: 45px; background: #f1f5f9; color: #475569; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="exportExpenses()">
+                <button class="btn-export" style="flex: 1; height: 45px; background: #94a3b8; color: #ffffff; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="exportExpenses()">
                     <i class="fas fa-file-download"></i> 匯出明細
                 </button>
                 <button class="btn-clear" style="flex: 1; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="askClearAll()">
@@ -816,7 +816,7 @@
             </div>
             <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">   
             <div style="margin-top: 15px; display: flex; gap: 10px;">
-                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #f1f5f9; color: #475569; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="offlineAllImages()">
+                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #94a3b8; color: #ffffff; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="offlineAllImages()">
                     <i class="fas fa-plane-slash"></i> 離線化
                  </button>
                  <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="resetApp()">
@@ -1880,7 +1880,7 @@
         `;
         const btnContainer = document.querySelector('#dateInputModal .confirm-btns');
         if (btnContainer) {
-            btnContainer.style.marginTop = "10px"; // 這裡的數值越大，間距就越寬
+            btnContainer.style.marginTop = "0px"; // 這裡的數值越大，間距就越寬
         }
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存"; 
