@@ -696,7 +696,7 @@
                     <div class="vjw-sub" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
                     <div id="vjw-qr-btn-container" style="margin-top: 12px; display: none;">
                         <button onclick="openVjwQrModal()" style="background: rgba(255,255,255,0.2); border: 1px solid #fff; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
-                            <i class="fas fa-qrcode"></i> 離線 QR Code
+                            <i class="fas fa-qrcode"></i>
                         </button>
                     </div>
                 </div>
@@ -1874,7 +1874,7 @@
     // 在資料同步區或編輯地圖區，新增 5 個連結的輸入欄位
     function editVjwQrs() {
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
-        document.getElementById('dateModalTitle').innerText = "[ LINKS ] QR Code";
+        document.getElementById('dateModalTitle').innerText = "QR Code";
         document.getElementById('newDateInput').style.display = 'none';
         const fieldsArea = document.getElementById('editDayExtraFields');
         fieldsArea.style.display = 'block';
