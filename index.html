@@ -1886,19 +1886,19 @@
         fieldsArea.style.display = 'block';
         // 生成 5 個輸入框，value 會直接帶入儲存的內容（如果是空字串就是空白）
         fieldsArea.innerHTML = `
-            <div class="edit-label" style="margin-bottom:10px; color:var(--primary-blue);">請貼上圖片網址或 Base64：</div>
+            <div class="edit-label" style="margin-bottom:10px; color:var(--primary-blue);"></div>
             ${saved.map((val, i) => `
                 <div style="margin-bottom:15px;">
-                    <div class="edit-label">第 ${i+1} 格</div>
-                    <input class="edit-input vjw-qr-input" style="margin-top:5px;" 
-                           placeholder="暫無網址 (空白)" value="${val}">
+                    <div class="edit-label">第 ${i+1} 張</div>
+                    <input class="edit-input vjw-qr-input" style="margin-top:20px;" 
+                           placeholder="" value="${val}">
                 </div>
             `).join('')}
         `;
         const btnContainer = document.querySelector('#dateInputModal .confirm-btns');
         if (btnContainer) btnContainer.style.marginTop = "0px";
         const btn = document.getElementById('dateModalConfirmBtn');
-        btn.innerText = "儲存設定"; 
+        btn.innerText = "儲存"; 
         btn.onclick = function() {
             const inputs = document.querySelectorAll('.vjw-qr-input');
             // 讀取所有輸入框的內容
