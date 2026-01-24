@@ -1876,8 +1876,12 @@
         fieldsArea.style.display = 'block';
         fieldsArea.innerHTML = `
             <div class="edit-label"></div>
-            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:0px;margin-bottom:20px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
+            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:0px;margin-bottom:20px" placeholder="" value="${saved[i] || ''}">`).join('')}
         `;
+        const btnContainer = document.querySelector('#dateInputModal .confirm-btns');
+        if (btnContainer) {
+            btnContainer.style.marginTop = "10px"; // 這裡的數值越大，間距就越寬
+        }
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存"; 
         btn.onclick = function() {
