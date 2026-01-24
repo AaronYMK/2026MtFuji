@@ -688,24 +688,22 @@
              <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
         </a>
         </div>
-        <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="text-decoration:none;">
-            <div class="vjw-banner" style="display: flex; align-items: center; justify-content: space-between; padding: 22px; cursor: default; background: #233b7d; border-radius: 20px;">
-                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; pointer-events: none;">
-                    <div style="margin-bottom: 8px;">
-                        <span class="vjw-tag" style="background: #e5534b; padding: 4px 10px; border-radius: 5px; font-weight: 700; font-size: 0.8rem; color: #fff; display: inline-block;">MUST HAVE</span>
-                    </div>
-                    <div class="vjw-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px;">Visit Japan Web</div>
-                    <div class="vjw-sub" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
+        <div class="vjw-banner" style="display: flex; align-items: center; justify-content: space-between; padding: 22px; cursor: default; background: #233b7d; border-radius: 20px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; pointer-events: none;">
+                <div style="margin-bottom: 8px;">
+                    <span class="vjw-tag" style="background: #e5534b; padding: 4px 10px; border-radius: 5px; font-weight: 700; font-size: 0.8rem; color: #fff; display: inline-block;">MUST HAVE</span>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; flex-shrink: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.1);">
-                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.2rem; display: block; line-height: 1;">
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.2rem; cursor: pointer; display: none;"></i>
-                    <i class="fas fa-cog" onclick="editVjwQrs()" style="color: rgba(255, 255, 255, 0.4); font-size: 1.2rem; cursor: pointer;"></i>
-                </div>
+                <div class="vjw-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px;">Visit Japan Web</div>
+                <div class="vjw-sub" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
             </div>
-        </a>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; flex-shrink: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.1);">
+                <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.2rem; display: block; line-height: 1;">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.2rem; cursor: pointer; display: none;"></i>
+                <i class="fas fa-cog" onclick="editVjwQrs()" style="color: rgba(255, 255, 255, 0.4); font-size: 1.2rem; cursor: pointer;"></i>
+            </div>
+        </div>
         <div class="em-header"><i class="fas fa-exclamation-circle"></i> 緊急聯絡 & 支援</div>
         <div class="em-hotline">
             <div style="flex:1">
@@ -1878,7 +1876,7 @@
         fieldsArea.style.display = 'block';
         fieldsArea.innerHTML = `
             <div class="edit-label"></div>
-            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:10px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
+            ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:0px;margin-bottom:20px" placeholder="https://..." value="${saved[i] || ''}">`).join('')}
         `;
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存"; 
