@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="referrer" content="no-referrer">
-    <title>【 122026 Winter Mt. Fuji 】</title>
+    <title>【 2026 Winter Mt. Fuji 】</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -685,19 +685,24 @@
         </a>
         </div>
         <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="text-decoration:none;">
-            <div class="vjw-banner" style="cursor: default;">
-                <div style="flex:1">
-                    <div class="vjw-tag">MUST HAVE</div>
-                    <div class="vjw-title" style="margin-top:3px"> Visit Japan Web</div>
-                    <div class="vjw-sub" style="margin-top:5px"> 入境審查 & 海關申報</div>
-                    <div id="vjw-qr-btn-container" style="margin-top:10px; display:none;">
-                        <button onclick="openVjwQrModal()" style="background:rgba(255,255,255,0.2); border:1px solid #fff; color:#fff; padding:5px 12px; border-radius:8px; font-size:0.8rem; cursor:pointer;">
-                            <i class="fas fa-qrcode"></i> 離線 QR Code
+            <div class="vjw-banner" style="display: flex; align-items: stretch; padding: 22px; cursor: default; background: #233b7d; border-radius: 20px;">   
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 18px; flex-shrink: 0; padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="vjw-icon" style="margin: 0; background: rgba(255,255,255,0.15); width: 48px; height: 48px;">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a> 
+                    <button onclick="editVjwQrs()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); width: 40px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;">
+                        <i class="fas fa-cog" style="font-size: 0.9rem;"></i>
+                    </button>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding-left: 5px;">
+                    <div class="vjw-tag" style="background: #e5534b; margin-bottom: 8px;">MUST HAVE</div>
+                    <div class="vjw-title" style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 500; color: #fff; margin-bottom: 4px;">Visit Japan Web</div>
+                    <div class="vjw-sub" style="font-size: 0.95rem; color: rgba(255,255,255,0.8); letter-spacing: 0.5px;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
+                    <div id="vjw-qr-btn-container" style="margin-top: 12px; display: none;">
+                        <button onclick="openVjwQrModal()" style="background: rgba(255,255,255,0.2); border: 1px solid #fff; color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">
+                            <i class="fas fa-qrcode"></i> 檢視離線 QR Code
                         </button>
                     </div>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" class="vjw-icon"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         </a>
@@ -814,13 +819,16 @@
                     <i class="fas fa-file-import" style="color:var(--primary-blue)"></i> 匯入
                 </button>
             </div>
-            <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">
-            <div style="margin-top: 10px">
-                 <button class="btn-reset-app" style="margin-top:18px" onclick="resetApp()">
-                    <i class="fas fa-redo-alt" style="font-size: 1.2rem"></i>
+            <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">   
+            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                 <button class="btn-reset-app" style="background: #0f172a; flex: 1;" onclick="offlineAllImages()">
+                    <i class="fas fa-plane-slash" style="font-size: 1.2rem"></i> 離線化
+                 </button>
+                 <button class="btn-reset-app" style="background: #475569; flex: 1;" onclick="resetApp()">
+                    <i class="fas fa-redo-alt" style="font-size: 1.2rem"></i> 重置
                  </button>
             </div>
-        </div>
+        </div> 
 </div> </div>
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
@@ -1951,6 +1959,66 @@
     e.stopPropagation(); 
     const img = document.getElementById('imgPreviewTarget');
     img.classList.toggle('zoomed');
+    }
+    /*** 核心：將外部連結圖片轉為 Base64 數據，實現 100% 離線化 */
+    async function convertUrlToBase64(url) {
+        if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
+        try {
+            // 加入 mode: 'cors' 嘗試跨域抓取
+            const response = await fetch(url, { mode: 'cors' });
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            console.warn("跳過無法跨域轉換的圖片:", url);
+            return url; 
+        }
+    }
+    async function offlineAllImages() {
+        // 鎖定滾動防止干擾
+        lockScroll(); 
+        // 顯示進度提示
+        showCustomAlert("正在處理圖片離線化...\n這可能需要幾秒鐘，請勿關閉網頁。");   
+        try {
+            // 1. 處理行程內的圖片
+            for (let day of itineraryData) {
+                // 背景圖
+                if (day.bg) day.bg = await convertUrlToBase64(day.bg);        
+                // 行程事件圖 (考慮分流 A/B)
+                const allEvts = [
+                    ...(day.events || []),
+                    ...(day.eventsA || []),
+                    ...(day.eventsB || [])
+                ];        
+                for (let evt of allEvts) {
+                    if (evt.desc_img) evt.desc_img = await convertUrlToBase64(evt.desc_img);
+                }
+            }
+            // 2. 處理 VJW QR Codes
+            const vjwQrs = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
+            const processedVjw = [];
+            for (let url of vjwQrs) {
+                processedVjw.push(await convertUrlToBase64(url));
+            }
+            localStorage.setItem('vjw_qrs', JSON.stringify(processedVjw));
+            // 儲存至本地
+            saveItineraryToLocal();
+            // 關閉之前的 Alert 並顯示成功
+            closeConfirm(); 
+            setTimeout(() => {
+                showCustomAlert("✅ 離線化完成！\n所有圖片已加密儲存於瀏覽器緩存，無網路時也能正常顯示圖片。");
+                switchDay(currentDayIdx); // 重新渲染畫面
+            }, 500);
+        } catch (err) {
+            closeConfirm();
+            showCustomAlert("離線化過程中發生錯誤，請檢查網路連線。");
+        } finally {
+            unlockScroll();
+        }
     }
     init();
 </script>
