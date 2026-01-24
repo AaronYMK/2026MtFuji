@@ -1882,7 +1882,7 @@
             ${[0,1,2,3,4].map(i => `<input class="edit-input vjw-qr-input" style="margin-top:5px" placeholder="" value="${saved[i] || ''}">`).join('')}
         `;
         const btn = document.getElementById('dateModalConfirmBtn');
-        btn.innerText = "儲存 QR Code";
+        btn.innerText = "儲存";
         btn.onclick = function() {
             const inputs = document.querySelectorAll('.vjw-qr-input');
             const urls = Array.from(inputs).map(input => input.value.trim());
