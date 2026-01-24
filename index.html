@@ -1873,39 +1873,54 @@
         };
         document.getElementById('dateInputModal').classList.add('active');
     }
-    // 編輯 VJW QR Code 連結的視窗
+    // 編輯 VJW QR Code 連結的視窗 (修正版：解決離線化代碼過長無法編輯問題)
     function editVjwQrs() {
         lockScroll();
-        // 取得儲存的資料，如果沒有則建立一個包含 5 個空字串的陣列
         let saved = JSON.parse(localStorage.getItem('vjw_qrs') || '["", "", "", "", ""]');
-        // 確保陣列長度至少有 5，防止舊資料格式不符
         while(saved.length < 5) saved.push("");
         document.getElementById('dateModalTitle').innerText = "QR Code Links";
         document.getElementById('newDateInput').style.display = 'none';
         const fieldsArea = document.getElementById('editDayExtraFields');
         fieldsArea.style.display = 'block';
-        // 生成 5 個輸入框，value 會直接帶入儲存的內容（如果是空字串就是空白）
+        // 生成輸入框邏輯
         fieldsArea.innerHTML = `
-            <div class="edit-label" style="margin-bottom:10px; color:var(--primary-blue);"></div>
-            ${saved.map((val, i) => `
-                <div style="margin-bottom:15px;">
-                    <div class="edit-label">第 ${i+1} 張</div>
-                    <input class="edit-input vjw-qr-input" style="margin-top:15px;" 
-                           placeholder="" value="${val}">
+            <div class="edit-label" style="margin-bottom:15px; color:var(--primary-blue); font-size:0.8rem; line-height:1.4;">
+                * 若已執行「離線化」，欄位將顯示為已加密狀態，請點擊「清除圖片」來移除。
+            </div>
+            ${saved.map((val, i) => {
+                const isBase64 = val.startsWith('data:image');
+                return `
+                <div style="margin-bottom:20px; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="edit-label">第 ${i+1} 張</div>
+                        ${isBase64 ? `<span style="font-size:0.7rem; color:#ef4444; font-weight:700; cursor:pointer;" onclick="document.getElementById('vjw-input-${i}').value=''; this.style.display='none'; document.getElementById('vjw-input-${i}').placeholder='已清除，請儲存';">清除圖片</span>` : ''}
+                    </div>
+                    <input id="vjw-input-${i}" class="edit-input vjw-qr-input" 
+                           style="margin-top:8px; font-size:0.8rem;" 
+                           placeholder="${isBase64 ? '[ 已儲存離線化圖片 ]' : '請貼上圖片連結'}" 
+                           value="${isBase64 ? '' : val}"
+                           ${isBase64 ? 'readonly' : ''}>
+                    ${isBase64 ? `<input type="hidden" class="vjw-hidden-data" value="${val}">` : ''}
                 </div>
-            `).join('')}
+                `;
+            }).join('')}
         `;
-        const btnContainer = document.querySelector('#dateInputModal .confirm-btns');
-        if (btnContainer) btnContainer.style.marginTop = "0px";
         const btn = document.getElementById('dateModalConfirmBtn');
         btn.innerText = "儲存"; 
         btn.onclick = function() {
-            const inputs = document.querySelectorAll('.vjw-qr-input');
-            // 讀取所有輸入框的內容
-            const urls = Array.from(inputs).map(input => input.value.trim());
-            // 儲存回 localStorage
-            localStorage.setItem('vjw_qrs', JSON.stringify(urls));
-            checkVjwBtn(); // 更新主介面按鈕顯示狀態
+            const finalUrls = [];
+            for(let i=0; i<5; i++){
+                const input = document.getElementById(`vjw-input-${i}`);
+                const hidden = input.parentElement.querySelector('.vjw-hidden-data');
+                // 如果 input 沒被清空且有隱藏的 Base64，則保留 Base64；否則取 input 的值
+                if (hidden && input.placeholder === '[ 已儲存離線化圖片 ]') {
+                    finalUrls.push(hidden.value);
+                } else {
+                    finalUrls.push(input.value.trim());
+                }
+            }
+            localStorage.setItem('vjw_qrs', JSON.stringify(finalUrls));
+            checkVjwBtn(); 
             document.getElementById('dateInputModal').classList.remove('active');
             unlockScroll(); 
         };
