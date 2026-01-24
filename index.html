@@ -500,7 +500,6 @@
         }
         /* 當 Modal 開啟時，套用此類別到 body */
         body.modal-open {
-            fixed: top;
             left: 0;
             width: 100%;
             height: 100%;
@@ -571,7 +570,7 @@
         </div>
     </div>
         <div class="confirm-btns" style="margin-top:20px">
-            <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active')">取消</button>
+            <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active'); unlockScroll();">取消</button>
             <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="dateModalConfirmBtn">確定</button>
         </div>
     </div>
@@ -847,9 +846,13 @@
         document.body.classList.add('modal-open');
     }
     function unlockScroll() {
+        // 1. 移除鎖定類別
         document.body.classList.remove('modal-open');
+        // 2. 關鍵修正：將 position 還原，否則頁面會卡死
+        document.body.style.position = ''; 
         document.body.style.top = '';
-        // 回到原本紀錄的位置
+        document.body.style.width = '';
+        // 3. 回到原本紀錄的捲動位置
         window.scrollTo(0, scrollPos);
     }
     // 核心助手：根據當前模式與狀態，回傳正確的行程陣列
@@ -1650,6 +1653,7 @@
     }
     let pendingDeleteId = null; 
     function delExpense(id) {
+        lockScroll();
         pendingDeleteId = id; 
         showCustomConfirm("確定要刪除這筆紀錄嗎？", function() { performDeleteSingle(); });
     }
@@ -1661,6 +1665,7 @@
         closeConfirm();
     }
     function askClearAll() {
+        lockScroll();
         showCustomConfirm("確定要清除所有紀錄嗎？", function() { performClearAll(); });
     }
     function performClearAll() {
@@ -1669,8 +1674,9 @@
         closeConfirm();
     }
     function closeConfirm() {
-        unlockScroll();
-        document.getElementById('confirmModal').classList.remove('active');
+        const modal = document.getElementById('confirmModal');
+        modal.classList.remove('active');
+        unlockScroll(); // 確保關閉後恢復滑動
         pendingDeleteId = null;
     }
     function exportExpenses() {
@@ -1869,6 +1875,7 @@
     }
     // 在資料同步區或編輯地圖區，新增 5 個連結的輸入欄位
     function editVjwQrs() {
+        lockScroll();
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
         document.getElementById('dateModalTitle').innerText = "QR Code Links";
         document.getElementById('newDateInput').style.display = 'none';
@@ -1908,6 +1915,7 @@
     }
     // 開啟卡片顯示圖片
     function openVjwQrModal() {
+        lockScroll();
         const saved = JSON.parse(localStorage.getItem('vjw_qrs') || '[]');
         let imgHtml = saved.filter(url => url !== "").map(url => `
             <img src="${url}" style="width:100%; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);" onclick="openImagePreview('${url}')">
